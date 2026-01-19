@@ -1,68 +1,94 @@
 name: Polymarket Bot
 
 on:
-  # Run every 6 hours
+  # Run every 6 hours (GitHub uses UTC)
   schedule:
-    - cron: '0 */6 * * *'
-  
+    - cron: "0 */6 * * *"
+
   # Manual trigger
   workflow_dispatch:
     inputs:
       mode:
-        description: 'Run mode'
+        description: "Run mode"
         required: true
-        default: 'dry_run'
+        default: "paper"
         type: choice
         options:
-          - dry_run
+          - paper
           - scan_only
           - live
+
+# Avoid overlapping runs if one run takes longer than expected
+concurrency:
+  group: polymarket-bot
+  cancel-in-progress: false
 
 jobs:
   run-bot:
     runs-on: ubuntu-latest
-    
+    timeout-minutes: 10
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
-      
+          python-version: "3.12"
+
       - name: Install dependencies
-        run: pip install -r requirements.txt
-      
-      - name: Run bot (scheduled - dry run)
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # ----------------------------
+      # SCHEDULED RUNS (always paper)
+      # ----------------------------
+      - name: Run paper trading (scheduled)
         if: github.event_name == 'schedule'
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          DRY_RUN: 'true'
-        run: python bot.py --paper
-      
+          DRY_RUN: "true"
+        run: |
+          python bot.py --paper
+
+      # ----------------------------
+      # MANUAL RUNS (selected mode)
+      # ----------------------------
       - name: Run bot (manual - selected mode)
         if: github.event_name == 'workflow_dispatch'
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          DRY_RUN: ${{ inputs.mode == 'live' && 'false' || 'true' }}
+
+          # Only needed for LIVE mode (safe to expose only here)
+          POLYMARKET_API_KEY: ${{ secrets.POLYMARKET_API_KEY }}
+          POLYMARKET_SECRET: ${{ secrets.POLYMARKET_SECRET }}
+          POLYMARKET_PASSPHRASE: ${{ secrets.POLYMARKET_PASSPHRASE }}
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         run: |
           if [ "${{ inputs.mode }}" = "scan_only" ]; then
+            export DRY_RUN="true"
             python bot.py --scan-only
+
           elif [ "${{ inputs.mode }}" = "live" ]; then
+            export DRY_RUN="false"
             python bot.py --live <<< "CONFIRM"
+
           else
+            export DRY_RUN="true"
             python bot.py --paper
           fi
-      
-      - name: Upload logs
-  uses: actions/upload-artifact@v4
-  if: always()
-  with:
-    name: bot-logs-${{ github.run_number }}
-    path: |
-      bot_history.json
-      portfolio_*.json
-    retention-days: 30
+
+      - name: Upload artifacts (history + portfolios)
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bot-logs-${{ github.run_number }}
+          path: |
+            bot_history.json
+            portfolio_*.json
+          retention-days: 30
+
