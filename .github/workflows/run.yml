@@ -58,9 +58,11 @@ jobs:
           fi
       
       - name: Upload logs
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: bot-logs-${{ github.run_number }}
-          path: bot_history.json
-          retention-days: 30
+  uses: actions/upload-artifact@v4
+  if: always()
+  with:
+    name: bot-logs-${{ github.run_number }}
+    path: |
+      bot_history.json
+      portfolio_*.json
+    retention-days: 30
