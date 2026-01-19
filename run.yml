@@ -1,0 +1,96 @@
+name: Polymarket Bot
+
+on:
+  # Run every 6 hours for paper trading
+  schedule:
+    - cron: '0 */6 * * *'
+  
+  # Manual trigger
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Run mode'
+        required: true
+        default: 'paper'
+        type: choice
+        options:
+          - paper
+          - paper_conservative
+          - paper_balanced
+          - paper_aggressive
+          - paper_volume_sweet
+          - dry_run
+          - scan_only
+          - live
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      
+      - name: Run bot (scheduled - all strategies)
+        if: github.event_name == 'schedule'
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python bot.py --paper
+      
+      - name: Run bot (manual)
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          POLYMARKET_API_KEY: ${{ secrets.POLYMARKET_API_KEY }}
+          POLYMARKET_SECRET: ${{ secrets.POLYMARKET_SECRET }}
+          POLYMARKET_PASSPHRASE: ${{ secrets.POLYMARKET_PASSPHRASE }}
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ "${{ inputs.mode }}" = "scan_only" ]; then
+            python bot.py --scan-only
+          elif [ "${{ inputs.mode }}" = "live" ]; then
+            python bot.py --live <<< "CONFIRM"
+          elif [ "${{ inputs.mode }}" = "paper" ]; then
+            python bot.py --paper
+          elif [ "${{ inputs.mode }}" = "paper_conservative" ]; then
+            python bot.py --paper conservative
+          elif [ "${{ inputs.mode }}" = "paper_balanced" ]; then
+            python bot.py --paper balanced
+          elif [ "${{ inputs.mode }}" = "paper_aggressive" ]; then
+            python bot.py --paper aggressive
+          elif [ "${{ inputs.mode }}" = "paper_volume_sweet" ]; then
+            python bot.py --paper volume_sweet
+          else
+            python bot.py
+          fi
+      
+      - name: Commit portfolio changes
+        if: always()
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add portfolio_*.json || true
+          git diff --staged --quiet || git commit -m "Update paper portfolios [$(date +'%Y-%m-%d %H:%M')]"
+          git push || true
+      
+      - name: Upload logs
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bot-logs-${{ github.run_number }}
+          path: |
+            bot_history.json
+            portfolio_*.json
+          retention-days: 30

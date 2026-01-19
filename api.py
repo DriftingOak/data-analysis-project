@@ -234,20 +234,42 @@ def place_market_order(
 
 def get_token_ids(market: Dict) -> Dict[str, str]:
     """Extract YES and NO token IDs from market data."""
+    import json
     tokens = {}
     
-    # Try clobTokenIds first
-    clob_ids = market.get("clobTokenIds", [])
-    outcomes = market.get("outcomes", [])
+    # Try clobTokenIds first - may be JSON string
+    clob_ids_raw = market.get("clobTokenIds", [])
+    if isinstance(clob_ids_raw, str):
+        try:
+            clob_ids = json.loads(clob_ids_raw) if clob_ids_raw else []
+        except:
+            clob_ids = []
+    else:
+        clob_ids = clob_ids_raw or []
+    
+    # outcomes may also be JSON string
+    outcomes_raw = market.get("outcomes", [])
+    if isinstance(outcomes_raw, str):
+        try:
+            outcomes = json.loads(outcomes_raw) if outcomes_raw else []
+        except:
+            outcomes = []
+    else:
+        outcomes = outcomes_raw or []
     
     if clob_ids and outcomes:
         for i, outcome in enumerate(outcomes):
-            if i < len(clob_ids):
+            if i < len(clob_ids) and isinstance(outcome, str):
                 outcome_lower = outcome.lower()
                 if outcome_lower == "yes":
                     tokens["YES"] = clob_ids[i]
                 elif outcome_lower == "no":
                     tokens["NO"] = clob_ids[i]
+    
+    # Fallback for binary markets without Yes/No labels
+    if not tokens and len(clob_ids) == 2:
+        tokens["YES"] = clob_ids[0]
+        tokens["NO"] = clob_ids[1]
     
     return tokens
 

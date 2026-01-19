@@ -118,7 +118,7 @@ GEO_REGIONS = {
             "xi jinping", "kim jong", "kim jong un", "yoon suk yeol", "kishida",
             "marcos", "lai ching-te", "tsai ing-wen", "li qiang", "min aung hlaing",
         ],
-        "orgs": ["pla", "ccp", "kcna"],
+        "orgs": ["people's liberation army", "ccp", "kcna"],
         "features": [
             "south china sea", "east china sea", "taiwan strait", "senkaku",
             "diaoyu", "spratly", "paracel", "nine dash", "first island chain",
@@ -141,7 +141,7 @@ GEO_REGIONS = {
             "modi", "sharif", "imran khan", "taliban",
         ],
         "orgs": [
-            "taliban", "isis-k", "ttp", "lashkar", "jaish", "isi",
+            "taliban", "isis-k", "ttp", "lashkar", "jaish", "pakistan isi",
         ],
     },
     
@@ -179,7 +179,7 @@ GEO_REGIONS = {
             "congo", "drc", "rwanda", "uganda", "tanzania", "mozambique",
             "zimbabwe", "south africa", "angola", "namibia", "botswana",
             "senegal", "ivory coast", "ghana", "guinea", "liberia", "sierra leone",
-            "central african republic", "car",
+            "central african republic",
         ],
         "cities": [
             "khartoum", "addis ababa", "mogadishu", "nairobi", "lagos", "abuja",
@@ -200,7 +200,7 @@ GEO_REGIONS = {
     # -------------------------------------------------------------------------
     "europe": {
         "entities": [
-            "european union", "eu", "nato", "brexit", "schengen",
+            "european union", "nato", "brexit", "schengen",  # Removed "eu" - too short, matches "ethereum"
         ],
         "countries": [
             "germany", "france", "uk", "united kingdom", "britain", "england",
@@ -230,7 +230,7 @@ GEO_REGIONS = {
     # -------------------------------------------------------------------------
     "international": {
         "orgs": [
-            "nato", "united nations", "un", "iaea", "icj", "icc", "who",
+            "nato", "united nations", "iaea", "icj", "icc", "who",  # Removed "un" - too short
             "imf", "world bank", "wto", "opec", "brics", "g7", "g20",
             "security council", "general assembly", "african union", "asean",
             "arab league", "gcc", "osce", "interpol",
@@ -292,14 +292,15 @@ ACTION_KEYWORDS = [
     "sabotage", "disinformation", "propaganda",
 ]
 
-# Build flat GEO_KEYWORDS list from regions
+# Build flat GEO_KEYWORDS list from regions (WITHOUT action keywords)
 def _build_geo_keywords():
     keywords = set()
     for region_data in GEO_REGIONS.values():
         for key, values in region_data.items():
             if isinstance(values, list):
                 keywords.update(v.lower() for v in values)
-    keywords.update(k.lower() for k in ACTION_KEYWORDS)
+    # NOTE: We do NOT add ACTION_KEYWORDS here anymore
+    # Action keywords alone should not qualify a market as geopolitical
     return list(keywords)
 
 GEO_KEYWORDS = _build_geo_keywords()
@@ -379,11 +380,13 @@ EXCLUDE_KEYWORDS = [
     # CRYPTO / FINANCE (prices, not geopolitics)
     # -------------------------------------------------------------------------
     "bitcoin price", "btc price", "ethereum price", "eth price",
+    "ethereum", "bitcoin",  # Added - too many false positives
     "solana price", "sol price", "crypto price", "token price",
     "doge", "dogecoin", "shiba", "memecoin", "meme coin",
     "nft", "airdrop", "defi", "yield", "staking", "mining",
     "altcoin", "market cap", "ath", "all time high",
     "bull run", "bear market", "pump", "dump", "moon",
+    "fdv", "token launch", "tge",  # Added - crypto token launches
     
     # Stock specific
     "stock price", "share price", "earnings", "quarterly",
@@ -398,6 +401,13 @@ EXCLUDE_KEYWORDS = [
     "ai model", "chatgpt", "gpt-5", "claude", "gemini", "llama",
     "startup", "unicorn", "vc", "funding round", "series a",
     "product launch", "wwdc", "google io", "keynote",
+    "tesla", "full self driving", "fsd", "autopilot",  # Added Tesla
+    
+    # -------------------------------------------------------------------------
+    # NATURAL DISASTERS (not geopolitics unless conflict-related)
+    # -------------------------------------------------------------------------
+    "earthquake", "magnitude", "richter", "tsunami", "volcano",
+    "hurricane", "typhoon", "cyclone", "tornado", "wildfire",
     
     # -------------------------------------------------------------------------
     # HEALTH (non-geopolitical)

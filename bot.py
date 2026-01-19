@@ -5,9 +5,18 @@ POLYMARKET BOT - Main Entry Point
 Runs the trading strategy and places orders.
 
 Usage:
-    python bot.py              # Dry run (default)
-    python bot.py --live       # Live trading (real orders)
-    python bot.py --scan-only  # Just scan markets, no orders
+    python bot.py                    # Dry run (default)
+    python bot.py --live             # Live trading (real orders)
+    python bot.py --scan-only        # Just scan markets, no orders
+    python bot.py --paper            # Paper trading - ALL strategies
+    python bot.py --paper balanced   # Paper trading - single strategy
+    python bot.py --help             # Show available strategies
+
+Strategies:
+    conservative  - NO 10-25%, high win rate, low risk
+    balanced      - NO 20-60%, baseline strategy
+    aggressive    - NO 30-60%, higher risk/reward
+    volume_sweet  - NO 20-60%, 15k-100k volume only
 """
 
 import sys
@@ -235,21 +244,201 @@ def run_bot(dry_run: bool = True, scan_only: bool = False):
 
 
 # =============================================================================
+# PAPER TRADING
+# =============================================================================
+
+def run_paper_trading(strategy_name: str = None):
+    """Run paper trading mode - simulated trading with persistence.
+    
+    Args:
+        strategy_name: Name of strategy to run (from strategies.py), or None to run all
+    """
+    import paper_trading as pt
+    import strategies as strat_config
+    
+    run_start = datetime.now()
+    log("=" * 60)
+    log("POLYMARKET BOT - PAPER TRADING MODE")
+    log("=" * 60)
+    
+    # Determine which strategies to run
+    if strategy_name:
+        if strategy_name not in strat_config.STRATEGIES:
+            log(f"ERROR: Unknown strategy '{strategy_name}'", "ERROR")
+            log(f"Available: {list(strat_config.STRATEGIES.keys())}")
+            return
+        strategies_to_run = {strategy_name: strat_config.STRATEGIES[strategy_name]}
+    else:
+        strategies_to_run = strat_config.STRATEGIES
+    
+    log(f"Running {len(strategies_to_run)} strategies: {list(strategies_to_run.keys())}")
+    
+    # Fetch all markets once (shared across strategies)
+    log("\nFetching markets...")
+    markets = api.fetch_open_markets(limit=5000)
+    log(f"Found {len(markets)} markets")
+    
+    # Build market lookup
+    market_lookup = {m.get("id") or m.get("conditionId"): m for m in markets}
+    current_ts = datetime.now().timestamp()
+    
+    # Prepare summary for Telegram
+    summary_lines = [f"📊 <b>Paper Trading Update</b>", f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M')}", ""]
+    
+    # Run each strategy
+    for strat_name, strat_params in strategies_to_run.items():
+        log("\n" + "=" * 60)
+        log(f"STRATEGY: {strat_params['name']}")
+        log("=" * 60)
+        
+        portfolio_file = strat_params.get("portfolio_file", f"portfolio_{strat_name}.json")
+        initial_bankroll = strat_params.get("bankroll", 1500.0)
+        
+        # Load portfolio for this strategy
+        portfolio = pt.load_portfolio(
+            portfolio_file=portfolio_file,
+            initial_bankroll=initial_bankroll,
+            entry_cost_rate=strat_params.get("entry_cost_rate", 0.03),
+        )
+        
+        # 1) Check resolutions of open positions
+        log("Checking open positions for resolutions...")
+        open_positions = [p for p in portfolio.positions if p.status == "open"]
+        newly_closed = 0
+        
+        for pos in open_positions:
+            market_data = market_lookup.get(pos.market_id)
+            
+            if market_data:
+                outcome = pt.check_resolution(market_data)
+                if outcome:
+                    pnl = pt.settle_position(pos, outcome)
+                    portfolio.closed_trades.append(pos)
+                    newly_closed += 1
+                    emoji = "✅" if pos.resolution == "win" else "❌"
+                    log(f"  {emoji} {pos.bet_side} resolved: {outcome.upper()} | P&L: ${pnl:+.2f}")
+        
+        if newly_closed > 0:
+            pt.update_portfolio_stats(portfolio)
+            log(f"{newly_closed} positions resolved")
+        
+        # 2) Evaluate new candidates with this strategy's params
+        log("Evaluating markets for new positions...")
+        candidates = []
+        
+        for market in markets:
+            timestamps = api.parse_market_timestamps(market)
+            tokens = api.get_token_ids(market)
+            
+            candidate = strategy.evaluate_market(
+                market, timestamps, tokens, current_ts,
+                strategy_params=strat_params,
+            )
+            
+            if candidate:
+                candidates.append(candidate)
+        
+        log(f"Found {len(candidates)} qualifying candidates")
+        
+        # 3) Select and execute paper trades
+        exposure_total, exposure_by_cluster = pt.get_open_exposure(portfolio)
+        existing_ids = pt.get_open_market_ids(portfolio)
+        available_cash = portfolio.bankroll_current - exposure_total
+        
+        # Use strategy-specific exposure limits
+        max_total_exp = strat_params.get("max_total_exposure_pct", 0.60)
+        max_cluster_exp = strat_params.get("max_cluster_exposure_pct", 0.20)
+        bet_size = strat_params.get("bet_size", config.BET_SIZE)
+        
+        selected = strategy.select_trades(
+            candidates=candidates,
+            cash_available=available_cash,
+            current_exposure=exposure_total,
+            exposure_by_cluster=exposure_by_cluster,
+            bankroll=portfolio.bankroll_current,
+            existing_market_ids=existing_ids,
+            max_exposure_pct=max_total_exp,
+            max_cluster_pct=max_cluster_exp,
+            bet_size=bet_size,
+        )
+        
+        log(f"Selected {len(selected)} new trades")
+        
+        # Execute paper trades
+        for trade in selected:
+            expected_close = datetime.fromtimestamp(trade.end_ts).strftime("%Y-%m-%d")
+            
+            pt.paper_buy(
+                portfolio=portfolio,
+                market_id=trade.market_id,
+                question=trade.question,
+                token_id=trade.token_id,
+                bet_side=trade.bet_side,
+                entry_price=trade.price_entry,
+                size_usd=bet_size,
+                cluster=trade.cluster,
+                expected_close=expected_close,
+            )
+        
+        # 4) Save portfolio
+        pt.save_portfolio(portfolio, portfolio_file)
+        
+        # 5) Print summary
+        pt.print_portfolio_summary(portfolio, strat_params['name'])
+        
+        # Add to Telegram summary
+        open_count = len([p for p in portfolio.positions if p.status == "open"])
+        roi_pct = portfolio.total_pnl / portfolio.bankroll_initial * 100
+        win_rate = (portfolio.wins / len(portfolio.closed_trades) * 100) if portfolio.closed_trades else 0
+        
+        summary_lines.append(f"<b>{strat_params['name']}</b>")
+        summary_lines.append(f"  P&L: ${portfolio.total_pnl:+.2f} ({roi_pct:+.1f}%)")
+        summary_lines.append(f"  Win rate: {win_rate:.0f}% | Open: {open_count}")
+        summary_lines.append("")
+    
+    # Send Telegram summary
+    send_telegram("\n".join(summary_lines))
+    
+    run_duration = (datetime.now() - run_start).total_seconds()
+    log(f"\nPaper trading run complete in {run_duration:.1f}s")
+
+
+# =============================================================================
 # CLI
 # =============================================================================
 
 def main():
     dry_run = True
     scan_only = False
+    paper_mode = False
+    paper_strategy = None  # None = run all strategies
     
-    for arg in sys.argv[1:]:
+    args = sys.argv[1:]
+    i = 0
+    while i < len(args):
+        arg = args[i]
         if arg == "--live":
             dry_run = False
         elif arg == "--scan-only":
             scan_only = True
+        elif arg == "--paper":
+            paper_mode = True
+            # Check if next arg is a strategy name
+            if i + 1 < len(args) and not args[i + 1].startswith("--"):
+                paper_strategy = args[i + 1]
+                i += 1
         elif arg == "--help":
             print(__doc__)
+            print("\nStrategies available for --paper:")
+            import strategies
+            for name, strat in strategies.STRATEGIES.items():
+                print(f"  {name}: {strat['description']}")
             sys.exit(0)
+        i += 1
+    
+    if paper_mode:
+        run_paper_trading(paper_strategy)
+        return
     
     # Safety check for live mode
     if not dry_run:

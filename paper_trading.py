@@ -1,0 +1,347 @@
+"""
+POLYMARKET BOT - Paper Trading Module
+=====================================
+Simulates trading without real money.
+Persists state to portfolio.json between runs.
+Supports multiple strategies with separate portfolios.
+"""
+
+import json
+import os
+from datetime import datetime
+from typing import Dict, List, Any, Optional
+from dataclasses import dataclass, asdict
+
+import config
+import strategies as strat_config
+
+PORTFOLIO_FILE = "portfolio.json"  # Default, can be overridden
+
+# =============================================================================
+# DATA STRUCTURES
+# =============================================================================
+
+@dataclass
+class PaperPosition:
+    market_id: str
+    question: str
+    token_id: str
+    bet_side: str  # "YES" or "NO"
+    entry_date: str
+    entry_price: float  # Price we paid (e.g., 0.75 for NO when YES=25%)
+    size_usd: float  # Amount in USD
+    shares: float  # Number of shares bought
+    cluster: str
+    expected_close: str  # Expected resolution date
+    status: str  # "open" or "closed"
+    resolution: Optional[str] = None  # "win", "lose", or None
+    close_date: Optional[str] = None
+    pnl: Optional[float] = None
+
+
+@dataclass
+class PaperPortfolio:
+    bankroll_initial: float
+    bankroll_current: float
+    entry_cost_rate: float
+    positions: List[PaperPosition]
+    closed_trades: List[PaperPosition]
+    created_at: str
+    last_updated: str
+    
+    # Stats
+    total_trades: int = 0
+    wins: int = 0
+    losses: int = 0
+    total_pnl: float = 0.0
+
+
+# =============================================================================
+# PERSISTENCE
+# =============================================================================
+
+def load_portfolio(portfolio_file: str = PORTFOLIO_FILE, 
+                   initial_bankroll: float = None,
+                   entry_cost_rate: float = None) -> PaperPortfolio:
+    """Load portfolio from JSON file, or create new one."""
+    
+    # Use defaults from config/strategies if not specified
+    if initial_bankroll is None:
+        initial_bankroll = getattr(strat_config, 'INITIAL_BANKROLL', config.BANKROLL)
+    if entry_cost_rate is None:
+        entry_cost_rate = getattr(config, 'PAPER_ENTRY_COST_RATE', 0.03)
+    
+    if os.path.exists(portfolio_file):
+        try:
+            with open(portfolio_file, "r") as f:
+                data = json.load(f)
+            
+            # Reconstruct positions
+            positions = [PaperPosition(**p) for p in data.get("positions", [])]
+            closed_trades = [PaperPosition(**p) for p in data.get("closed_trades", [])]
+            
+            return PaperPortfolio(
+                bankroll_initial=data["bankroll_initial"],
+                bankroll_current=data["bankroll_current"],
+                entry_cost_rate=data["entry_cost_rate"],
+                positions=positions,
+                closed_trades=closed_trades,
+                created_at=data["created_at"],
+                last_updated=data["last_updated"],
+                total_trades=data.get("total_trades", 0),
+                wins=data.get("wins", 0),
+                losses=data.get("losses", 0),
+                total_pnl=data.get("total_pnl", 0.0),
+            )
+        except Exception as e:
+            print(f"[WARN] Could not load portfolio from {portfolio_file}: {e}, creating new one")
+    
+    # Create new portfolio
+    now = datetime.now().isoformat()
+    return PaperPortfolio(
+        bankroll_initial=initial_bankroll,
+        bankroll_current=initial_bankroll,
+        entry_cost_rate=entry_cost_rate,
+        positions=[],
+        closed_trades=[],
+        created_at=now,
+        last_updated=now,
+    )
+
+
+def save_portfolio(portfolio: PaperPortfolio, portfolio_file: str = PORTFOLIO_FILE):
+    """Save portfolio to JSON file."""
+    portfolio.last_updated = datetime.now().isoformat()
+    
+    data = {
+        "bankroll_initial": portfolio.bankroll_initial,
+        "bankroll_current": portfolio.bankroll_current,
+        "entry_cost_rate": portfolio.entry_cost_rate,
+        "positions": [asdict(p) for p in portfolio.positions],
+        "closed_trades": [asdict(p) for p in portfolio.closed_trades],
+        "created_at": portfolio.created_at,
+        "last_updated": portfolio.last_updated,
+        "total_trades": portfolio.total_trades,
+        "wins": portfolio.wins,
+        "losses": portfolio.losses,
+        "total_pnl": portfolio.total_pnl,
+    }
+    
+    with open(portfolio_file, "w") as f:
+        json.dump(data, f, indent=2)
+    
+    print(f"[INFO] Portfolio saved to {portfolio_file}")
+
+
+# =============================================================================
+# PAPER TRADING LOGIC
+# =============================================================================
+
+def get_open_exposure(portfolio: PaperPortfolio) -> tuple[float, Dict[str, float]]:
+    """Calculate current exposure from open positions."""
+    total = 0.0
+    by_cluster = {}
+    
+    for pos in portfolio.positions:
+        if pos.status == "open":
+            total += pos.size_usd
+            by_cluster[pos.cluster] = by_cluster.get(pos.cluster, 0) + pos.size_usd
+    
+    return total, by_cluster
+
+
+def get_open_market_ids(portfolio: PaperPortfolio) -> set:
+    """Get set of market IDs we already have positions in."""
+    return {pos.market_id for pos in portfolio.positions if pos.status == "open"}
+
+
+def paper_buy(
+    portfolio: PaperPortfolio,
+    market_id: str,
+    question: str,
+    token_id: str,
+    bet_side: str,
+    entry_price: float,
+    size_usd: float,
+    cluster: str,
+    expected_close: str,
+) -> Optional[PaperPosition]:
+    """Simulate buying a position."""
+    
+    # Check if we have enough cash
+    exposure_total, _ = get_open_exposure(portfolio)
+    available_cash = portfolio.bankroll_current - exposure_total
+    
+    if size_usd > available_cash:
+        print(f"[PAPER] Insufficient cash: need ${size_usd:.2f}, have ${available_cash:.2f}")
+        return None
+    
+    # Apply entry cost (simulated spread + slippage)
+    effective_investment = size_usd * (1 - portfolio.entry_cost_rate)
+    shares = effective_investment / entry_price
+    
+    position = PaperPosition(
+        market_id=market_id,
+        question=question,
+        token_id=token_id,
+        bet_side=bet_side,
+        entry_date=datetime.now().strftime("%Y-%m-%d %H:%M"),
+        entry_price=entry_price,
+        size_usd=size_usd,
+        shares=shares,
+        cluster=cluster,
+        expected_close=expected_close,
+        status="open",
+    )
+    
+    portfolio.positions.append(position)
+    portfolio.total_trades += 1
+    
+    print(f"[PAPER] Bought {bet_side} @ {entry_price:.1%} for ${size_usd:.2f} ({shares:.2f} shares)")
+    print(f"        Market: {question[:60]}...")
+    
+    return position
+
+
+def check_resolution(market_data: Dict) -> Optional[str]:
+    """Check if a market has been resolved and return outcome.
+    
+    Returns:
+        "yes" if YES won, "no" if NO won, None if not resolved
+    """
+    # Check various fields that might indicate resolution
+    resolved_field = market_data.get("resolved")
+    if resolved_field == True:
+        # Try to get the winning outcome
+        outcome = market_data.get("outcome")
+        if outcome is not None:
+            return "yes" if outcome == "Yes" or outcome == 1 or outcome == "1" else "no"
+        
+        # Try outcomePrices - if one is 1.0 and other is 0.0, it's resolved
+        prices_raw = market_data.get("outcomePrices", "")
+        if isinstance(prices_raw, str) and prices_raw:
+            import json as json_lib
+            try:
+                prices = json_lib.loads(prices_raw)
+                if len(prices) >= 2:
+                    if float(prices[0]) >= 0.99:
+                        return "yes"
+                    elif float(prices[1]) >= 0.99:
+                        return "no"
+            except:
+                pass
+    
+    return None
+
+
+def settle_position(position: PaperPosition, outcome: str) -> float:
+    """Settle a position and calculate P&L.
+    
+    Args:
+        position: The position to settle
+        outcome: "yes" or "no" (which side won)
+    
+    Returns:
+        P&L in USD
+    """
+    # Determine if we won
+    if position.bet_side == "NO":
+        won = (outcome == "no")
+    else:
+        won = (outcome == "yes")
+    
+    if won:
+        # We get $1 per share
+        payout = position.shares
+        pnl = payout - position.size_usd
+        position.resolution = "win"
+    else:
+        # We get nothing
+        payout = 0
+        pnl = -position.size_usd
+        position.resolution = "lose"
+    
+    position.status = "closed"
+    position.close_date = datetime.now().strftime("%Y-%m-%d %H:%M")
+    position.pnl = pnl
+    
+    return pnl
+
+
+def update_portfolio_stats(portfolio: PaperPortfolio):
+    """Recalculate portfolio statistics."""
+    portfolio.wins = sum(1 for t in portfolio.closed_trades if t.resolution == "win")
+    portfolio.losses = sum(1 for t in portfolio.closed_trades if t.resolution == "lose")
+    portfolio.total_pnl = sum(t.pnl for t in portfolio.closed_trades if t.pnl is not None)
+    portfolio.bankroll_current = portfolio.bankroll_initial + portfolio.total_pnl
+
+
+# =============================================================================
+# REPORTING
+# =============================================================================
+
+def print_portfolio_summary(portfolio: PaperPortfolio, strategy_name: str = ""):
+    """Print a summary of the portfolio."""
+    exposure_total, exposure_by_cluster = get_open_exposure(portfolio)
+    
+    print("\n" + "=" * 60)
+    if strategy_name:
+        print(f"PAPER PORTFOLIO: {strategy_name}")
+    else:
+        print("PAPER PORTFOLIO SUMMARY")
+    print("=" * 60)
+    print(f"Started: {portfolio.created_at[:10]}")
+    print(f"Last updated: {portfolio.last_updated[:10]}")
+    print(f"Entry cost rate: {portfolio.entry_cost_rate:.1%}")
+    print("-" * 60)
+    print(f"Initial bankroll: ${portfolio.bankroll_initial:,.2f}")
+    print(f"Current bankroll: ${portfolio.bankroll_current:,.2f}")
+    print(f"Total P&L: ${portfolio.total_pnl:+,.2f} ({portfolio.total_pnl/portfolio.bankroll_initial:+.1%})")
+    print("-" * 60)
+    print(f"Total trades: {portfolio.total_trades}")
+    print(f"Closed: {len(portfolio.closed_trades)} (W:{portfolio.wins} / L:{portfolio.losses})")
+    print(f"Win rate: {portfolio.wins / len(portfolio.closed_trades) * 100:.1f}%" if portfolio.closed_trades else "Win rate: N/A")
+    print(f"Open positions: {len([p for p in portfolio.positions if p.status == 'open'])}")
+    print(f"Current exposure: ${exposure_total:,.2f} ({exposure_total/portfolio.bankroll_current*100:.1f}%)")
+    
+    if exposure_by_cluster:
+        print("\nExposure by cluster:")
+        for cluster, exp in sorted(exposure_by_cluster.items(), key=lambda x: -x[1]):
+            print(f"  {cluster}: ${exp:,.2f}")
+    
+    print("=" * 60)
+
+
+def print_open_positions(portfolio: PaperPortfolio):
+    """Print list of open positions."""
+    open_pos = [p for p in portfolio.positions if p.status == "open"]
+    
+    if not open_pos:
+        print("\n[INFO] No open positions")
+        return
+    
+    print(f"\n{'='*60}")
+    print(f"OPEN POSITIONS ({len(open_pos)})")
+    print("=" * 60)
+    
+    for pos in sorted(open_pos, key=lambda x: x.entry_date):
+        print(f"  [{pos.cluster}] {pos.bet_side} @ {pos.entry_price:.1%} | ${pos.size_usd:.0f} | {pos.entry_date[:10]}")
+        print(f"      {pos.question[:55]}...")
+
+
+def print_recent_trades(portfolio: PaperPortfolio, n: int = 10):
+    """Print recent closed trades."""
+    recent = sorted(portfolio.closed_trades, key=lambda x: x.close_date or "", reverse=True)[:n]
+    
+    if not recent:
+        print("\n[INFO] No closed trades yet")
+        return
+    
+    print(f"\n{'='*60}")
+    print(f"RECENT CLOSED TRADES (last {n})")
+    print("=" * 60)
+    
+    for trade in recent:
+        emoji = "✅" if trade.resolution == "win" else "❌"
+        print(f"  {emoji} {trade.bet_side} | P&L: ${trade.pnl:+.2f} | {trade.close_date[:10]}")
+        print(f"      {trade.question[:55]}...")

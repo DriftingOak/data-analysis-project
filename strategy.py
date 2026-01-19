@@ -37,7 +37,8 @@ def is_geopolitical(question: str) -> bool:
     
     Strategy:
     1. Must NOT contain any exclusion keyword
-    2. Must contain at least one geo keyword OR one action keyword with geo context
+    2. Must contain at least one GEO keyword (country, leader, org, city)
+    3. Action keywords alone are NOT sufficient
     """
     q = question.lower()
     
@@ -45,7 +46,7 @@ def is_geopolitical(question: str) -> bool:
     if any(excl in q for excl in config.EXCLUDE_KEYWORDS):
         return False
     
-    # Check for geo keywords
+    # Must have at least one real geo keyword (not just action words)
     has_geo = any(kw in q for kw in config.GEO_KEYWORDS)
     
     return has_geo
@@ -83,13 +84,20 @@ def get_region_detail(question: str) -> str:
 def is_valid_market(
     market: Dict,
     timestamps: Dict[str, Optional[float]],
-    current_ts: float
+    current_ts: float,
+    min_volume: float = None,
+    max_volume: float = None,
 ) -> Tuple[bool, str]:
     """Check if market passes all filters.
     
     Returns:
         (is_valid, reason_if_invalid)
     """
+    if min_volume is None:
+        min_volume = config.MIN_VOLUME
+    if max_volume is None:
+        max_volume = float("inf")
+        
     question = market.get("question", "")
     
     # Must be geopolitical
@@ -115,15 +123,21 @@ def is_valid_market(
     
     # Volume filter
     volume = float(market.get("volume", 0) or 0)
-    if volume < config.MIN_VOLUME:
+    if volume < min_volume:
         return False, "low_volume"
+    if volume > max_volume:
+        return False, "high_volume"
     
     return True, "ok"
 
 
-def is_valid_price(price_yes: float) -> bool:
+def is_valid_price(price_yes: float, price_min: float = None, price_max: float = None) -> bool:
     """Check if YES price is in target range."""
-    return config.PRICE_YES_MIN <= price_yes <= config.PRICE_YES_MAX
+    if price_min is None:
+        price_min = config.PRICE_YES_MIN
+    if price_max is None:
+        price_max = config.PRICE_YES_MAX
+    return price_min <= price_yes <= price_max
 
 
 # =============================================================================
@@ -134,32 +148,67 @@ def evaluate_market(
     market: Dict,
     timestamps: Dict[str, Optional[float]],
     tokens: Dict[str, str],
-    current_ts: float
+    current_ts: float,
+    strategy_params: Dict = None,
 ) -> Optional[TradeCandidate]:
-    """Evaluate a market and return TradeCandidate if it qualifies."""
+    """Evaluate a market and return TradeCandidate if it qualifies.
+    
+    Args:
+        market: Market data from API
+        timestamps: Parsed timestamps
+        tokens: Token IDs for YES/NO
+        current_ts: Current timestamp
+        strategy_params: Optional dict with strategy overrides:
+            - bet_side: "YES" or "NO"
+            - price_yes_min: Minimum YES price
+            - price_yes_max: Maximum YES price
+            - min_volume: Minimum volume
+    """
+    # Use strategy params or defaults from config
+    if strategy_params is None:
+        strategy_params = {}
+    
+    bet_side = strategy_params.get("bet_side", config.BET_SIDE)
+    price_yes_min = strategy_params.get("price_yes_min", config.PRICE_YES_MIN)
+    price_yes_max = strategy_params.get("price_yes_max", config.PRICE_YES_MAX)
+    min_volume = strategy_params.get("min_volume", config.MIN_VOLUME)
+    max_volume = strategy_params.get("max_volume", float("inf"))
     
     # Basic validation
-    is_valid, reason = is_valid_market(market, timestamps, current_ts)
+    is_valid, reason = is_valid_market(market, timestamps, current_ts, 
+                                        min_volume=min_volume, max_volume=max_volume)
     if not is_valid:
         return None
     
     # Get YES price
-    # outcomePrices is usually a JSON string like "[0.35, 0.65]"
+    # Both outcomePrices and outcomes can be JSON strings
     try:
         prices_raw = market.get("outcomePrices", "")
         if isinstance(prices_raw, str):
             import json
-            prices = json.loads(prices_raw)
+            prices = json.loads(prices_raw) if prices_raw else []
         else:
-            prices = prices_raw
+            prices = prices_raw or []
         
-        outcomes = market.get("outcomes", [])
+        outcomes_raw = market.get("outcomes", [])
+        if isinstance(outcomes_raw, str):
+            import json
+            outcomes = json.loads(outcomes_raw) if outcomes_raw else []
+        else:
+            outcomes = outcomes_raw or []
+        
         price_yes = None
         
+        # First try to find explicit "Yes" outcome
         for i, outcome in enumerate(outcomes):
-            if outcome.lower() == "yes" and i < len(prices):
+            if isinstance(outcome, str) and outcome.lower() == "yes" and i < len(prices):
                 price_yes = float(prices[i])
                 break
+        
+        # If no "Yes" found and it's a binary market, use first price
+        # (First outcome is typically the "event happens" case)
+        if price_yes is None and len(outcomes) == 2 and len(prices) >= 1:
+            price_yes = float(prices[0])
         
         if price_yes is None:
             return None
@@ -168,11 +217,11 @@ def evaluate_market(
         return None
     
     # Check price range
-    if not is_valid_price(price_yes):
+    if not is_valid_price(price_yes, price_yes_min, price_yes_max):
         return None
     
     # Get token ID for our bet side
-    if config.BET_SIDE == "NO":
+    if bet_side == "NO":
         token_id = tokens.get("NO")
         price_entry = 1 - price_yes  # NO price
     else:
@@ -190,7 +239,7 @@ def evaluate_market(
         market_id=market.get("id", ""),
         question=market.get("question", "")[:100],
         token_id=token_id,
-        bet_side=config.BET_SIDE,
+        bet_side=bet_side,
         price_yes=price_yes,
         price_entry=price_entry,
         volume=float(market.get("volume", 0) or 0),
@@ -230,7 +279,10 @@ def select_trades(
     current_exposure: float,
     exposure_by_cluster: Dict[str, float],
     bankroll: float,
-    existing_market_ids: set
+    existing_market_ids: set,
+    max_exposure_pct: float = None,
+    max_cluster_pct: float = None,
+    bet_size: float = None,
 ) -> List[TradeCandidate]:
     """Select which trades to execute based on constraints.
     
@@ -238,6 +290,13 @@ def select_trades(
     - If cash is low (< 30%), prioritize fast-resolving markets
     - Otherwise, prioritize high volume (liquidity)
     """
+    # Use defaults from config if not specified
+    if max_exposure_pct is None:
+        max_exposure_pct = config.MAX_TOTAL_EXPOSURE_PCT
+    if max_cluster_pct is None:
+        max_cluster_pct = config.MAX_CLUSTER_EXPOSURE_PCT
+    if bet_size is None:
+        bet_size = config.BET_SIZE
     
     # Filter out markets we already have positions in
     candidates = [c for c in candidates if c.market_id not in existing_market_ids]
@@ -262,31 +321,31 @@ def select_trades(
     running_exposure = current_exposure
     running_cluster_exposure = exposure_by_cluster.copy()
     
-    max_total = bankroll * config.MAX_TOTAL_EXPOSURE_PCT
-    max_cluster = bankroll * config.MAX_CLUSTER_EXPOSURE_PCT
+    max_total = bankroll * max_exposure_pct
+    max_cluster = bankroll * max_cluster_pct
     
     for candidate in candidates:
         # Check if we have enough cash
-        if cash_available < config.BET_SIZE:
+        if cash_available < bet_size:
             print(f"[INFO] No more cash available (${cash_available:.2f})")
             break
         
         # Check total exposure
-        if running_exposure + config.BET_SIZE > max_total:
-            print(f"[INFO] Would exceed max total exposure ({running_exposure + config.BET_SIZE:.0f} > {max_total:.0f})")
+        if running_exposure + bet_size > max_total:
+            print(f"[INFO] Would exceed max total exposure ({running_exposure + bet_size:.0f} > {max_total:.0f})")
             continue
         
         # Check cluster exposure
         cluster_exp = running_cluster_exposure.get(candidate.cluster, 0)
-        if cluster_exp + config.BET_SIZE > max_cluster:
-            print(f"[INFO] Would exceed max {candidate.cluster} exposure ({cluster_exp + config.BET_SIZE:.0f} > {max_cluster:.0f})")
+        if cluster_exp + bet_size > max_cluster:
+            print(f"[INFO] Would exceed max {candidate.cluster} exposure ({cluster_exp + bet_size:.0f} > {max_cluster:.0f})")
             continue
         
         # Add to selection
         selected.append(candidate)
-        cash_available -= config.BET_SIZE
-        running_exposure += config.BET_SIZE
-        running_cluster_exposure[candidate.cluster] = cluster_exp + config.BET_SIZE
+        cash_available -= bet_size
+        running_exposure += bet_size
+        running_cluster_exposure[candidate.cluster] = cluster_exp + bet_size
     
     return selected
 

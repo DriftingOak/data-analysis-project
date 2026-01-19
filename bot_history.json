@@ -1,0 +1,38 @@
+[
+  {
+    "timestamp": "2026-01-19T03:11:58.913858",
+    "mode": "dry_run",
+    "markets_scanned": 24662,
+    "candidates_found": 0,
+    "trades_selected": 0,
+    "trades_executed": 0,
+    "errors": []
+  },
+  {
+    "timestamp": "2026-01-19T03:27:05.779956",
+    "mode": "dry_run",
+    "markets_scanned": 24735,
+    "candidates_found": 0,
+    "trades_selected": 0,
+    "trades_executed": 0,
+    "errors": []
+  },
+  {
+    "timestamp": "2026-01-19T04:08:10.356666",
+    "mode": "dry_run",
+    "markets_scanned": 24807,
+    "candidates_found": 216,
+    "trades_selected": 36,
+    "trades_executed": 36,
+    "errors": []
+  },
+  {
+    "timestamp": "2026-01-19T04:19:13.006449",
+    "mode": "dry_run",
+    "markets_scanned": 24792,
+    "candidates_found": 106,
+    "trades_selected": 36,
+    "trades_executed": 36,
+    "errors": []
+  }
+]
