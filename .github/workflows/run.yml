@@ -1,102 +1,116 @@
 name: Polymarket Bot
 
 on:
-  # Run every 6 hours (GitHub uses UTC)
+  # Run every 6 hours for paper trading
   schedule:
-    - cron: "0 */6 * * *"
-
+    - cron: '0 */6 * * *'
+  
   # Manual trigger
   workflow_dispatch:
     inputs:
       mode:
-        description: "Run mode"
+        description: 'Run mode'
         required: true
-        default: "paper"
+        default: 'paper'
         type: choice
         options:
           - paper
+          - paper_conservative
+          - paper_balanced
+          - paper_aggressive
+          - paper_volume_sweet
+          - dry_run
           - scan_only
           - live
 
-# Avoid overlapping runs if one run takes longer than expected
-concurrency:
-  group: polymarket-bot
-  cancel-in-progress: false
-
-# Needed if you want GitHub Pages deployment from Actions
+# Required for pushing commits
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 jobs:
   run-bot:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
-
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
-
+          python-version: '3.11'
+      
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      # ----------------------------
-      # SCHEDULED RUNS (always paper)
-      # ----------------------------
-      - name: Run paper trading (scheduled)
+        run: pip install -r requirements.txt
+      
+      - name: Run bot (scheduled - all strategies)
         if: github.event_name == 'schedule'
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          DRY_RUN: "true"
-        run: |
-          python bot.py --paper
-
-      # ----------------------------
-      # MANUAL RUNS (selected mode)
-      # ----------------------------
-      - name: Run bot (manual - selected mode)
+        run: python bot.py --paper
+      
+      - name: Run bot (manual)
         if: github.event_name == 'workflow_dispatch'
         env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-
-          # Only needed for LIVE mode
           POLYMARKET_API_KEY: ${{ secrets.POLYMARKET_API_KEY }}
           POLYMARKET_SECRET: ${{ secrets.POLYMARKET_SECRET }}
           POLYMARKET_PASSPHRASE: ${{ secrets.POLYMARKET_PASSPHRASE }}
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           if [ "${{ inputs.mode }}" = "scan_only" ]; then
-            export DRY_RUN="true"
             python bot.py --scan-only
-
           elif [ "${{ inputs.mode }}" = "live" ]; then
-            export DRY_RUN="false"
             python bot.py --live <<< "CONFIRM"
-
-          else
-            export DRY_RUN="true"
+          elif [ "${{ inputs.mode }}" = "paper" ]; then
             python bot.py --paper
+          elif [ "${{ inputs.mode }}" = "paper_conservative" ]; then
+            python bot.py --paper conservative
+          elif [ "${{ inputs.mode }}" = "paper_balanced" ]; then
+            python bot.py --paper balanced
+          elif [ "${{ inputs.mode }}" = "paper_aggressive" ]; then
+            python bot.py --paper aggressive
+          elif [ "${{ inputs.mode }}" = "paper_volume_sweet" ]; then
+            python bot.py --paper volume_sweet
+          else
+            python bot.py
           fi
-
-      # ----------------------------
-      # DASHBOARD GENERATION (static)
-      # ----------------------------
-      - name: Generate dashboard (static HTML)
+      
+      - name: Commit portfolio changes
+        if: always()
         run: |
-          python generate_dashboard.py --output-dir site
-
-      # Keep artifacts for debugging (optional)
-      - name: Upload artifacts (history + portfolios)
+          # Debug: show what files exist
+          echo "=== Portfolio files ==="
+          ls -la portfolio_*.json 2>/dev/null || echo "No portfolio files found"
+          
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          # Pull latest to avoid conflicts
+          git pull --rebase origin main || true
+          
+          # Add and commit
+          git add portfolio_*.json || true
+          
+          # Show what's staged
+          echo "=== Staged changes ==="
+          git diff --staged --stat
+          
+          # Commit and push
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update paper portfolios [$(date +'%Y-%m-%d %H:%M')]"
+            git push
+            echo "Changes pushed successfully"
+          fi
+      
+      - name: Upload logs
         uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -105,20 +119,3 @@ jobs:
             bot_history.json
             portfolio_*.json
           retention-days: 30
-
-      # Upload the static site as a Pages artifact
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: site
-
-  deploy-pages:
-    needs: run-bot
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
