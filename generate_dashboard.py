@@ -1,526 +1,445 @@
-#!/usr/bin/env python3
-"""Generate a lightweight static dashboard (HTML) from portfolio_*.json.
-
-Why:
-- You get a simple interface to sanity-check what the bots bought/sold
-- Works with GitHub Pages (static files)
-
-Inputs (expected in repo root):
-- portfolio_*.json (one per bot/strategy)
-Optional:
-- bot_history.json (if present, we show a small "last run" panel)
-
-Output (default folder: site/):
-- index.html
-- data.json
-
-No external dependencies.
+"""
+POLYMARKET BOT - Dashboard Generator
+====================================
+Generates a visual HTML dashboard from portfolio data.
 """
 
-from __future__ import annotations
-
-import argparse
-import glob
 import json
 import os
-from datetime import datetime, timezone
-from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from datetime import datetime
+from typing import Dict, List
 
-
-def utc_now_iso() -> str:
-    return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
-
-
-def safe_float(x: Any, default: float = 0.0) -> float:
-    try:
-        return float(x)
-    except Exception:
-        return default
-
-
-def load_json(path: str) -> Optional[Dict[str, Any]]:
-    try:
-        with open(path, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except Exception:
+def load_portfolio(filepath: str) -> dict:
+    """Load a portfolio JSON file."""
+    if not os.path.exists(filepath):
         return None
+    with open(filepath, "r") as f:
+        return json.load(f)
 
-
-def portfolio_name_from_file(fn: str) -> str:
-    # portfolio_aggressive.json -> aggressive
-    base = os.path.basename(fn)
-    name = base.replace("portfolio_", "").replace(".json", "")
-    return name
-
-
-def normalize_position(p: Dict[str, Any]) -> Dict[str, Any]:
-    """Accepts both old/new schemas and returns a normalized dict."""
-    # Newer schema (your repo) typically uses:
-    # market_id, question, bet_side, entry_date, entry_price, size_usd, shares,
-    # cluster, expected_close, status, resolution, close_date, pnl
-    # Older schema (my earlier internal sim) used: entry_ts, size_usdc, etc.
-
-    market_id = str(p.get("market_id") or p.get("id") or "")
-    question = p.get("question") or p.get("title") or ""
-    bet_side = p.get("bet_side") or p.get("side") or ""
-
-    entry_price = p.get("entry_price")
-    if entry_price is None:
-        entry_price = p.get("price")
-
-    size_usd = p.get("size_usd")
-    if size_usd is None:
-        size_usd = p.get("size_usdc")
-
-    shares = p.get("shares")
-    if shares is None:
-        shares = p.get("qty_shares")
-
-    entry_date = p.get("entry_date") or p.get("entry_time")
-    if entry_date is None and p.get("entry_ts") is not None:
-        try:
-            entry_date = datetime.fromtimestamp(float(p["entry_ts"]), tz=timezone.utc).strftime("%Y-%m-%d %H:%M")
-        except Exception:
-            entry_date = None
-
-    expected_close = p.get("expected_close")
-    if expected_close is None and p.get("close_ts") is not None:
-        try:
-            expected_close = datetime.fromtimestamp(float(p["close_ts"]), tz=timezone.utc).strftime("%Y-%m-%d")
-        except Exception:
-            expected_close = None
-
-    cluster = p.get("cluster") or "other"
-
-    status = p.get("status") or ("open" if p.get("resolution") in (None, "") else "closed")
-
-    resolution = p.get("resolution")
-    pnl = p.get("pnl")
-
-    return {
-        "market_id": market_id,
-        "question": question,
-        "bet_side": bet_side,
-        "entry_date": entry_date,
-        "entry_price": safe_float(entry_price, default=None) if entry_price is not None else None,
-        "size_usd": safe_float(size_usd, default=None) if size_usd is not None else None,
-        "shares": safe_float(shares, default=None) if shares is not None else None,
-        "cluster": cluster,
-        "expected_close": expected_close,
-        "status": status,
-        "resolution": resolution,
-        "pnl": safe_float(pnl, default=None) if pnl is not None else None,
+def generate_dashboard():
+    """Generate HTML dashboard from all portfolio files."""
+    
+    # Find all portfolio files
+    portfolios = {}
+    strategy_names = {
+        "conservative": "🛡️ Conservative",
+        "balanced": "⚖️ Balanced", 
+        "aggressive": "🔥 Aggressive",
+        "volume_sweet": "📊 Volume Sweet Spot",
     }
+    
+    for strat_key, strat_name in strategy_names.items():
+        filepath = f"portfolio_{strat_key}.json"
+        data = load_portfolio(filepath)
+        if data:
+            portfolios[strat_key] = {
+                "name": strat_name,
+                "data": data
+            }
+    
+    if not portfolios:
+        print("[WARN] No portfolio files found")
+        return
+    
+    # Generate HTML
+    html = generate_html(portfolios)
+    
+    # Write to file
+    with open("dashboard.html", "w", encoding="utf-8") as f:
+        f.write(html)
+    
+    print(f"[INFO] Dashboard generated: dashboard.html")
 
-
-def normalize_closed_trade(t: Dict[str, Any]) -> Dict[str, Any]:
-    market_id = str(t.get("market_id") or t.get("id") or "")
-    question = t.get("question") or t.get("title") or ""
-    bet_side = t.get("bet_side") or t.get("side") or ""
-    entry_price = t.get("entry_price")
-    size_usd = t.get("size_usd") or t.get("size_usdc")
-
-    close_date = t.get("close_date")
-    if close_date is None and t.get("close_ts") is not None:
-        try:
-            close_date = datetime.fromtimestamp(float(t["close_ts"]), tz=timezone.utc).strftime("%Y-%m-%d %H:%M")
-        except Exception:
-            close_date = None
-
-    resolution = t.get("resolution")
-    pnl = t.get("pnl")
-
-    return {
-        "market_id": market_id,
-        "question": question,
-        "bet_side": bet_side,
-        "entry_price": safe_float(entry_price, default=None) if entry_price is not None else None,
-        "size_usd": safe_float(size_usd, default=None) if size_usd is not None else None,
-        "close_date": close_date,
-        "resolution": resolution,
-        "pnl": safe_float(pnl, default=None) if pnl is not None else None,
-    }
-
-
-def compute_exposure(open_positions: List[Dict[str, Any]]) -> Tuple[float, Dict[str, float]]:
-    total = 0.0
-    by_cluster: Dict[str, float] = {}
-    for p in open_positions:
-        amt = safe_float(p.get("size_usd"), 0.0)
-        total += amt
-        cl = p.get("cluster") or "other"
-        by_cluster[cl] = by_cluster.get(cl, 0.0) + amt
-    # Sort clusters by exposure
-    by_cluster = dict(sorted(by_cluster.items(), key=lambda kv: kv[1], reverse=True))
-    return total, by_cluster
-
-
-def maybe_make_market_url(market_id: str, slug: Optional[str] = None) -> str:
-    # If you later store slug, we can use it.
-    # For now, we still provide something click-able: the Gamma market endpoint.
-    # You can always copy-paste the question into Polymarket search.
-    if slug:
-        return f"https://polymarket.com/market/{slug}"
-    if market_id:
-        return f"https://gamma-api.polymarket.com/markets/{market_id}"
-    return ""
-
-
-def build_data() -> Dict[str, Any]:
-    portfolios: Dict[str, Any] = {}
-
-    for fn in sorted(glob.glob("portfolio_*.json")):
-        raw = load_json(fn)
-        if not raw:
-            continue
-
-        name = portfolio_name_from_file(fn)
-
-        positions_raw = raw.get("positions", []) or []
-        closed_raw = raw.get("closed_trades", []) or []
-
-        positions = [normalize_position(p) for p in positions_raw]
-        closed = [normalize_closed_trade(t) for t in closed_raw]
-
-        open_positions = [p for p in positions if (p.get("status") or "").lower() == "open"]
-
-        exposure_total, exposure_by_cluster = compute_exposure(open_positions)
-
-        # Top upcoming expiries
-        def close_sort_key(p: Dict[str, Any]):
-            # expected_close format "YYYY-MM-DD" or None
-            return p.get("expected_close") or "9999-12-31"
-
-        upcoming = sorted(open_positions, key=close_sort_key)[:15]
-
-        # Recent closed
-        recent_closed = closed
-        # If close_date exists, sort desc
-        if any(t.get("close_date") for t in closed):
-            recent_closed = sorted(closed, key=lambda t: t.get("close_date") or "", reverse=True)
-        recent_closed = recent_closed[:20]
-
-        # Add URLs
-        for p in open_positions:
-            p["url"] = maybe_make_market_url(p.get("market_id", ""))
-        for t in recent_closed:
-            t["url"] = maybe_make_market_url(t.get("market_id", ""))
-
-        portfolios[name] = {
-            "file": fn,
-            "bankroll_initial": safe_float(raw.get("bankroll_initial"), 0.0),
-            "bankroll_current": safe_float(raw.get("bankroll_current"), 0.0),
-            "entry_cost_rate": safe_float(raw.get("entry_cost_rate"), 0.0),
-            "stats": {
-                "total_trades": int(raw.get("total_trades") or 0),
-                "wins": int(raw.get("wins") or 0),
-                "losses": int(raw.get("losses") or 0),
-                "total_pnl": safe_float(raw.get("total_pnl"), 0.0),
-                "open_positions": len(open_positions),
-                "closed_trades": len(closed),
-                "exposure_total": exposure_total,
-                "exposure_by_cluster": exposure_by_cluster,
-            },
-            "open_positions": open_positions,
-            "upcoming": upcoming,
-            "recent_closed": recent_closed,
-        }
-
-    bot_history = load_json("bot_history.json")
-
-    return {
-        "generated_at": utc_now_iso(),
-        "portfolio_count": len(portfolios),
-        "portfolios": portfolios,
-        "bot_history": bot_history,
-    }
-
-
-def render_html() -> str:
-    # Simple self-contained UI (no external assets)
-    return """<!doctype html>
-<html lang=\"en\">
+def generate_html(portfolios: Dict) -> str:
+    """Generate the HTML content."""
+    
+    now = datetime.now().strftime("%Y-%m-%d %H:%M")
+    
+    # Calculate summary stats
+    cards_html = ""
+    positions_html = ""
+    closed_html = ""
+    
+    for strat_key, strat_info in portfolios.items():
+        name = strat_info["name"]
+        data = strat_info["data"]
+        
+        # Stats
+        initial = data.get("bankroll_initial", 0)
+        current = data.get("bankroll_current", 0)
+        pnl = data.get("total_pnl", 0)
+        wins = data.get("wins", 0)
+        losses = data.get("losses", 0)
+        total_trades = data.get("total_trades", 0)
+        
+        positions = [p for p in data.get("positions", []) if p.get("status") == "open"]
+        closed = data.get("closed_trades", [])
+        
+        roi_pct = (pnl / initial * 100) if initial > 0 else 0
+        win_rate = (wins / (wins + losses) * 100) if (wins + losses) > 0 else 0
+        
+        # Exposure by cluster
+        exposure_by_cluster = {}
+        total_exposure = 0
+        for pos in positions:
+            cluster = pos.get("cluster", "other")
+            size = pos.get("size_usd", 0)
+            exposure_by_cluster[cluster] = exposure_by_cluster.get(cluster, 0) + size
+            total_exposure += size
+        
+        # Card color based on P&L
+        if pnl > 0:
+            card_class = "card-positive"
+            pnl_class = "positive"
+        elif pnl < 0:
+            card_class = "card-negative"
+            pnl_class = "negative"
+        else:
+            card_class = ""
+            pnl_class = ""
+        
+        # Strategy card
+        cards_html += f"""
+        <div class="card {card_class}">
+            <h2>{name}</h2>
+            <div class="stats-grid">
+                <div class="stat">
+                    <span class="stat-value">${current:,.0f}</span>
+                    <span class="stat-label">Bankroll</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value {pnl_class}">${pnl:+,.0f}</span>
+                    <span class="stat-label">P&L ({roi_pct:+.1f}%)</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">{win_rate:.0f}%</span>
+                    <span class="stat-label">Win Rate</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">{wins}W / {losses}L</span>
+                    <span class="stat-label">Record</span>
+                </div>
+            </div>
+            <div class="exposure-bar">
+                <div class="exposure-fill" style="width: {min(total_exposure/current*100, 100):.0f}%"></div>
+            </div>
+            <span class="exposure-label">Exposure: ${total_exposure:,.0f} ({total_exposure/current*100:.0f}%)</span>
+            <div class="cluster-tags">
+                {"".join(f'<span class="tag tag-{c}">{c}: ${v:.0f}</span>' for c, v in sorted(exposure_by_cluster.items(), key=lambda x: -x[1]))}
+            </div>
+        </div>
+        """
+        
+        # Open positions table
+        if positions:
+            positions_html += f"""
+            <div class="section">
+                <h3>{name} - Open Positions ({len(positions)})</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Market</th>
+                            <th>Side</th>
+                            <th>Entry</th>
+                            <th>Size</th>
+                            <th>Cluster</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            """
+            for pos in sorted(positions, key=lambda x: x.get("entry_date", ""), reverse=True)[:20]:
+                positions_html += f"""
+                        <tr>
+                            <td class="market-name">{pos.get("question", "")[:60]}...</td>
+                            <td><span class="badge badge-{pos.get('bet_side', '').lower()}">{pos.get("bet_side", "")}</span></td>
+                            <td>{pos.get("entry_price", 0):.0%}</td>
+                            <td>${pos.get("size_usd", 0):.0f}</td>
+                            <td><span class="tag tag-{pos.get('cluster', 'other')}">{pos.get("cluster", "")}</span></td>
+                            <td>{pos.get("entry_date", "")[:10]}</td>
+                        </tr>
+                """
+            positions_html += """
+                    </tbody>
+                </table>
+            </div>
+            """
+        
+        # Closed trades table
+        if closed:
+            closed_html += f"""
+            <div class="section">
+                <h3>{name} - Recent Closed Trades ({len(closed)} total)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Market</th>
+                            <th>Side</th>
+                            <th>Result</th>
+                            <th>P&L</th>
+                            <th>Entry</th>
+                            <th>Closed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            """
+            for trade in sorted(closed, key=lambda x: x.get("close_date", ""), reverse=True)[:10]:
+                result = trade.get("resolution", "")
+                pnl_trade = trade.get("pnl", 0)
+                result_class = "win" if result == "win" else "lose"
+                pnl_class = "positive" if pnl_trade > 0 else "negative"
+                
+                closed_html += f"""
+                        <tr>
+                            <td class="market-name">{trade.get("question", "")[:60]}...</td>
+                            <td><span class="badge badge-{trade.get('bet_side', '').lower()}">{trade.get("bet_side", "")}</span></td>
+                            <td><span class="badge badge-{result_class}">{"✅ WIN" if result == "win" else "❌ LOSS"}</span></td>
+                            <td class="{pnl_class}">${pnl_trade:+.2f}</td>
+                            <td>{trade.get("entry_price", 0):.0%}</td>
+                            <td>{trade.get("close_date", "")[:10]}</td>
+                        </tr>
+                """
+            closed_html += """
+                    </tbody>
+                </table>
+            </div>
+            """
+    
+    # Full HTML
+    html = f"""<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset=\"utf-8\" />
-  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
-  <title>Polymarket Paper Trading Dashboard</title>
-  <style>
-    body { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; margin: 20px; }
-    h1 { margin: 0 0 4px 0; }
-    .muted { color: #666; font-size: 14px; }
-    .grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
-    @media (min-width: 1100px) { .grid { grid-template-columns: 370px 1fr; } }
-
-    .card { border: 1px solid #ddd; border-radius: 10px; padding: 12px 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
-    .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0; }
-    .tab { padding: 7px 10px; border: 1px solid #ccc; border-radius: 999px; cursor: pointer; user-select: none; font-size: 14px; }
-    .tab.active { background: #111; color: white; border-color: #111; }
-
-    .kpi { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .kpi .box { border: 1px solid #eee; border-radius: 10px; padding: 10px; }
-    .kpi .value { font-weight: 700; font-size: 18px; }
-    .kpi .label { color: #666; font-size: 12px; }
-
-    .row { display: flex; gap: 10px; flex-wrap: wrap; }
-
-    input[type=\"search\"] { width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #ddd; font-size: 14px; }
-
-    table { width: 100%; border-collapse: collapse; }
-    th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid #eee; vertical-align: top; }
-    th { font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
-    td { font-size: 14px; }
-    .pill { display: inline-block; padding: 2px 8px; border-radius: 999px; border: 1px solid #ddd; font-size: 12px; color: #333; }
-
-    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 12px; }
-    .small { font-size: 12px; }
-
-    a { color: inherit; }
-    .right { text-align: right; }
-    .good { color: #1a7f37; font-weight: 600; }
-    .bad { color: #c11717; font-weight: 600; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polymarket Bot Dashboard</title>
+    <style>
+        :root {{
+            --bg-primary: #0f1419;
+            --bg-secondary: #1a1f2e;
+            --bg-card: #232b3b;
+            --text-primary: #e7e9ea;
+            --text-secondary: #8b98a5;
+            --accent: #1d9bf0;
+            --positive: #00c853;
+            --negative: #ff5252;
+            --border: #2f3947;
+        }}
+        
+        * {{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }}
+        
+        body {{
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+            padding: 20px;
+        }}
+        
+        .container {{
+            max-width: 1400px;
+            margin: 0 auto;
+        }}
+        
+        header {{
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }}
+        
+        h1 {{
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }}
+        
+        .subtitle {{
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }}
+        
+        .cards {{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }}
+        
+        .card {{
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--border);
+        }}
+        
+        .card-positive {{
+            border-left: 4px solid var(--positive);
+        }}
+        
+        .card-negative {{
+            border-left: 4px solid var(--negative);
+        }}
+        
+        .card h2 {{
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }}
+        
+        .stats-grid {{
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 15px;
+        }}
+        
+        .stat {{
+            display: flex;
+            flex-direction: column;
+        }}
+        
+        .stat-value {{
+            font-size: 1.4rem;
+            font-weight: 600;
+        }}
+        
+        .stat-label {{
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }}
+        
+        .positive {{ color: var(--positive); }}
+        .negative {{ color: var(--negative); }}
+        
+        .exposure-bar {{
+            height: 6px;
+            background: var(--bg-secondary);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }}
+        
+        .exposure-fill {{
+            height: 100%;
+            background: var(--accent);
+            border-radius: 3px;
+        }}
+        
+        .exposure-label {{
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }}
+        
+        .cluster-tags {{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 10px;
+        }}
+        
+        .tag {{
+            font-size: 0.7rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+        }}
+        
+        .tag-mideast {{ background: #3d2929; color: #ff8a80; }}
+        .tag-ukraine {{ background: #2a3d29; color: #b9f6ca; }}
+        .tag-china {{ background: #3d3429; color: #ffe57f; }}
+        .tag-latam {{ background: #29333d; color: #80d8ff; }}
+        .tag-europe {{ background: #35293d; color: #ea80fc; }}
+        .tag-africa {{ background: #3d2f29; color: #ffcc80; }}
+        .tag-other {{ background: var(--bg-secondary); color: var(--text-secondary); }}
+        
+        .section {{
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }}
+        
+        .section h3 {{
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }}
+        
+        table {{
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }}
+        
+        th, td {{
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }}
+        
+        th {{
+            color: var(--text-secondary);
+            font-weight: 500;
+        }}
+        
+        .market-name {{
+            max-width: 300px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }}
+        
+        .badge {{
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }}
+        
+        .badge-no {{ background: #3d2929; color: #ff8a80; }}
+        .badge-yes {{ background: #2a3d29; color: #b9f6ca; }}
+        .badge-win {{ background: #2a3d29; color: #b9f6ca; }}
+        .badge-lose {{ background: #3d2929; color: #ff8a80; }}
+        
+        @media (max-width: 600px) {{
+            .cards {{
+                grid-template-columns: 1fr;
+            }}
+            
+            table {{
+                font-size: 0.75rem;
+            }}
+            
+            .market-name {{
+                max-width: 150px;
+            }}
+        }}
+    </style>
 </head>
 <body>
-  <h1>Polymarket Paper Trading Dashboard</h1>
-  <div class=\"muted\">Auto-updated by GitHub Actions. Click any market to open its Gamma details.</div>
-
-  <div class=\"tabs\" id=\"tabs\"></div>
-
-  <div class=\"grid\">
-    <div class=\"card\">
-      <div id=\"meta\" class=\"muted\"></div>
-      <div style=\"height: 8px\"></div>
-      <div class=\"kpi\" id=\"kpis\"></div>
-      <div style=\"height: 10px\"></div>
-      <div class=\"small\" id=\"exposure\"></div>
-    </div>
-
-    <div class=\"card\">
-      <div class=\"row\" style=\"justify-content: space-between; align-items:center\">
-        <div>
-          <div style=\"font-weight:700\">Open positions</div>
-          <div class=\"muted small\" id=\"open_meta\"></div>
+    <div class="container">
+        <header>
+            <h1>📈 Polymarket Bot Dashboard</h1>
+            <p class="subtitle">Last updated: {now} UTC</p>
+        </header>
+        
+        <div class="cards">
+            {cards_html}
         </div>
-        <div style=\"min-width: 320px; flex: 1\">
-          <input id=\"search\" type=\"search\" placeholder=\"Search question / cluster / date...\" />
-        </div>
-      </div>
-
-      <div style=\"height: 10px\"></div>
-      <table id=\"open_table\"></table>
-
-      <div style=\"height: 18px\"></div>
-      <div style=\"font-weight:700\">Recently closed</div>
-      <div style=\"height: 8px\"></div>
-      <table id=\"closed_table\"></table>
+        
+        {closed_html}
+        
+        {positions_html}
     </div>
-  </div>
-
-<script>
-let DATA = null;
-let current = null;
-
-function fmtMoney(x) {
-  if (x === null || x === undefined || Number.isNaN(x)) return "-";
-  return (Math.round(x * 100) / 100).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
-}
-
-function fmtPct(x) {
-  if (x === null || x === undefined || Number.isNaN(x)) return "-";
-  return (Math.round(x * 1000) / 10).toFixed(1) + "%";
-}
-
-function byId(id){ return document.getElementById(id); }
-
-function renderTabs(){
-  const tabs = byId('tabs');
-  tabs.innerHTML = '';
-  const names = Object.keys(DATA.portfolios);
-  if (names.length === 0) {
-    tabs.innerHTML = '<div class="muted">No portfolio_*.json found.</div>';
-    return;
-  }
-  names.forEach(name => {
-    const el = document.createElement('div');
-    el.className = 'tab' + (name === current ? ' active' : '');
-    el.innerText = name;
-    el.onclick = () => { current = name; renderAll(); };
-    tabs.appendChild(el);
-  });
-}
-
-function renderKPIs(p){
-  const kpis = byId('kpis');
-  const s = p.stats;
-  const init = p.bankroll_initial || 0;
-  const cur = p.bankroll_current || 0;
-  const pnl = cur - init;
-  const roi = init > 0 ? pnl / init : 0;
-
-  const boxes = [
-    {label:'Bankroll', value:`${fmtMoney(cur)} (init ${fmtMoney(init)})`},
-    {label:'PnL / ROI', value:`${pnl >= 0 ? '<span class="good">+' : '<span class="bad">'}${fmtMoney(pnl)}</span>  (${roi >= 0 ? '+' : ''}${fmtPct(roi)})`},
-    {label:'Open positions', value:`${s.open_positions}`},
-    {label:'Closed trades', value:`${s.closed_trades}`},
-    {label:'Wins / Losses', value:`${s.wins} / ${s.losses}`},
-    {label:'Entry cost', value:`${fmtPct(p.entry_cost_rate)}`},
-  ];
-
-  kpis.innerHTML = '';
-  boxes.forEach(b => {
-    const box = document.createElement('div');
-    box.className = 'box';
-    box.innerHTML = `<div class="value">${b.value}</div><div class="label">${b.label}</div>`;
-    kpis.appendChild(box);
-  });
-}
-
-function renderExposure(p){
-  const s = p.stats;
-  const total = s.exposure_total || 0;
-  const byCluster = s.exposure_by_cluster || {};
-
-  let html = `<div><b>Exposure total:</b> ${fmtMoney(total)}</div>`;
-  const items = Object.entries(byCluster);
-  if (items.length) {
-    html += '<div style="height:6px"></div><div><b>By cluster:</b></div>';
-    html += '<ul style="margin:6px 0 0 18px; padding:0">';
-    items.slice(0, 10).forEach(([k, v]) => {
-      html += `<li><span class="pill">${k}</span>  ${fmtMoney(v)}</li>`;
-    });
-    html += '</ul>';
-  }
-  byId('exposure').innerHTML = html;
-}
-
-function renderOpenTable(p, query){
-  const table = byId('open_table');
-  const rows = p.open_positions || [];
-
-  const q = (query || '').trim().toLowerCase();
-  const filtered = q ? rows.filter(r => {
-    return String(r.question || '').toLowerCase().includes(q)
-      || String(r.cluster || '').toLowerCase().includes(q)
-      || String(r.expected_close || '').toLowerCase().includes(q)
-      || String(r.bet_side || '').toLowerCase().includes(q);
-  }) : rows;
-
-  byId('open_meta').innerText = `${filtered.length} shown / ${rows.length} total`;
-
-  let html = '<thead><tr>';
-  html += '<th>Market</th><th>Side</th><th>Entry</th><th>Size</th><th>Close</th><th>Cluster</th>';
-  html += '</tr></thead><tbody>';
-
-  filtered.slice(0, 250).forEach(r => {
-    const url = r.url || '';
-    const title = r.question || '(no question)';
-    const mid = r.market_id || '';
-    const entry = r.entry_price !== null ? fmtPct(r.entry_price) : '-';
-    const size = r.size_usd !== null ? fmtMoney(r.size_usd) : '-';
-    const close = r.expected_close || '-';
-    const cluster = r.cluster || 'other';
-    const side = r.bet_side || '-';
-
-    const marketCell = url ? `<a href="${url}" target="_blank" rel="noopener">${title}</a><div class="muted mono">id: ${mid}</div>`
-                           : `${title}<div class="muted mono">id: ${mid}</div>`;
-
-    html += `<tr>`;
-    html += `<td>${marketCell}</td>`;
-    html += `<td><span class="pill">${side}</span></td>`;
-    html += `<td>${entry}</td>`;
-    html += `<td>${size}</td>`;
-    html += `<td>${close}</td>`;
-    html += `<td><span class="pill">${cluster}</span></td>`;
-    html += `</tr>`;
-  });
-
-  html += '</tbody>';
-  table.innerHTML = html;
-}
-
-function renderClosedTable(p){
-  const table = byId('closed_table');
-  const rows = p.recent_closed || [];
-
-  let html = '<thead><tr>';
-  html += '<th>Market</th><th>Resolution</th><th>PnL</th><th>Close</th>';
-  html += '</tr></thead><tbody>';
-
-  rows.slice(0, 30).forEach(r => {
-    const url = r.url || '';
-    const title = r.question || '(no question)';
-    const mid = r.market_id || '';
-    const resolution = r.resolution === null || r.resolution === undefined ? '-' : String(r.resolution);
-    const pnl = r.pnl;
-    const pnlStr = pnl === null || pnl === undefined ? '-' : `${pnl >= 0 ? '<span class="good">+' : '<span class="bad">'}${fmtMoney(pnl)}</span>`;
-    const close = r.close_date || '-';
-
-    const marketCell = url ? `<a href="${url}" target="_blank" rel="noopener">${title}</a><div class="muted mono">id: ${mid}</div>`
-                           : `${title}<div class="muted mono">id: ${mid}</div>`;
-
-    html += `<tr>`;
-    html += `<td>${marketCell}</td>`;
-    html += `<td>${resolution}</td>`;
-    html += `<td>${pnlStr}</td>`;
-    html += `<td>${close}</td>`;
-    html += `</tr>`;
-  });
-
-  html += '</tbody>';
-  table.innerHTML = html;
-}
-
-function renderMeta(){
-  const generatedAt = DATA.generated_at || '-';
-  byId('meta').innerHTML = `Generated: <span class="mono">${generatedAt}</span> (UTC)`;
-}
-
-function renderAll(){
-  renderTabs();
-  renderMeta();
-  const p = DATA.portfolios[current];
-  if (!p) return;
-
-  renderKPIs(p);
-  renderExposure(p);
-  renderOpenTable(p, byId('search').value);
-  renderClosedTable(p);
-}
-
-async function main(){
-  const res = await fetch('./data.json', {cache: 'no-store'});
-  DATA = await res.json();
-  const names = Object.keys(DATA.portfolios);
-  current = names[0] || null;
-  byId('search').addEventListener('input', () => renderOpenTable(DATA.portfolios[current], byId('search').value));
-  renderAll();
-}
-
-main();
-</script>
 </body>
-</html>"""
-
-
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--output-dir", default="site", help="Output folder (default: site)")
-    args = ap.parse_args()
-
-    out_dir = Path(args.output_dir)
-    out_dir.mkdir(parents=True, exist_ok=True)
-
-    data = build_data()
-
-    with open(out_dir / "data.json", "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
-
-    with open(out_dir / "index.html", "w", encoding="utf-8") as f:
-        f.write(render_html())
-
-    print(f"Dashboard written to: {out_dir}/index.html")
+</html>
+"""
+    
+    return html
 
 
 if __name__ == "__main__":
-    main()
+    generate_dashboard()
