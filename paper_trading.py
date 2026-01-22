@@ -209,28 +209,72 @@ def check_resolution(market_data: Dict) -> Optional[str]:
     Returns:
         "yes" if YES won, "no" if NO won, None if not resolved
     """
-    # Check various fields that might indicate resolution
-    resolved_field = market_data.get("resolved")
-    if resolved_field == True:
-        # Try to get the winning outcome
-        outcome = market_data.get("outcome")
-        if outcome is not None:
-            return "yes" if outcome == "Yes" or outcome == 1 or outcome == "1" else "no"
-        
-        # Try outcomePrices - if one is 1.0 and other is 0.0, it's resolved
-        prices_raw = market_data.get("outcomePrices", "")
-        if isinstance(prices_raw, str) and prices_raw:
-            import json as json_lib
-            try:
-                prices = json_lib.loads(prices_raw)
-                if len(prices) >= 2:
-                    if float(prices[0]) >= 0.99:
-                        return "yes"
-                    elif float(prices[1]) >= 0.99:
-                        return "no"
-            except:
-                pass
+    import json as json_lib
     
+    # Check if market is closed/resolved
+    is_closed = market_data.get("closed") == True or market_data.get("closed") == "true"
+    is_resolved = market_data.get("resolved") == True or market_data.get("resolved") == "true"
+    
+    if not (is_closed or is_resolved):
+        return None
+    
+    # Method 1: Check "outcome" field directly
+    outcome = market_data.get("outcome")
+    if outcome is not None:
+        outcome_str = str(outcome).lower()
+        if outcome_str in ["yes", "1", "true"]:
+            return "yes"
+        elif outcome_str in ["no", "0", "false"]:
+            return "no"
+    
+    # Method 2: Check "resolutionSource" or similar fields
+    resolution = market_data.get("resolutionSource") or market_data.get("resolution")
+    if resolution:
+        resolution_str = str(resolution).lower()
+        if "yes" in resolution_str:
+            return "yes"
+        elif "no" in resolution_str:
+            return "no"
+    
+    # Method 3: Check outcomePrices - if one is 1.0 and other is 0.0
+    prices_raw = market_data.get("outcomePrices", "")
+    outcomes_raw = market_data.get("outcomes", "")
+    
+    try:
+        if isinstance(prices_raw, str) and prices_raw:
+            prices = json_lib.loads(prices_raw)
+        else:
+            prices = prices_raw or []
+        
+        if isinstance(outcomes_raw, str) and outcomes_raw:
+            outcomes = json_lib.loads(outcomes_raw)
+        else:
+            outcomes = outcomes_raw or []
+        
+        if len(prices) >= 2:
+            # Check if prices indicate resolution (one is ~1, other is ~0)
+            p0, p1 = float(prices[0]), float(prices[1])
+            if p0 >= 0.99 and p1 <= 0.01:
+                # First outcome won - check if it's "Yes"
+                if outcomes and len(outcomes) > 0:
+                    if str(outcomes[0]).lower() == "yes":
+                        return "yes"
+                    else:
+                        return "no"  # First outcome won but wasn't "Yes"
+                return "yes"  # Default: first outcome = yes
+            elif p1 >= 0.99 and p0 <= 0.01:
+                # Second outcome won - check if it's "No"
+                if outcomes and len(outcomes) > 1:
+                    if str(outcomes[1]).lower() == "no":
+                        return "no"
+                    else:
+                        return "yes"  # Second outcome won but wasn't "No"
+                return "no"  # Default: second outcome = no
+    except Exception as e:
+        pass
+    
+    # Market is closed but we couldn't determine outcome
+    # This might happen for cancelled markets
     return None
 
 

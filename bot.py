@@ -309,6 +309,11 @@ def run_paper_trading(strategy_name: str = None):
         for pos in open_positions:
             market_data = market_lookup.get(pos.market_id)
             
+            # If market not in open markets, it might be closed - fetch it directly
+            if not market_data:
+                log(f"  Fetching closed market: {pos.question[:40]}...")
+                market_data = api.fetch_market_by_id(pos.market_id)
+            
             if market_data:
                 outcome = pt.check_resolution(market_data)
                 if outcome:
@@ -317,6 +322,8 @@ def run_paper_trading(strategy_name: str = None):
                     newly_closed += 1
                     emoji = "✅" if pos.resolution == "win" else "❌"
                     log(f"  {emoji} {pos.bet_side} resolved: {outcome.upper()} | P&L: ${pnl:+.2f}")
+            else:
+                log(f"  [WARN] Could not fetch market {pos.market_id}")
         
         if newly_closed > 0:
             pt.update_portfolio_stats(portfolio)
