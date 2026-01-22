@@ -37,6 +37,8 @@ class PaperPosition:
     resolution: Optional[str] = None  # "win", "lose", or None
     close_date: Optional[str] = None
     pnl: Optional[float] = None
+    current_price: Optional[float] = None  # Current price (updated each run)
+    price_yes_current: Optional[float] = None  # Current YES price
 
 
 @dataclass
@@ -310,6 +312,58 @@ def settle_position(position: PaperPosition, outcome: str) -> float:
     position.pnl = pnl
     
     return pnl
+
+
+def update_current_prices(portfolio: PaperPortfolio, market_lookup: Dict[str, Any]):
+    """Update current prices for all open positions.
+    
+    Args:
+        portfolio: The portfolio to update
+        market_lookup: Dict mapping market_id to market data
+    """
+    import json as json_lib
+    
+    for pos in portfolio.positions:
+        if pos.status != "open":
+            continue
+        
+        market_data = market_lookup.get(pos.market_id)
+        if not market_data:
+            continue
+        
+        try:
+            # Parse prices
+            prices_raw = market_data.get("outcomePrices", "")
+            outcomes_raw = market_data.get("outcomes", "")
+            
+            if isinstance(prices_raw, str) and prices_raw:
+                prices = json_lib.loads(prices_raw)
+            else:
+                prices = prices_raw or []
+            
+            if isinstance(outcomes_raw, str) and outcomes_raw:
+                outcomes = json_lib.loads(outcomes_raw)
+            else:
+                outcomes = outcomes_raw or []
+            
+            # Find YES price
+            price_yes = None
+            for i, outcome in enumerate(outcomes):
+                if isinstance(outcome, str) and outcome.lower() == "yes" and i < len(prices):
+                    price_yes = float(prices[i])
+                    break
+            
+            if price_yes is None and len(prices) >= 1:
+                price_yes = float(prices[0])
+            
+            if price_yes is not None:
+                pos.price_yes_current = price_yes
+                if pos.bet_side == "NO":
+                    pos.current_price = 1 - price_yes
+                else:
+                    pos.current_price = price_yes
+        except Exception as e:
+            pass
 
 
 def update_portfolio_stats(portfolio: PaperPortfolio):

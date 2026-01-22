@@ -387,7 +387,10 @@ def run_paper_trading(strategy_name: str = None):
                 expected_close=expected_close,
             )
         
-        # 4) Save portfolio
+        # 4) Update current prices for all open positions
+        pt.update_current_prices(portfolio, market_lookup)
+        
+        # 5) Save portfolio
         pt.save_portfolio(portfolio, portfolio_file)
         
         # 5) Print summary

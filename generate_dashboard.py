@@ -6,8 +6,10 @@ Generates a visual HTML dashboard from portfolio data.
 
 import json
 import os
+import requests
+import time
 from datetime import datetime
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 def load_portfolio(filepath: str) -> dict:
     """Load a portfolio JSON file."""
@@ -15,6 +17,82 @@ def load_portfolio(filepath: str) -> dict:
         return None
     with open(filepath, "r") as f:
         return json.load(f)
+
+def fetch_current_prices(market_ids: List[str]) -> Dict[str, float]:
+    """Fetch current YES prices for a list of market IDs."""
+    prices = {}
+    
+    # Fetch all open markets
+    print("[INFO] Fetching current market prices...")
+    all_markets = []
+    offset = 0
+    
+    while offset < 5000:
+        try:
+            url = "https://gamma-api.polymarket.com/markets"
+            params = {"closed": "false", "limit": 100, "offset": offset}
+            resp = requests.get(url, params=params, timeout=30)
+            batch = resp.json()
+            if not batch:
+                break
+            all_markets.extend(batch)
+            offset += len(batch)
+            if len(batch) < 100:
+                break
+            time.sleep(0.05)
+        except Exception as e:
+            print(f"[WARN] Error fetching markets: {e}")
+            break
+    
+    # Also fetch closed markets for resolved positions
+    try:
+        url = "https://gamma-api.polymarket.com/markets"
+        params = {"closed": "true", "limit": 100}
+        resp = requests.get(url, params=params, timeout=30)
+        closed_markets = resp.json()
+        all_markets.extend(closed_markets)
+    except:
+        pass
+    
+    print(f"[INFO] Fetched {len(all_markets)} markets")
+    
+    # Build lookup
+    for market in all_markets:
+        market_id = market.get("id") or market.get("conditionId")
+        if not market_id:
+            continue
+        
+        # Parse YES price
+        try:
+            prices_raw = market.get("outcomePrices", "")
+            outcomes_raw = market.get("outcomes", "")
+            
+            if isinstance(prices_raw, str) and prices_raw:
+                price_list = json.loads(prices_raw)
+            else:
+                price_list = prices_raw or []
+            
+            if isinstance(outcomes_raw, str) and outcomes_raw:
+                outcomes = json.loads(outcomes_raw)
+            else:
+                outcomes = outcomes_raw or []
+            
+            # Find YES price
+            price_yes = None
+            for i, outcome in enumerate(outcomes):
+                if isinstance(outcome, str) and outcome.lower() == "yes" and i < len(price_list):
+                    price_yes = float(price_list[i])
+                    break
+            
+            if price_yes is None and len(price_list) >= 1:
+                price_yes = float(price_list[0])
+            
+            if price_yes is not None:
+                prices[market_id] = price_yes
+        except:
+            pass
+    
+    return prices
 
 def generate_dashboard():
     """Generate HTML dashboard from all portfolio files."""
@@ -28,6 +106,9 @@ def generate_dashboard():
         "volume_sweet": "📊 Volume Sweet Spot",
     }
     
+    # Collect all market IDs we need prices for
+    all_market_ids = set()
+    
     for strat_key, strat_name in strategy_names.items():
         filepath = f"portfolio_{strat_key}.json"
         data = load_portfolio(filepath)
@@ -36,13 +117,20 @@ def generate_dashboard():
                 "name": strat_name,
                 "data": data
             }
+            for pos in data.get("positions", []):
+                if pos.get("status") == "open":
+                    all_market_ids.add(pos.get("market_id"))
     
     if not portfolios:
         print("[WARN] No portfolio files found")
         return
     
+    # Fetch current prices
+    current_prices = fetch_current_prices(list(all_market_ids))
+    print(f"[INFO] Got prices for {len(current_prices)} markets")
+    
     # Generate HTML
-    html = generate_html(portfolios)
+    html = generate_html(portfolios, current_prices)
     
     # Write to file
     with open("dashboard.html", "w", encoding="utf-8") as f:
@@ -50,7 +138,7 @@ def generate_dashboard():
     
     print(f"[INFO] Dashboard generated: dashboard.html")
 
-def generate_html(portfolios: Dict) -> str:
+def generate_html(portfolios: Dict, current_prices: Dict[str, float]) -> str:
     """Generate the HTML content."""
     
     now = datetime.now().strftime("%Y-%m-%d %H:%M")
@@ -78,6 +166,22 @@ def generate_html(portfolios: Dict) -> str:
         roi_pct = (pnl / initial * 100) if initial > 0 else 0
         win_rate = (wins / (wins + losses) * 100) if (wins + losses) > 0 else 0
         
+        # Calculate unrealized P&L
+        unrealized_pnl = 0
+        for pos in positions:
+            market_id = pos.get("market_id")
+            if market_id in current_prices:
+                current_yes = current_prices[market_id]
+                entry_price = pos.get("entry_price", 0)
+                shares = pos.get("shares", 0)
+                bet_side = pos.get("bet_side", "NO")
+                
+                if bet_side == "NO":
+                    current_no = 1 - current_yes
+                    unrealized_pnl += (current_no - entry_price) * shares
+                else:
+                    unrealized_pnl += (current_yes - entry_price) * shares
+        
         # Exposure by cluster
         exposure_by_cluster = {}
         total_exposure = 0
@@ -88,15 +192,18 @@ def generate_html(portfolios: Dict) -> str:
             total_exposure += size
         
         # Card color based on P&L
-        if pnl > 0:
+        total_pnl_with_unrealized = pnl + unrealized_pnl
+        if total_pnl_with_unrealized > 0:
             card_class = "card-positive"
             pnl_class = "positive"
-        elif pnl < 0:
+        elif total_pnl_with_unrealized < 0:
             card_class = "card-negative"
             pnl_class = "negative"
         else:
             card_class = ""
             pnl_class = ""
+        
+        unrealized_class = "positive" if unrealized_pnl > 0 else "negative" if unrealized_pnl < 0 else ""
         
         # Strategy card
         cards_html += f"""
@@ -109,15 +216,15 @@ def generate_html(portfolios: Dict) -> str:
                 </div>
                 <div class="stat">
                     <span class="stat-value {pnl_class}">${pnl:+,.0f}</span>
-                    <span class="stat-label">P&L ({roi_pct:+.1f}%)</span>
+                    <span class="stat-label">Realized P&L ({roi_pct:+.1f}%)</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value {unrealized_class}">${unrealized_pnl:+,.0f}</span>
+                    <span class="stat-label">Unrealized P&L</span>
                 </div>
                 <div class="stat">
                     <span class="stat-value">{win_rate:.0f}%</span>
-                    <span class="stat-label">Win Rate</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-value">{wins}W / {losses}L</span>
-                    <span class="stat-label">Record</span>
+                    <span class="stat-label">Win Rate ({wins}W/{losses}L)</span>
                 </div>
             </div>
             <div class="exposure-bar">
@@ -130,17 +237,20 @@ def generate_html(portfolios: Dict) -> str:
         </div>
         """
         
-        # Open positions table
+        # Open positions table - ALL positions, not limited
         if positions:
             positions_html += f"""
             <div class="section">
                 <h3>{name} - Open Positions ({len(positions)})</h3>
+                <div class="table-wrapper">
                 <table>
                     <thead>
                         <tr>
                             <th>Market</th>
                             <th>Side</th>
                             <th>Entry</th>
+                            <th>Current</th>
+                            <th>Δ</th>
                             <th>Size</th>
                             <th>Cluster</th>
                             <th>Date</th>
@@ -148,12 +258,36 @@ def generate_html(portfolios: Dict) -> str:
                     </thead>
                     <tbody>
             """
-            for pos in sorted(positions, key=lambda x: x.get("entry_date", ""), reverse=True)[:20]:
+            for pos in sorted(positions, key=lambda x: x.get("entry_date", ""), reverse=True):
+                market_id = pos.get("market_id")
+                entry_price = pos.get("entry_price", 0)
+                bet_side = pos.get("bet_side", "NO")
+                shares = pos.get("shares", 0)
+                
+                # Get current price
+                current_yes = current_prices.get(market_id)
+                if current_yes is not None:
+                    if bet_side == "NO":
+                        current_price = 1 - current_yes
+                    else:
+                        current_price = current_yes
+                    
+                    delta = current_price - entry_price
+                    delta_pnl = delta * shares
+                    delta_class = "positive" if delta > 0 else "negative" if delta < 0 else ""
+                    current_str = f"{current_price:.0%}"
+                    delta_str = f'<span class="{delta_class}">{delta:+.0%} (${delta_pnl:+.0f})</span>'
+                else:
+                    current_str = "—"
+                    delta_str = "—"
+                
                 positions_html += f"""
                         <tr>
-                            <td class="market-name">{pos.get("question", "")[:60]}...</td>
+                            <td class="market-name" title="{pos.get('question', '')}">{pos.get("question", "")[:55]}...</td>
                             <td><span class="badge badge-{pos.get('bet_side', '').lower()}">{pos.get("bet_side", "")}</span></td>
-                            <td>{pos.get("entry_price", 0):.0%}</td>
+                            <td>{entry_price:.0%}</td>
+                            <td>{current_str}</td>
+                            <td>{delta_str}</td>
                             <td>${pos.get("size_usd", 0):.0f}</td>
                             <td><span class="tag tag-{pos.get('cluster', 'other')}">{pos.get("cluster", "")}</span></td>
                             <td>{pos.get("entry_date", "")[:10]}</td>
@@ -162,14 +296,16 @@ def generate_html(portfolios: Dict) -> str:
             positions_html += """
                     </tbody>
                 </table>
+                </div>
             </div>
             """
         
-        # Closed trades table
+        # Closed trades table - ALL closed trades
         if closed:
             closed_html += f"""
             <div class="section">
-                <h3>{name} - Recent Closed Trades ({len(closed)} total)</h3>
+                <h3>{name} - Closed Trades ({len(closed)} total)</h3>
+                <div class="table-wrapper">
                 <table>
                     <thead>
                         <tr>
@@ -183,7 +319,7 @@ def generate_html(portfolios: Dict) -> str:
                     </thead>
                     <tbody>
             """
-            for trade in sorted(closed, key=lambda x: x.get("close_date", ""), reverse=True)[:10]:
+            for trade in sorted(closed, key=lambda x: x.get("close_date", ""), reverse=True):
                 result = trade.get("resolution", "")
                 pnl_trade = trade.get("pnl", 0)
                 result_class = "win" if result == "win" else "lose"
@@ -191,7 +327,7 @@ def generate_html(portfolios: Dict) -> str:
                 
                 closed_html += f"""
                         <tr>
-                            <td class="market-name">{trade.get("question", "")[:60]}...</td>
+                            <td class="market-name" title="{trade.get('question', '')}">{trade.get("question", "")[:55]}...</td>
                             <td><span class="badge badge-{trade.get('bet_side', '').lower()}">{trade.get("bet_side", "")}</span></td>
                             <td><span class="badge badge-{result_class}">{"✅ WIN" if result == "win" else "❌ LOSS"}</span></td>
                             <td class="{pnl_class}">${pnl_trade:+.2f}</td>
@@ -202,6 +338,7 @@ def generate_html(portfolios: Dict) -> str:
             closed_html += """
                     </tbody>
                 </table>
+                </div>
             </div>
             """
     
@@ -263,7 +400,7 @@ def generate_html(portfolios: Dict) -> str:
         
         .cards {{
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 20px;
             margin-bottom: 40px;
         }}
@@ -302,12 +439,12 @@ def generate_html(portfolios: Dict) -> str:
         }}
         
         .stat-value {{
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: 600;
         }}
         
         .stat-label {{
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--text-secondary);
         }}
         
@@ -368,14 +505,18 @@ def generate_html(portfolios: Dict) -> str:
             font-size: 1rem;
         }}
         
+        .table-wrapper {{
+            overflow-x: auto;
+        }}
+        
         table {{
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }}
         
         th, td {{
-            padding: 10px;
+            padding: 8px 10px;
             text-align: left;
             border-bottom: 1px solid var(--border);
         }}
@@ -383,10 +524,13 @@ def generate_html(portfolios: Dict) -> str:
         th {{
             color: var(--text-secondary);
             font-weight: 500;
+            position: sticky;
+            top: 0;
+            background: var(--bg-secondary);
         }}
         
         .market-name {{
-            max-width: 300px;
+            max-width: 280px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -395,7 +539,7 @@ def generate_html(portfolios: Dict) -> str:
         .badge {{
             padding: 3px 8px;
             border-radius: 4px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 500;
         }}
         
@@ -404,13 +548,17 @@ def generate_html(portfolios: Dict) -> str:
         .badge-win {{ background: #2a3d29; color: #b9f6ca; }}
         .badge-lose {{ background: #3d2929; color: #ff8a80; }}
         
+        tr:hover {{
+            background: rgba(255,255,255,0.02);
+        }}
+        
         @media (max-width: 600px) {{
             .cards {{
                 grid-template-columns: 1fr;
             }}
             
             table {{
-                font-size: 0.75rem;
+                font-size: 0.7rem;
             }}
             
             .market-name {{
