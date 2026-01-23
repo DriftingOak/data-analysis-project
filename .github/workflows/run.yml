@@ -23,9 +23,11 @@ on:
           - scan_only
           - live
 
-# Required for pushing commits
+# Required for pushing commits and deploying pages
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 jobs:
   run-bot:
@@ -82,7 +84,6 @@ jobs:
           fi
       
       - name: Commit portfolio changes
-        if: always()
         run: |
           # Debug: show what files exist
           echo "=== Portfolio files ==="
@@ -110,6 +111,17 @@ jobs:
             echo "Changes pushed successfully"
           fi
       
+      - name: Generate dashboard
+        run: |
+          mkdir -p site
+          python generate_dashboard.py
+          mv dashboard.html site/index.html
+      
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      
       - name: Upload logs
         uses: actions/upload-artifact@v4
         if: always()
@@ -119,3 +131,14 @@ jobs:
             bot_history.json
             portfolio_*.json
           retention-days: 30
+
+  deploy-pages:
+    needs: run-bot
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
