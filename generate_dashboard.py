@@ -18,13 +18,12 @@ def load_portfolio(filepath: str) -> dict:
     with open(filepath, "r") as f:
         return json.load(f)
 
-def fetch_current_prices(market_ids: List[str]) -> Dict[str, float]:
-    """Fetch current YES prices for a list of market IDs."""
-    prices = {}
+def fetch_market_data(market_ids: List[str]) -> Dict[str, dict]:
+    """Fetch current data for a list of market IDs."""
+    markets = {}
     
-    print(f"[INFO] Fetching prices for {len(market_ids)} markets...")
+    print(f"[INFO] Fetching data for {len(market_ids)} markets...")
     
-    # Fetch each market individually by ID
     for i, market_id in enumerate(market_ids):
         try:
             url = f"https://gamma-api.polymarket.com/markets/{market_id}"
@@ -57,25 +56,27 @@ def fetch_current_prices(market_ids: List[str]) -> Dict[str, float]:
             if price_yes is None and len(price_list) >= 1:
                 price_yes = float(price_list[0])
             
-            if price_yes is not None:
-                prices[market_id] = price_yes
+            markets[market_id] = {
+                "price_yes": price_yes,
+                "slug": market.get("slug", ""),
+                "closed": market.get("closed", False),
+                "question": market.get("question", ""),
+            }
             
-            # Progress indicator
             if (i + 1) % 50 == 0:
                 print(f"[INFO] Fetched {i + 1}/{len(market_ids)} markets...")
             
-            time.sleep(0.02)  # Rate limiting
+            time.sleep(0.02)
             
         except Exception as e:
             pass
     
-    print(f"[INFO] Got prices for {len(prices)}/{len(market_ids)} markets")
-    return prices
+    print(f"[INFO] Got data for {len(markets)}/{len(market_ids)} markets")
+    return markets
 
 def generate_dashboard():
     """Generate HTML dashboard from all portfolio files."""
     
-    # Find all portfolio files
     portfolios = {}
     strategy_names = {
         "conservative": "🛡️ Conservative",
@@ -84,7 +85,6 @@ def generate_dashboard():
         "volume_sweet": "📊 Volume Sweet Spot",
     }
     
-    # Collect all market IDs we need prices for
     all_market_ids = set()
     
     for strat_key, strat_name in strategy_names.items():
@@ -96,32 +96,36 @@ def generate_dashboard():
                 "data": data
             }
             for pos in data.get("positions", []):
-                if pos.get("status") == "open":
-                    all_market_ids.add(pos.get("market_id"))
+                all_market_ids.add(pos.get("market_id"))
+            for pos in data.get("closed_trades", []):
+                all_market_ids.add(pos.get("market_id"))
     
     if not portfolios:
         print("[WARN] No portfolio files found")
         return
     
-    # Fetch current prices
-    current_prices = fetch_current_prices(list(all_market_ids))
-    print(f"[INFO] Got prices for {len(current_prices)} markets")
+    market_data = fetch_market_data(list(all_market_ids))
     
-    # Generate HTML
-    html = generate_html(portfolios, current_prices)
+    html = generate_html(portfolios, market_data)
     
-    # Write to file
     with open("dashboard.html", "w", encoding="utf-8") as f:
         f.write(html)
     
     print(f"[INFO] Dashboard generated: dashboard.html")
 
-def generate_html(portfolios: Dict, current_prices: Dict[str, float]) -> str:
+def generate_html(portfolios: Dict, market_data: Dict[str, dict]) -> str:
     """Generate the HTML content."""
     
     now = datetime.now().strftime("%Y-%m-%d %H:%M")
     
-    # Calculate summary stats
+    # Strategy descriptions
+    strategy_desc = {
+        "conservative": "Bet NO on YES 10-25%",
+        "balanced": "Bet NO on YES 20-60%",
+        "aggressive": "Bet NO on YES 30-60%",
+        "volume_sweet": "Bet NO on YES 20-60%, Vol $15k-100k",
+    }
+    
     cards_html = ""
     positions_html = ""
     closed_html = ""
@@ -130,13 +134,11 @@ def generate_html(portfolios: Dict, current_prices: Dict[str, float]) -> str:
         name = strat_info["name"]
         data = strat_info["data"]
         
-        # Stats
         initial = data.get("bankroll_initial", 0)
         current = data.get("bankroll_current", 0)
         pnl = data.get("total_pnl", 0)
         wins = data.get("wins", 0)
         losses = data.get("losses", 0)
-        total_trades = data.get("total_trades", 0)
         
         positions = [p for p in data.get("positions", []) if p.get("status") == "open"]
         closed = data.get("closed_trades", [])
@@ -148,8 +150,9 @@ def generate_html(portfolios: Dict, current_prices: Dict[str, float]) -> str:
         unrealized_pnl = 0
         for pos in positions:
             market_id = pos.get("market_id")
-            if market_id in current_prices:
-                current_yes = current_prices[market_id]
+            mkt = market_data.get(market_id)
+            if mkt and mkt.get("price_yes") is not None:
+                current_yes = mkt["price_yes"]
                 entry_price = pos.get("entry_price", 0)
                 shares = pos.get("shares", 0)
                 bet_side = pos.get("bet_side", "NO")
@@ -169,24 +172,22 @@ def generate_html(portfolios: Dict, current_prices: Dict[str, float]) -> str:
             exposure_by_cluster[cluster] = exposure_by_cluster.get(cluster, 0) + size
             total_exposure += size
         
-        # Card color based on P&L
-        total_pnl_with_unrealized = pnl + unrealized_pnl
-        if total_pnl_with_unrealized > 0:
+        # Card colors - FIXED: check actual values
+        total_pnl_display = pnl + unrealized_pnl
+        if total_pnl_display > 0:
             card_class = "card-positive"
-            pnl_class = "positive"
-        elif total_pnl_with_unrealized < 0:
+        elif total_pnl_display < 0:
             card_class = "card-negative"
-            pnl_class = "negative"
         else:
             card_class = ""
-            pnl_class = ""
         
+        pnl_class = "positive" if pnl > 0 else "negative" if pnl < 0 else ""
         unrealized_class = "positive" if unrealized_pnl > 0 else "negative" if unrealized_pnl < 0 else ""
         
-        # Strategy card
         cards_html += f"""
         <div class="card {card_class}">
             <h2>{name}</h2>
+            <p class="strategy-desc">{strategy_desc.get(strat_key, "")}</p>
             <div class="stats-grid">
                 <div class="stat">
                     <span class="stat-value">${current:,.0f}</span>
@@ -206,69 +207,103 @@ def generate_html(portfolios: Dict, current_prices: Dict[str, float]) -> str:
                 </div>
             </div>
             <div class="exposure-bar">
-                <div class="exposure-fill" style="width: {min(total_exposure/current*100, 100):.0f}%"></div>
+                <div class="exposure-fill" style="width: {min(total_exposure/current*100 if current > 0 else 0, 100):.0f}%"></div>
             </div>
-            <span class="exposure-label">Exposure: ${total_exposure:,.0f} ({total_exposure/current*100:.0f}%)</span>
+            <span class="exposure-label">Exposure: ${total_exposure:,.0f} ({total_exposure/current*100 if current > 0 else 0:.0f}%)</span>
             <div class="cluster-tags">
                 {"".join(f'<span class="tag tag-{c}">{c}: ${v:.0f}</span>' for c, v in sorted(exposure_by_cluster.items(), key=lambda x: -x[1]))}
             </div>
         </div>
         """
         
-        # Open positions table - ALL positions, not limited
+        # Open positions table
         if positions:
+            table_id = f"table-{strat_key}"
             positions_html += f"""
             <div class="section">
                 <h3>{name} - Open Positions ({len(positions)})</h3>
                 <div class="table-wrapper">
-                <table>
+                <table id="{table_id}" class="sortable">
                     <thead>
                         <tr>
-                            <th>Market</th>
-                            <th>Side</th>
-                            <th>Entry</th>
-                            <th>Current</th>
-                            <th>Δ</th>
-                            <th>Size</th>
-                            <th>Cluster</th>
-                            <th>Date</th>
+                            <th data-sort="string">Market</th>
+                            <th data-sort="string">Side</th>
+                            <th data-sort="number">YES Entry</th>
+                            <th data-sort="number">YES Current</th>
+                            <th data-sort="number">Δ</th>
+                            <th data-sort="number">P&L</th>
+                            <th data-sort="number">Size</th>
+                            <th data-sort="string">Cluster</th>
+                            <th data-sort="string">Entry Date</th>
+                            <th data-sort="string">End Date</th>
                         </tr>
                     </thead>
                     <tbody>
             """
             for pos in sorted(positions, key=lambda x: x.get("entry_date", ""), reverse=True):
                 market_id = pos.get("market_id")
-                entry_price = pos.get("entry_price", 0)
+                entry_no_price = pos.get("entry_price", 0)
+                entry_yes = 1 - entry_no_price  # Convert to YES
                 bet_side = pos.get("bet_side", "NO")
                 shares = pos.get("shares", 0)
                 
-                # Get current price
-                current_yes = current_prices.get(market_id)
+                mkt = market_data.get(market_id, {})
+                slug = mkt.get("slug", "")
+                current_yes = mkt.get("price_yes")
+                
+                # Build Polymarket link
+                if slug:
+                    link = f"https://polymarket.com/event/{slug}"
+                else:
+                    link = f"https://polymarket.com/markets/{market_id}"
+                
                 if current_yes is not None:
-                    if bet_side == "NO":
-                        current_price = 1 - current_yes
-                    else:
-                        current_price = current_yes
+                    delta_yes = current_yes - entry_yes
                     
-                    delta = current_price - entry_price
-                    delta_pnl = delta * shares
-                    delta_class = "positive" if delta > 0 else "negative" if delta < 0 else ""
-                    current_str = f"{current_price:.0%}"
-                    delta_str = f'<span class="{delta_class}">{delta:+.0%} (${delta_pnl:+.0f})</span>'
+                    # P&L calculation (based on NO position)
+                    if bet_side == "NO":
+                        delta_pnl = ((1 - current_yes) - entry_no_price) * shares
+                    else:
+                        delta_pnl = (current_yes - entry_no_price) * shares
+                    
+                    # Color: for NO bet, we PROFIT when YES goes DOWN
+                    if bet_side == "NO":
+                        delta_class = "positive" if delta_yes < 0 else "negative" if delta_yes > 0 else ""
+                    else:
+                        delta_class = "positive" if delta_yes > 0 else "negative" if delta_yes < 0 else ""
+                    
+                    pnl_class = "positive" if delta_pnl > 0 else "negative" if delta_pnl < 0 else ""
+                    
+                    current_str = f"{current_yes:.0%}"
+                    delta_str = f'{delta_yes:+.0%}'
+                    pnl_str = f'${delta_pnl:+.0f}'
+                    
+                    # Data attributes for sorting
+                    current_data = current_yes
+                    delta_data = delta_yes
+                    pnl_data = delta_pnl
                 else:
                     current_str = "—"
                     delta_str = "—"
+                    pnl_str = "—"
+                    delta_class = ""
+                    pnl_class = ""
+                    current_data = 0
+                    delta_data = 0
+                    pnl_data = 0
                 
                 positions_html += f"""
                         <tr>
-                            <td class="market-name" title="{pos.get('question', '')}">{pos.get("question", "")[:55]}...</td>
+                            <td class="market-name"><a href="{link}" target="_blank" title="{pos.get('question', '')}">{pos.get("question", "")[:50]}...</a></td>
                             <td><span class="badge badge-{pos.get('bet_side', '').lower()}">{pos.get("bet_side", "")}</span></td>
-                            <td>{entry_price:.0%}</td>
-                            <td>{current_str}</td>
-                            <td>{delta_str}</td>
-                            <td>${pos.get("size_usd", 0):.0f}</td>
+                            <td data-value="{entry_yes}">{entry_yes:.0%}</td>
+                            <td data-value="{current_data}">{current_str}</td>
+                            <td data-value="{delta_data}" class="{delta_class}">{delta_str}</td>
+                            <td data-value="{pnl_data}" class="{pnl_class}">{pnl_str}</td>
+                            <td data-value="{pos.get('size_usd', 0)}">${pos.get("size_usd", 0):.0f}</td>
                             <td><span class="tag tag-{pos.get('cluster', 'other')}">{pos.get("cluster", "")}</span></td>
                             <td>{pos.get("entry_date", "")[:10]}</td>
+                            <td>{pos.get("expected_close", "")[:10]}</td>
                         </tr>
                 """
             positions_html += """
@@ -278,21 +313,22 @@ def generate_html(portfolios: Dict, current_prices: Dict[str, float]) -> str:
             </div>
             """
         
-        # Closed trades table - ALL closed trades
+        # Closed trades table
         if closed:
+            table_id = f"table-closed-{strat_key}"
             closed_html += f"""
             <div class="section">
                 <h3>{name} - Closed Trades ({len(closed)} total)</h3>
                 <div class="table-wrapper">
-                <table>
+                <table id="{table_id}" class="sortable">
                     <thead>
                         <tr>
-                            <th>Market</th>
-                            <th>Side</th>
-                            <th>Result</th>
-                            <th>P&L</th>
-                            <th>Entry</th>
-                            <th>Closed</th>
+                            <th data-sort="string">Market</th>
+                            <th data-sort="string">Side</th>
+                            <th data-sort="string">Result</th>
+                            <th data-sort="number">P&L</th>
+                            <th data-sort="number">YES Entry</th>
+                            <th data-sort="string">Closed</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -301,15 +337,27 @@ def generate_html(portfolios: Dict, current_prices: Dict[str, float]) -> str:
                 result = trade.get("resolution", "")
                 pnl_trade = trade.get("pnl", 0)
                 result_class = "win" if result == "win" else "lose"
-                pnl_class = "positive" if pnl_trade > 0 else "negative"
+                pnl_class = "positive" if pnl_trade > 0 else "negative" if pnl_trade < 0 else ""
+                
+                market_id = trade.get("market_id")
+                mkt = market_data.get(market_id, {})
+                slug = mkt.get("slug", "")
+                
+                entry_no_price = trade.get("entry_price", 0)
+                entry_yes = 1 - entry_no_price
+                
+                if slug:
+                    link = f"https://polymarket.com/event/{slug}"
+                else:
+                    link = f"https://polymarket.com/markets/{market_id}"
                 
                 closed_html += f"""
                         <tr>
-                            <td class="market-name" title="{trade.get('question', '')}">{trade.get("question", "")[:55]}...</td>
+                            <td class="market-name"><a href="{link}" target="_blank" title="{trade.get('question', '')}">{trade.get("question", "")[:50]}...</a></td>
                             <td><span class="badge badge-{trade.get('bet_side', '').lower()}">{trade.get("bet_side", "")}</span></td>
                             <td><span class="badge badge-{result_class}">{"✅ WIN" if result == "win" else "❌ LOSS"}</span></td>
-                            <td class="{pnl_class}">${pnl_trade:+.2f}</td>
-                            <td>{trade.get("entry_price", 0):.0%}</td>
+                            <td data-value="{pnl_trade}" class="{pnl_class}">${pnl_trade:+.2f}</td>
+                            <td data-value="{entry_yes}">{entry_yes:.0%}</td>
                             <td>{trade.get("close_date", "")[:10]}</td>
                         </tr>
                 """
@@ -320,13 +368,12 @@ def generate_html(portfolios: Dict, current_prices: Dict[str, float]) -> str:
             </div>
             """
     
-    # Full HTML
     html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Polymarket Bot Dashboard</title>
+    <title>Dashboard</title>
     <style>
         :root {{
             --bg-primary: #0f1419;
@@ -400,8 +447,15 @@ def generate_html(portfolios: Dict, current_prices: Dict[str, float]) -> str:
         
         .card h2 {{
             font-size: 1.2rem;
-            margin-bottom: 15px;
+            margin-bottom: 5px;
             color: var(--text-primary);
+        }}
+        
+        .strategy-desc {{
+            font-size: 0.75rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-style: italic;
         }}
         
         .stats-grid {{
@@ -426,8 +480,8 @@ def generate_html(portfolios: Dict, current_prices: Dict[str, float]) -> str:
             color: var(--text-secondary);
         }}
         
-        .positive {{ color: var(--positive); }}
-        .negative {{ color: var(--negative); }}
+        .positive {{ color: var(--positive) !important; }}
+        .negative {{ color: var(--negative) !important; }}
         
         .exposure-bar {{
             height: 6px;
@@ -505,6 +559,23 @@ def generate_html(portfolios: Dict, current_prices: Dict[str, float]) -> str:
             position: sticky;
             top: 0;
             background: var(--bg-secondary);
+            cursor: pointer;
+            user-select: none;
+        }}
+        
+        th:hover {{
+            color: var(--text-primary);
+            background: var(--bg-card);
+        }}
+        
+        th.sort-asc::after {{
+            content: " ▲";
+            font-size: 0.7rem;
+        }}
+        
+        th.sort-desc::after {{
+            content: " ▼";
+            font-size: 0.7rem;
         }}
         
         .market-name {{
@@ -512,6 +583,16 @@ def generate_html(portfolios: Dict, current_prices: Dict[str, float]) -> str:
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+        }}
+        
+        .market-name a {{
+            color: var(--text-primary);
+            text-decoration: none;
+        }}
+        
+        .market-name a:hover {{
+            color: var(--accent);
+            text-decoration: underline;
         }}
         
         .badge {{
@@ -548,7 +629,7 @@ def generate_html(portfolios: Dict, current_prices: Dict[str, float]) -> str:
 <body>
     <div class="container">
         <header>
-            <h1>📈 Polymarket Bot Dashboard</h1>
+            <h1>📈 Dashboard</h1>
             <p class="subtitle">Last updated: {now} UTC</p>
         </header>
         
@@ -560,6 +641,53 @@ def generate_html(portfolios: Dict, current_prices: Dict[str, float]) -> str:
         
         {positions_html}
     </div>
+    
+    <script>
+        // Sortable tables
+        document.querySelectorAll('table.sortable').forEach(table => {{
+            const headers = table.querySelectorAll('th[data-sort]');
+            
+            headers.forEach((header, index) => {{
+                header.addEventListener('click', () => {{
+                    const type = header.dataset.sort;
+                    const tbody = table.querySelector('tbody');
+                    const rows = Array.from(tbody.querySelectorAll('tr'));
+                    
+                    // Determine sort direction
+                    const isAsc = header.classList.contains('sort-asc');
+                    
+                    // Remove sort classes from all headers
+                    headers.forEach(h => h.classList.remove('sort-asc', 'sort-desc'));
+                    
+                    // Add new sort class
+                    header.classList.add(isAsc ? 'sort-desc' : 'sort-asc');
+                    
+                    // Sort rows
+                    rows.sort((a, b) => {{
+                        const aCell = a.cells[index];
+                        const bCell = b.cells[index];
+                        
+                        let aVal, bVal;
+                        
+                        if (type === 'number') {{
+                            aVal = parseFloat(aCell.dataset.value) || 0;
+                            bVal = parseFloat(bCell.dataset.value) || 0;
+                        }} else {{
+                            aVal = aCell.textContent.trim().toLowerCase();
+                            bVal = bCell.textContent.trim().toLowerCase();
+                        }}
+                        
+                        if (aVal < bVal) return isAsc ? 1 : -1;
+                        if (aVal > bVal) return isAsc ? -1 : 1;
+                        return 0;
+                    }});
+                    
+                    // Re-append sorted rows
+                    rows.forEach(row => tbody.appendChild(row));
+                }});
+            }});
+        }});
+    </script>
 </body>
 </html>
 """
