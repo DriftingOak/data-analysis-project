@@ -22,48 +22,18 @@ def fetch_current_prices(market_ids: List[str]) -> Dict[str, float]:
     """Fetch current YES prices for a list of market IDs."""
     prices = {}
     
-    # Fetch all open markets
-    print("[INFO] Fetching current market prices...")
-    all_markets = []
-    offset = 0
+    print(f"[INFO] Fetching prices for {len(market_ids)} markets...")
     
-    while offset < 5000:
+    # Fetch each market individually by ID
+    for i, market_id in enumerate(market_ids):
         try:
-            url = "https://gamma-api.polymarket.com/markets"
-            params = {"closed": "false", "limit": 100, "offset": offset}
-            resp = requests.get(url, params=params, timeout=30)
-            batch = resp.json()
-            if not batch:
-                break
-            all_markets.extend(batch)
-            offset += len(batch)
-            if len(batch) < 100:
-                break
-            time.sleep(0.05)
-        except Exception as e:
-            print(f"[WARN] Error fetching markets: {e}")
-            break
-    
-    # Also fetch closed markets for resolved positions
-    try:
-        url = "https://gamma-api.polymarket.com/markets"
-        params = {"closed": "true", "limit": 100}
-        resp = requests.get(url, params=params, timeout=30)
-        closed_markets = resp.json()
-        all_markets.extend(closed_markets)
-    except:
-        pass
-    
-    print(f"[INFO] Fetched {len(all_markets)} markets")
-    
-    # Build lookup
-    for market in all_markets:
-        market_id = market.get("id") or market.get("conditionId")
-        if not market_id:
-            continue
-        
-        # Parse YES price
-        try:
+            url = f"https://gamma-api.polymarket.com/markets/{market_id}"
+            resp = requests.get(url, timeout=10)
+            if resp.status_code != 200:
+                continue
+            market = resp.json()
+            
+            # Parse YES price
             prices_raw = market.get("outcomePrices", "")
             outcomes_raw = market.get("outcomes", "")
             
@@ -79,9 +49,9 @@ def fetch_current_prices(market_ids: List[str]) -> Dict[str, float]:
             
             # Find YES price
             price_yes = None
-            for i, outcome in enumerate(outcomes):
-                if isinstance(outcome, str) and outcome.lower() == "yes" and i < len(price_list):
-                    price_yes = float(price_list[i])
+            for j, outcome in enumerate(outcomes):
+                if isinstance(outcome, str) and outcome.lower() == "yes" and j < len(price_list):
+                    price_yes = float(price_list[j])
                     break
             
             if price_yes is None and len(price_list) >= 1:
@@ -89,9 +59,17 @@ def fetch_current_prices(market_ids: List[str]) -> Dict[str, float]:
             
             if price_yes is not None:
                 prices[market_id] = price_yes
-        except:
+            
+            # Progress indicator
+            if (i + 1) % 50 == 0:
+                print(f"[INFO] Fetched {i + 1}/{len(market_ids)} markets...")
+            
+            time.sleep(0.02)  # Rate limiting
+            
+        except Exception as e:
             pass
     
+    print(f"[INFO] Got prices for {len(prices)}/{len(market_ids)} markets")
     return prices
 
 def generate_dashboard():

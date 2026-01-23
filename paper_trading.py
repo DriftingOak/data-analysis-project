@@ -73,6 +73,9 @@ def load_portfolio(portfolio_file: str = PORTFOLIO_FILE,
     if entry_cost_rate is None:
         entry_cost_rate = getattr(config, 'PAPER_ENTRY_COST_RATE', 0.03)
     
+    print(f"[DEBUG] Looking for portfolio file: {portfolio_file}")
+    print(f"[DEBUG] File exists: {os.path.exists(portfolio_file)}")
+    
     if os.path.exists(portfolio_file):
         try:
             with open(portfolio_file, "r") as f:
@@ -81,6 +84,8 @@ def load_portfolio(portfolio_file: str = PORTFOLIO_FILE,
             # Reconstruct positions
             positions = [PaperPosition(**p) for p in data.get("positions", [])]
             closed_trades = [PaperPosition(**p) for p in data.get("closed_trades", [])]
+            
+            print(f"[DEBUG] Loaded existing portfolio: {len(positions)} open, {len(closed_trades)} closed")
             
             return PaperPortfolio(
                 bankroll_initial=data["bankroll_initial"],
@@ -97,6 +102,8 @@ def load_portfolio(portfolio_file: str = PORTFOLIO_FILE,
             )
         except Exception as e:
             print(f"[WARN] Could not load portfolio from {portfolio_file}: {e}, creating new one")
+    
+    print(f"[DEBUG] Creating NEW portfolio (file not found)")
     
     # Create new portfolio
     now = datetime.now().isoformat()
