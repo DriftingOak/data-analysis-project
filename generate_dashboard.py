@@ -219,26 +219,41 @@ def generate_html(portfolios: Dict, market_data: Dict[str, dict]) -> str:
         # Open positions table
         if positions:
             table_id = f"table-{strat_key}"
+            
+            # Get unique clusters for this strategy
+            clusters = sorted(set(p.get("cluster", "other") for p in positions))
+            cluster_buttons = "".join(f'<button class="filter-btn" data-cluster="{c}" onclick="filterCluster(\'{table_id}\', \'{c}\', this)">{c}</button>' for c in clusters)
+            
             positions_html += f"""
-            <div class="section">
-                <h3>{name} - Open Positions ({len(positions)})</h3>
-                <div class="table-wrapper">
-                <table id="{table_id}" class="sortable">
-                    <thead>
-                        <tr>
-                            <th data-sort="string">Market</th>
-                            <th data-sort="string">Side</th>
-                            <th data-sort="number">YES Entry</th>
-                            <th data-sort="number">YES Current</th>
-                            <th data-sort="number">Δ</th>
-                            <th data-sort="number">P&L</th>
-                            <th data-sort="number">Size</th>
-                            <th data-sort="string">Cluster</th>
-                            <th data-sort="string">Entry Date</th>
-                            <th data-sort="string">End Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            <div class="section collapsed" data-section="{strat_key}">
+                <h3 class="section-header" onclick="toggleSection('{strat_key}')">
+                    <span class="toggle-icon">▶</span> {name} - Open Positions ({len(positions)})
+                </h3>
+                <div class="section-content">
+                    <div class="table-controls">
+                        <input type="text" class="search-box" placeholder="Search markets..." onkeyup="filterTable('{table_id}', this.value)">
+                        <div class="cluster-filters">
+                            <button class="filter-btn active" data-cluster="all" onclick="filterCluster('{table_id}', 'all', this)">All</button>
+                            {cluster_buttons}
+                        </div>
+                    </div>
+                    <div class="table-wrapper">
+                    <table id="{table_id}" class="sortable">
+                        <thead>
+                            <tr>
+                                <th data-sort="string">Market</th>
+                                <th data-sort="string">Side</th>
+                                <th data-sort="number">YES Entry</th>
+                                <th data-sort="number">YES Current</th>
+                                <th data-sort="number">Δ</th>
+                                <th data-sort="number">P&L</th>
+                                <th data-sort="number">Size</th>
+                                <th data-sort="string">Cluster</th>
+                                <th data-sort="string">Entry Date</th>
+                                <th data-sort="string">End Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
             """
             for pos in sorted(positions, key=lambda x: x.get("entry_date", ""), reverse=True):
                 market_id = pos.get("market_id")
@@ -310,6 +325,7 @@ def generate_html(portfolios: Dict, market_data: Dict[str, dict]) -> str:
                     </tbody>
                 </table>
                 </div>
+                </div>
             </div>
             """
         
@@ -317,8 +333,11 @@ def generate_html(portfolios: Dict, market_data: Dict[str, dict]) -> str:
         if closed:
             table_id = f"table-closed-{strat_key}"
             closed_html += f"""
-            <div class="section">
-                <h3>{name} - Closed Trades ({len(closed)} total)</h3>
+            <div class="section collapsed" data-section="closed-{strat_key}">
+                <h3 class="section-header" onclick="toggleSection('closed-{strat_key}')">
+                    <span class="toggle-icon">▶</span> {name} - Closed Trades ({len(closed)} total)
+                </h3>
+                <div class="section-content">
                 <div class="table-wrapper">
                 <table id="{table_id}" class="sortable">
                     <thead>
@@ -364,6 +383,7 @@ def generate_html(portfolios: Dict, market_data: Dict[str, dict]) -> str:
             closed_html += """
                     </tbody>
                 </table>
+                </div>
                 </div>
             </div>
             """
@@ -532,6 +552,86 @@ def generate_html(portfolios: Dict, market_data: Dict[str, dict]) -> str:
             margin-bottom: 20px;
         }}
         
+        .section-header {{
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            user-select: none;
+        }}
+        
+        .section-header:hover {{
+            color: var(--accent);
+        }}
+        
+        .toggle-icon {{
+            font-size: 0.8rem;
+            transition: transform 0.2s;
+        }}
+        
+        .section:not(.collapsed) .toggle-icon {{
+            transform: rotate(90deg);
+        }}
+        
+        .section.collapsed .section-content {{
+            display: none;
+        }}
+        
+        .section-content {{
+            margin-top: 15px;
+        }}
+        
+        .table-controls {{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+            align-items: center;
+        }}
+        
+        .search-box {{
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            min-width: 200px;
+        }}
+        
+        .search-box:focus {{
+            outline: none;
+            border-color: var(--accent);
+        }}
+        
+        .cluster-filters {{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }}
+        
+        .filter-btn {{
+            padding: 5px 10px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }}
+        
+        .filter-btn:hover {{
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }}
+        
+        .filter-btn.active {{
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }}
+        
         .section h3 {{
             margin-bottom: 15px;
             font-size: 1rem;
@@ -643,6 +743,67 @@ def generate_html(portfolios: Dict, market_data: Dict[str, dict]) -> str:
     </div>
     
     <script>
+        // Toggle sections
+        function toggleSection(sectionId) {{
+            const section = document.querySelector(`[data-section="${{sectionId}}"]`);
+            if (section) {{
+                section.classList.toggle('collapsed');
+            }}
+        }}
+        
+        // Search filter
+        function filterTable(tableId, query) {{
+            const table = document.getElementById(tableId);
+            if (!table) return;
+            
+            const rows = table.querySelectorAll('tbody tr');
+            const lowerQuery = query.toLowerCase();
+            
+            rows.forEach(row => {{
+                const text = row.textContent.toLowerCase();
+                const matchesSearch = text.includes(lowerQuery);
+                const currentDisplay = row.style.display;
+                
+                // Check if row is also filtered by cluster
+                const isClusterHidden = row.dataset.clusterHidden === 'true';
+                
+                if (matchesSearch && !isClusterHidden) {{
+                    row.style.display = '';
+                }} else {{
+                    row.style.display = 'none';
+                }}
+                
+                row.dataset.searchHidden = !matchesSearch;
+            }});
+        }}
+        
+        // Cluster filter
+        function filterCluster(tableId, cluster, btn) {{
+            const table = document.getElementById(tableId);
+            if (!table) return;
+            
+            // Update active button
+            const buttons = btn.parentElement.querySelectorAll('.filter-btn');
+            buttons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const rows = table.querySelectorAll('tbody tr');
+            
+            rows.forEach(row => {{
+                const rowCluster = row.querySelector('.tag')?.textContent.trim() || '';
+                const matchesCluster = cluster === 'all' || rowCluster === cluster;
+                const isSearchHidden = row.dataset.searchHidden === 'true';
+                
+                if (matchesCluster && !isSearchHidden) {{
+                    row.style.display = '';
+                }} else {{
+                    row.style.display = 'none';
+                }}
+                
+                row.dataset.clusterHidden = !matchesCluster;
+            }});
+        }}
+        
         // Sortable tables
         document.querySelectorAll('table.sortable').forEach(table => {{
             const headers = table.querySelectorAll('th[data-sort]');
