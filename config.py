@@ -447,6 +447,30 @@ EXCLUDE_KEYWORDS = [
     "paris saint-germain", "psg", "bayern munich", "manchester united",
     "manchester city", "liverpool fc", "arsenal fc", "chelsea fc",
     "juventus", "barcelona", "real madrid", "inter milan", "ac milan",
+    
+    # -------------------------------------------------------------------------
+    # ADDITIONAL FALSE POSITIVES (identified from paper trading)
+    # -------------------------------------------------------------------------
+    # Sports - specific patterns
+    "both teams to score", "wins the toss", "odi:", "vs.", 
+    "patriots", "championship round", "semi-final", "semifinals",
+    "internazionale", "borussia", "dortmund",
+    
+    # Eurovision
+    "eurovision",
+    
+    # Stunts/Records
+    "free solo", "honnold", "taipei 101",
+    
+    # Central banks / Monetary policy
+    "interest rate", "key rate", "bps", "bank of japan", "bank of mexico",
+    "bank of russia", "unemployment rate", "decrease the key", "increase the key",
+    
+    # Fed (monetary, not geopolitical)
+    "jerome powell", "fed board", "fed nominee",
+    
+    # Memes / Gaming references
+    "gta vi", "before gta", "nothing ever happens",
 ]
 
 # =============================================================================
@@ -500,3 +524,6 @@ CLOB_API_URL = "https://clob.polymarket.com"
 
 DRY_RUN = os.getenv("DRY_RUN", "true").lower() == "true"  # Set to False to execute real trades
 LOG_FILE = "bot_history.json"
+
+# Paper trading settings
+PAPER_ENTRY_COST_RATE = 0.03  # 3% simulated spread + slippage

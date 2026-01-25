@@ -10,6 +10,7 @@ Usage:
     python bot.py --scan-only        # Just scan markets, no orders
     python bot.py --paper            # Paper trading - ALL strategies
     python bot.py --paper balanced   # Paper trading - single strategy
+    python bot.py --sell "iran"      # Manually sell position(s) matching "iran"
     python bot.py --help             # Show available strategies
 
 Strategies:
@@ -417,11 +418,179 @@ def run_paper_trading(strategy_name: str = None):
 # CLI
 # =============================================================================
 
+def manual_sell(query: str):
+    """Manually sell a position matching the query."""
+    import paper_trading as pt
+    import strategies
+    import requests
+    
+    log(f"Searching for positions matching: '{query}'")
+    
+    # Find all matching positions across all strategies
+    matches = []
+    
+    for strat_name in strategies.STRATEGIES.keys():
+        portfolio_file = f"portfolio_{strat_name}.json"
+        strat_params = strategies.STRATEGIES[strat_name]
+        
+        portfolio = pt.load_portfolio(
+            portfolio_file,
+            initial_bankroll=strat_params['initial_bankroll'],
+            entry_cost_rate=strat_params.get('entry_cost_rate', 0.03)
+        )
+        
+        for pos in portfolio.positions:
+            if pos.status == "open" and query.lower() in pos.question.lower():
+                matches.append({
+                    "strategy": strat_name,
+                    "portfolio": portfolio,
+                    "portfolio_file": portfolio_file,
+                    "position": pos,
+                })
+    
+    if not matches:
+        log(f"No open positions found matching '{query}'", "WARN")
+        return
+    
+    # Show matches
+    print(f"\nFound {len(matches)} matching position(s):\n")
+    for i, m in enumerate(matches):
+        pos = m["position"]
+        entry_yes = 1 - pos.entry_price
+        print(f"  [{i+1}] [{m['strategy']}] {pos.question[:60]}...")
+        print(f"      Entry YES: {entry_yes:.0%} | Size: ${pos.size_usd:.0f} | Date: {pos.entry_date[:10]}")
+    
+    print(f"\n  [0] Cancel")
+    
+    # Ask which one to sell
+    try:
+        choice = input("\nSelect position to sell: ")
+        choice_num = int(choice)
+        
+        if choice_num == 0:
+            log("Cancelled")
+            return
+        
+        if choice_num < 1 or choice_num > len(matches):
+            log("Invalid choice", "ERROR")
+            return
+        
+        selected = matches[choice_num - 1]
+    except (ValueError, KeyboardInterrupt):
+        log("Cancelled")
+        return
+    
+    pos = selected["position"]
+    portfolio = selected["portfolio"]
+    portfolio_file = selected["portfolio_file"]
+    strategy_name = selected["strategy"]
+    
+    # Fetch current price
+    log(f"Fetching current price for {pos.market_id}...")
+    try:
+        url = f"https://gamma-api.polymarket.com/markets/{pos.market_id}"
+        resp = requests.get(url, timeout=10)
+        market = resp.json()
+        
+        prices_raw = market.get("outcomePrices", "")
+        outcomes_raw = market.get("outcomes", "")
+        
+        if isinstance(prices_raw, str) and prices_raw:
+            price_list = json.loads(prices_raw)
+        else:
+            price_list = prices_raw or []
+        
+        if isinstance(outcomes_raw, str) and outcomes_raw:
+            outcomes = json.loads(outcomes_raw)
+        else:
+            outcomes = outcomes_raw or []
+        
+        # Find YES price
+        current_yes = None
+        for j, outcome in enumerate(outcomes):
+            if isinstance(outcome, str) and outcome.lower() == "yes" and j < len(price_list):
+                current_yes = float(price_list[j])
+                break
+        
+        if current_yes is None and len(price_list) >= 1:
+            current_yes = float(price_list[0])
+        
+        if current_yes is None:
+            log("Could not fetch current price", "ERROR")
+            return
+        
+    except Exception as e:
+        log(f"Error fetching price: {e}", "ERROR")
+        return
+    
+    # Calculate P&L
+    entry_yes = 1 - pos.entry_price
+    current_no = 1 - current_yes
+    
+    if pos.bet_side == "NO":
+        # We bought NO at entry_price, selling at current_no
+        sale_value = current_no * pos.shares
+        cost_basis = pos.entry_price * pos.shares
+        # Add exit fees (same as entry)
+        exit_fee = sale_value * portfolio.entry_cost_rate
+        net_proceeds = sale_value - exit_fee
+        pnl = net_proceeds - pos.size_usd  # size_usd includes entry fee
+    else:
+        sale_value = current_yes * pos.shares
+        cost_basis = pos.entry_price * pos.shares
+        exit_fee = sale_value * portfolio.entry_cost_rate
+        net_proceeds = sale_value - exit_fee
+        pnl = net_proceeds - pos.size_usd
+    
+    # Show confirmation
+    print(f"\n{'='*60}")
+    print(f"SELL CONFIRMATION")
+    print(f"{'='*60}")
+    print(f"Strategy:     {strategy_name}")
+    print(f"Market:       {pos.question[:50]}...")
+    print(f"Side:         {pos.bet_side}")
+    print(f"Entry YES:    {entry_yes:.1%}")
+    print(f"Current YES:  {current_yes:.1%}")
+    print(f"Change:       {current_yes - entry_yes:+.1%}")
+    print(f"")
+    print(f"Cost:         ${pos.size_usd:.2f}")
+    print(f"Sale value:   ${sale_value:.2f}")
+    print(f"Exit fee:     ${exit_fee:.2f}")
+    print(f"Net proceeds: ${net_proceeds:.2f}")
+    print(f"P&L:          ${pnl:+.2f}")
+    print(f"{'='*60}")
+    
+    confirm = input("\nConfirm sale? (yes/no): ")
+    if confirm.lower() not in ["yes", "y"]:
+        log("Cancelled")
+        return
+    
+    # Execute the sale
+    pos.status = "closed"
+    pos.close_date = datetime.now().strftime("%Y-%m-%d %H:%M")
+    pos.resolution = "win" if pnl > 0 else "lose"
+    pos.pnl = pnl
+    
+    # Move to closed trades
+    portfolio.closed_trades.append(pos)
+    portfolio.positions = [p for p in portfolio.positions if p.market_id != pos.market_id or p.status != "closed"]
+    
+    # Update stats
+    pt.update_portfolio_stats(portfolio)
+    
+    # Save
+    pt.save_portfolio(portfolio, portfolio_file)
+    
+    log(f"✅ Sold position for ${pnl:+.2f}")
+    log(f"New bankroll: ${portfolio.bankroll_current:.2f}")
+
+
 def main():
     dry_run = True
     scan_only = False
     paper_mode = False
     paper_strategy = None  # None = run all strategies
+    sell_query = None
     
     args = sys.argv[1:]
     i = 0
@@ -437,14 +606,28 @@ def main():
             if i + 1 < len(args) and not args[i + 1].startswith("--"):
                 paper_strategy = args[i + 1]
                 i += 1
+        elif arg == "--sell":
+            # Get the search query
+            if i + 1 < len(args):
+                sell_query = args[i + 1]
+                i += 1
+            else:
+                print("Usage: python bot.py --sell \"search term\"")
+                sys.exit(1)
         elif arg == "--help":
             print(__doc__)
             print("\nStrategies available for --paper:")
             import strategies
             for name, strat in strategies.STRATEGIES.items():
                 print(f"  {name}: {strat['description']}")
+            print("\nTo manually sell a position:")
+            print("  python bot.py --sell \"market name\"")
             sys.exit(0)
         i += 1
+    
+    if sell_query:
+        manual_sell(sell_query)
+        return
     
     if paper_mode:
         run_paper_trading(paper_strategy)

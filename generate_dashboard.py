@@ -251,6 +251,7 @@ def generate_html(portfolios: Dict, market_data: Dict[str, dict]) -> str:
                                 <th data-sort="string">Cluster</th>
                                 <th data-sort="string">Entry Date</th>
                                 <th data-sort="string">End Date</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -319,6 +320,7 @@ def generate_html(portfolios: Dict, market_data: Dict[str, dict]) -> str:
                             <td><span class="tag tag-{pos.get('cluster', 'other')}">{pos.get("cluster", "")}</span></td>
                             <td>{pos.get("entry_date", "")[:10]}</td>
                             <td>{pos.get("expected_close", "")[:10]}</td>
+                            <td><button class="sell-btn" onclick="sellPosition('{market_id}')" title="Sell this position">🗑️</button></td>
                         </tr>
                 """
             positions_html += """
@@ -707,6 +709,22 @@ def generate_html(portfolios: Dict, market_data: Dict[str, dict]) -> str:
         .badge-win {{ background: #2a3d29; color: #b9f6ca; }}
         .badge-lose {{ background: #3d2929; color: #ff8a80; }}
         
+        .sell-btn {{
+            background: #3d2929;
+            border: 1px solid #ff5252;
+            color: #ff8a80;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }}
+        
+        .sell-btn:hover {{
+            background: #ff5252;
+            color: white;
+        }}
+        
         tr:hover {{
             background: rgba(255,255,255,0.02);
         }}
@@ -743,6 +761,35 @@ def generate_html(portfolios: Dict, market_data: Dict[str, dict]) -> str:
     </div>
     
     <script>
+        // GitHub repo config
+        const GITHUB_OWNER = 'DriftingOak';
+        const GITHUB_REPO = 'data-analysis-project';
+        
+        // Sell position function
+        function sellPosition(marketId) {{
+            // Copy to clipboard
+            navigator.clipboard.writeText(marketId).then(() => {{
+                // Show confirmation
+                const confirmed = confirm(
+                    `Sell position ${{marketId}}?\\n\\n` +
+                    `Market ID copied to clipboard!\\n\\n` +
+                    `Click OK to open GitHub Actions.\\n` +
+                    `Then paste the ID and type SELL to confirm.`
+                );
+                
+                if (confirmed) {{
+                    // Open GitHub Actions workflow
+                    const url = `https://github.com/${{GITHUB_OWNER}}/${{GITHUB_REPO}}/actions/workflows/sell.yml`;
+                    window.open(url, '_blank');
+                }}
+            }}).catch(err => {{
+                // Fallback: show ID in prompt
+                prompt('Copy this Market ID:', marketId);
+                const url = `https://github.com/${{GITHUB_OWNER}}/${{GITHUB_REPO}}/actions/workflows/sell.yml`;
+                window.open(url, '_blank');
+            }});
+        }}
+        
         // Toggle sections
         function toggleSection(sectionId) {{
             const section = document.querySelector(`[data-section="${{sectionId}}"]`);
