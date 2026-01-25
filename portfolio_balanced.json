@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 5000.0,
-  "bankroll_current": 4984.634723454599,
+  "bankroll_current": 4978.64280426268,
   "entry_cost_rate": 0.03,
   "positions": [
     {
@@ -1678,24 +1678,6 @@
       "price_yes_current": 0.53
     },
     {
-      "market_id": "1193690",
-      "question": "BV Borussia 09 Dortmund vs. FC Internazionale Milano: Both Teams to Score",
-      "token_id": "98243820271378203738180945301504460764129396017894701317834879381845427951574",
-      "bet_side": "NO",
-      "entry_date": "2026-01-19 04:52",
-      "entry_price": 0.495,
-      "size_usd": 25.0,
-      "shares": 48.98989898989899,
-      "cluster": "ukraine",
-      "expected_close": "2026-01-28",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.395,
-      "price_yes_current": 0.605
-    },
-    {
       "market_id": "569313",
       "question": "Will PLC win the most seats in the 2026 Colombian Chamber of Representatives election?",
       "token_id": "48864349022280169726553125261863553743937023400245588977422413513432415570129",
@@ -2290,12 +2272,30 @@
       "pnl": -25.0,
       "current_price": 0.0004999999999999449,
       "price_yes_current": 0.9995
+    },
+    {
+      "market_id": "1193690",
+      "question": "BV Borussia 09 Dortmund vs. FC Internazionale Milano: Both Teams to Score",
+      "token_id": "98243820271378203738180945301504460764129396017894701317834879381845427951574",
+      "bet_side": "NO",
+      "entry_date": "2026-01-19 04:52",
+      "entry_price": 0.495,
+      "size_usd": 25.0,
+      "shares": 48.98989898989899,
+      "cluster": "ukraine",
+      "expected_close": "2026-01-28",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-01-25 19:28",
+      "pnl": -5.991919191919187,
+      "current_price": 0.395,
+      "price_yes_current": 0.605
     }
   ],
   "created_at": "2026-01-19T04:52:38.726293",
-  "last_updated": "2026-01-25T18:55:42.969247",
+  "last_updated": "2026-01-25T19:28:22.943052",
   "total_trades": 123,
   "wins": 2,
-  "losses": 2,
-  "total_pnl": -15.36527654540076
+  "losses": 3,
+  "total_pnl": -21.357195737319948
 }
