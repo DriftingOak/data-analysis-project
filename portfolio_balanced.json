@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 5000.0,
-  "bankroll_current": 4984.317200678764,
+  "bankroll_current": 4982.839700678764,
   "entry_cost_rate": 0.03,
   "positions": [
     {
@@ -110,24 +110,6 @@
       "pnl": null,
       "current_price": 0.645,
       "price_yes_current": 0.355
-    },
-    {
-      "market_id": "601819",
-      "question": "Will Luiz In\u00e1cio Lula da Silva win the 2026 Brazilian presidential election?",
-      "token_id": "79191939610100241429039499950443680906623179487184628479206155805558220344190",
-      "bet_side": "NO",
-      "entry_date": "2026-01-19 04:52",
-      "entry_price": 0.475,
-      "size_usd": 25.0,
-      "shares": 51.05263157894737,
-      "cluster": "latam",
-      "expected_close": "2026-10-04",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.475,
-      "price_yes_current": 0.525
     },
     {
       "market_id": "984441",
@@ -2344,12 +2326,30 @@
       "pnl": -3.241687500000001,
       "current_price": 0.365,
       "price_yes_current": 0.635
+    },
+    {
+      "market_id": "601819",
+      "question": "Will Luiz In\u00e1cio Lula da Silva win the 2026 Brazilian presidential election?",
+      "token_id": "79191939610100241429039499950443680906623179487184628479206155805558220344190",
+      "bet_side": "NO",
+      "entry_date": "2026-01-19 04:52",
+      "entry_price": 0.475,
+      "size_usd": 25.0,
+      "shares": 51.05263157894737,
+      "cluster": "latam",
+      "expected_close": "2026-10-04",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-01-26 16:12",
+      "pnl": -1.4774999999999991,
+      "current_price": 0.475,
+      "price_yes_current": 0.525
     }
   ],
   "created_at": "2026-01-19T04:52:38.726293",
-  "last_updated": "2026-01-26T16:11:34.870948",
+  "last_updated": "2026-01-26T16:12:46.521057",
   "total_trades": 125,
   "wins": 3,
-  "losses": 4,
-  "total_pnl": -15.682799321236036
+  "losses": 5,
+  "total_pnl": -17.160299321236035
 }
