@@ -25,7 +25,6 @@ except ImportError:
 def get_strategy_names() -> Dict[str, str]:
     """Get all strategy names with display names."""
     if DYNAMIC_STRATEGIES:
-        # Build from strategies.py
         names = {}
         emojis = {
             "conservative": "🛡️",
@@ -43,18 +42,15 @@ def get_strategy_names() -> Dict[str, str]:
         }
         
         for key, params in strat_config.STRATEGIES.items():
-            # Find matching emoji
             emoji = "📋"
             for prefix, e in emojis.items():
                 if prefix in key:
                     emoji = e
                     break
-            
             names[key] = f"{emoji} {params.get('name', key)}"
         
         return names
     else:
-        # Fallback static list
         return {
             "conservative": "🛡️ Conservative",
             "balanced": "⚖️ Balanced",
@@ -72,7 +68,6 @@ def get_strategy_description(key: str) -> str:
         pmax = params.get("price_yes_max", 1) * 100
         return f"Bet {side} on YES {pmin:.0f}-{pmax:.0f}%"
     
-    # Fallback
     static_desc = {
         "conservative": "Bet NO on YES 10-25%",
         "balanced": "Bet NO on YES 20-60%",
@@ -111,7 +106,6 @@ def fetch_market_data(market_ids: List[str]) -> Dict[str, dict]:
                 continue
             market = resp.json()
             
-            # Parse YES price
             prices_raw = market.get("outcomePrices", "")
             outcomes_raw = market.get("outcomes", "")
             
@@ -125,7 +119,6 @@ def fetch_market_data(market_ids: List[str]) -> Dict[str, dict]:
             else:
                 outcomes = outcomes_raw or []
             
-            # Find YES price
             price_yes = None
             for j, outcome in enumerate(outcomes):
                 if isinstance(outcome, str) and outcome.lower() == "yes" and j < len(price_list):
@@ -156,15 +149,12 @@ def fetch_market_data(market_ids: List[str]) -> Dict[str, dict]:
 
 def generate_dashboard():
     """Generate HTML dashboard from all portfolio files."""
-    
-    # Get all strategy names dynamically
     strategy_names = get_strategy_names()
     
     portfolios = {}
     all_market_ids = set()
     
     for strat_key, strat_name in strategy_names.items():
-        # Try different filename patterns
         filepath = f"portfolio_{strat_key}.json"
         
         data = load_portfolio(filepath)
@@ -180,7 +170,6 @@ def generate_dashboard():
     
     if not portfolios:
         print("[WARN] No portfolio files found")
-        # Create empty dashboard anyway
         html = generate_empty_dashboard()
         with open("dashboard.html", "w", encoding="utf-8") as f:
             f.write(html)
@@ -224,7 +213,7 @@ def generate_empty_dashboard() -> str:
 
 def generate_html(portfolios: Dict, market_data: Dict[str, dict]) -> str:
     """Generate the HTML content."""
-    now = datetime.now().strftime("%Y-%m-%d %H:%M")
+    now = datetime.now().strftime("%Y-%m-%d %H:%M UTC")
     
     cards_html = ""
     positions_html = ""
@@ -330,24 +319,31 @@ def generate_html(portfolios: Dict, market_data: Dict[str, dict]) -> str:
         </div>
         """
         
-        # Open positions table (simplified)
+        # Open positions table with FULL columns
         if positions:
             table_id = f"table-{strat_key}"
             positions_html += f"""
-            <div class="section collapsed" data-section="{strat_key}">
+            <div class="section" data-section="{strat_key}">
                 <h3 class="section-header" onclick="toggleSection('{strat_key}')">
                     <span class="toggle-icon">▶</span> {name} - Open Positions ({len(positions)})
                 </h3>
                 <div class="section-content">
+                <div class="table-controls">
+                    <input type="text" class="search-box" placeholder="Search..." onkeyup="filterTable('{table_id}', this.value)">
+                </div>
+                <div class="table-wrapper">
                 <table id="{table_id}" class="sortable">
                     <thead>
                         <tr>
-                            <th>Market</th>
-                            <th>Side</th>
-                            <th>Entry</th>
-                            <th>Current</th>
-                            <th>P&L</th>
-                            <th>Cluster</th>
+                            <th data-sort="string">Market</th>
+                            <th data-sort="string">Side</th>
+                            <th data-sort="number">Entry YES</th>
+                            <th data-sort="number">Current YES</th>
+                            <th data-sort="number">P&L</th>
+                            <th data-sort="number">Size</th>
+                            <th data-sort="string">Cluster</th>
+                            <th data-sort="string">Entry Date</th>
+                            <th data-sort="string">Expected Close</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -360,6 +356,11 @@ def generate_html(portfolios: Dict, market_data: Dict[str, dict]) -> str:
                 entry_no = pos.get("entry_price", 0)
                 entry_yes = 1 - entry_no
                 current_yes = mkt.get("price_yes") if mkt else None
+                size_usd = pos.get("size_usd", 0)
+                
+                # Entry date and expected close
+                entry_date = pos.get("entry_date", "")[:10] if pos.get("entry_date") else "-"
+                expected_close = pos.get("expected_close", "")[:10] if pos.get("expected_close") else "-"
                 
                 if current_yes is not None:
                     current_no = 1 - current_yes
@@ -368,25 +369,30 @@ def generate_html(portfolios: Dict, market_data: Dict[str, dict]) -> str:
                         unrealized = (current_no - entry_no) * shares
                     else:
                         unrealized = (current_yes - entry_yes) * shares
-                    current_str = f"{current_yes:.1%}"
-                    pnl_str = f"${unrealized:+.0f}"
+                    current_str = f"{current_yes:.0%}"
+                    pnl_pct = (unrealized / size_usd * 100) if size_usd > 0 else 0
+                    pnl_str = f"{pnl_pct:+.0f}% (${unrealized:+.0f})"
                     pnl_cls = "positive" if unrealized > 0 else "negative" if unrealized < 0 else ""
                 else:
                     current_str = "-"
                     pnl_str = "-"
                     pnl_cls = ""
+                    unrealized = 0
                 
                 slug = mkt.get("slug", "")
-                link = f"https://polymarket.com/event/{slug}" if slug else f"https://polymarket.com/markets/{market_id}"
+                link = f"https://polymarket.com/event/{slug}" if slug else "#"
                 
                 positions_html += f"""
                         <tr>
-                            <td class="market-name"><a href="{link}" target="_blank">{pos.get('question', '')[:50]}...</a></td>
-                            <td>{pos.get('bet_side', 'NO')}</td>
-                            <td>{entry_yes:.1%}</td>
-                            <td>{current_str}</td>
-                            <td class="{pnl_cls}">{pnl_str}</td>
+                            <td class="market-name"><a href="{link}" target="_blank" title="{pos.get('question', '')}">{pos.get('question', '')[:50]}...</a></td>
+                            <td><span class="badge badge-{pos.get('bet_side', 'NO').lower()}">{pos.get('bet_side', 'NO')}</span></td>
+                            <td data-value="{entry_yes}">{entry_yes:.0%}</td>
+                            <td data-value="{current_yes if current_yes else 0}">{current_str}</td>
+                            <td data-value="{unrealized}" class="{pnl_cls}">{pnl_str}</td>
+                            <td data-value="{size_usd}">${size_usd:.0f}</td>
                             <td><span class="tag tag-{pos.get('cluster', 'other')}">{pos.get('cluster', 'other')}</span></td>
+                            <td data-value="{entry_date}">{entry_date}</td>
+                            <td data-value="{expected_close}">{expected_close}</td>
                         </tr>
                 """
             
@@ -394,57 +400,70 @@ def generate_html(portfolios: Dict, market_data: Dict[str, dict]) -> str:
                     </tbody>
                 </table>
                 </div>
+                </div>
             </div>
             """
         
-        # Closed trades (simplified)
+        # Closed trades table
         if closed:
+            closed_table_id = f"closed-{strat_key}"
             closed_html += f"""
-            <div class="section collapsed" data-section="closed-{strat_key}">
-                <h3 class="section-header" onclick="toggleSection('closed-{strat_key}')">
+            <div class="section collapsed" data-section="{closed_table_id}">
+                <h3 class="section-header" onclick="toggleSection('{closed_table_id}')">
                     <span class="toggle-icon">▶</span> {name} - Closed Trades ({len(closed)})
                 </h3>
                 <div class="section-content">
+                <div class="table-wrapper">
                 <table class="sortable">
                     <thead>
                         <tr>
-                            <th>Market</th>
-                            <th>Result</th>
-                            <th>P&L</th>
-                            <th>Closed</th>
+                            <th data-sort="string">Market</th>
+                            <th data-sort="string">Side</th>
+                            <th data-sort="string">Result</th>
+                            <th data-sort="number">P&L</th>
+                            <th data-sort="number">Entry YES</th>
+                            <th data-sort="string">Entry Date</th>
+                            <th data-sort="string">Close Date</th>
                         </tr>
                     </thead>
                     <tbody>
             """
             
-            for trade in sorted(closed, key=lambda x: x.get("close_date", ""), reverse=True)[:20]:
+            for trade in sorted(closed, key=lambda x: x.get("close_date", ""), reverse=True):
                 result = trade.get("resolution", "")
                 pnl_trade = trade.get("pnl", 0)
                 result_class = "win" if result == "win" else "lose"
                 pnl_class = "positive" if pnl_trade > 0 else "negative"
+                entry_yes = 1 - trade.get("entry_price", 0)
+                entry_date = trade.get("entry_date", "")[:10] if trade.get("entry_date") else "-"
+                close_date = trade.get("close_date", "")[:10] if trade.get("close_date") else "-"
+                
+                market_id = trade.get("market_id")
+                mkt = market_data.get(market_id, {})
+                slug = mkt.get("slug", "")
+                link = f"https://polymarket.com/event/{slug}" if slug else "#"
                 
                 closed_html += f"""
                         <tr>
-                            <td class="market-name">{trade.get('question', '')[:50]}...</td>
-                            <td class="{result_class}">{'✅' if result == 'win' else '❌'}</td>
-                            <td class="{pnl_class}">${pnl_trade:+.0f}</td>
-                            <td>{trade.get('close_date', '')[:10]}</td>
+                            <td class="market-name"><a href="{link}" target="_blank" title="{trade.get('question', '')}">{trade.get("question", "")[:50]}...</a></td>
+                            <td><span class="badge badge-{trade.get('bet_side', 'NO').lower()}">{trade.get("bet_side", "NO")}</span></td>
+                            <td><span class="badge badge-{result_class}">{"✅ WIN" if result == "win" else "❌ LOSS"}</span></td>
+                            <td data-value="{pnl_trade}" class="{pnl_class}">${pnl_trade:+.2f}</td>
+                            <td data-value="{entry_yes}">{entry_yes:.0%}</td>
+                            <td data-value="{entry_date}">{entry_date}</td>
+                            <td data-value="{close_date}">{close_date}</td>
                         </tr>
-                """
-            
-            if len(closed) > 20:
-                closed_html += f"""
-                        <tr><td colspan="4" style="text-align:center; color:#888;">... and {len(closed) - 20} more</td></tr>
                 """
             
             closed_html += """
                     </tbody>
                 </table>
                 </div>
+                </div>
             </div>
             """
     
-    # Full HTML
+    # Full HTML with sortable tables
     html = f"""<!DOCTYPE html>
 <html>
 <head>
@@ -453,53 +472,67 @@ def generate_html(portfolios: Dict, market_data: Dict[str, dict]) -> str:
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="refresh" content="300">
     <style>
-        * {{ box-sizing: border-box; }}
+        :root {{
+            --bg-primary: #0f0f1a;
+            --bg-secondary: #1a1a2e;
+            --bg-card: #252540;
+            --text-primary: #e0e0e0;
+            --text-secondary: #888;
+            --accent: #00d4ff;
+            --positive: #00ff88;
+            --negative: #ff4466;
+            --border: #2a2a4a;
+        }}
+        
+        * {{ box-sizing: border-box; margin: 0; padding: 0; }}
         body {{ 
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; 
-            background: #0f0f1a; 
-            color: #e0e0e0; 
-            margin: 0; 
+            background: var(--bg-primary); 
+            color: var(--text-primary); 
             padding: 20px;
             line-height: 1.5;
         }}
-        .container {{ max-width: 1400px; margin: 0 auto; }}
-        h1 {{ color: #00d4ff; margin-bottom: 5px; }}
-        .subtitle {{ color: #888; margin-bottom: 30px; }}
+        .container {{ max-width: 1600px; margin: 0 auto; }}
+        h1 {{ color: var(--accent); margin-bottom: 5px; }}
+        h2 {{ color: var(--accent); margin: 40px 0 20px 0; }}
+        .subtitle {{ color: var(--text-secondary); margin-bottom: 30px; }}
         
         .cards {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 30px; }}
         .card {{ 
-            background: #1a1a2e; 
+            background: var(--bg-secondary); 
             border-radius: 12px; 
             padding: 20px; 
-            border: 1px solid #2a2a4a;
+            border: 1px solid var(--border);
         }}
-        .card-positive {{ border-left: 4px solid #00ff88; }}
-        .card-negative {{ border-left: 4px solid #ff4466; }}
+        .card-positive {{ border-left: 4px solid var(--positive); }}
+        .card-negative {{ border-left: 4px solid var(--negative); }}
         .card h2 {{ margin: 0 0 5px 0; font-size: 1.1em; color: #fff; }}
-        .strategy-desc {{ color: #888; font-size: 0.85em; margin: 0 0 15px 0; }}
+        .strategy-desc {{ color: var(--text-secondary); font-size: 0.85em; margin: 0 0 15px 0; }}
         
         .stats-grid {{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 15px; }}
         .stat {{ text-align: center; }}
         .stat-value {{ display: block; font-size: 1.3em; font-weight: 600; }}
-        .stat-label {{ font-size: 0.75em; color: #888; }}
+        .stat-label {{ font-size: 0.75em; color: var(--text-secondary); }}
         
-        .positive {{ color: #00ff88; }}
-        .negative {{ color: #ff4466; }}
-        .win {{ color: #00ff88; }}
-        .lose {{ color: #ff4466; }}
+        .positive {{ color: var(--positive); }}
+        .negative {{ color: var(--negative); }}
+        .win {{ color: var(--positive); }}
+        .lose {{ color: var(--negative); }}
         
-        .exposure-bar {{ background: #2a2a4a; height: 6px; border-radius: 3px; margin: 10px 0 5px 0; }}
-        .exposure-fill {{ background: linear-gradient(90deg, #00d4ff, #00ff88); height: 100%; border-radius: 3px; transition: width 0.3s; }}
-        .exposure-label {{ font-size: 0.8em; color: #888; }}
+        .exposure-bar {{ background: var(--border); height: 6px; border-radius: 3px; margin: 10px 0 5px 0; }}
+        .exposure-fill {{ background: linear-gradient(90deg, var(--accent), var(--positive)); height: 100%; border-radius: 3px; }}
+        .exposure-label {{ font-size: 0.8em; color: var(--text-secondary); }}
         
         .cluster-tags {{ margin-top: 10px; }}
-        .tag {{ display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75em; margin: 2px; background: #2a2a4a; }}
+        .tag {{ display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75em; margin: 2px; background: var(--border); }}
         .tag-mideast {{ background: #4a3a2a; color: #ffaa44; }}
-        .tag-eastern_europe {{ background: #3a3a4a; color: #88aaff; }}
-        .tag-asia {{ background: #3a4a3a; color: #88ff88; }}
+        .tag-eastern_europe, .tag-ukraine {{ background: #3a3a4a; color: #88aaff; }}
+        .tag-asia, .tag-china {{ background: #3a4a3a; color: #88ff88; }}
         .tag-latam {{ background: #4a3a4a; color: #ff88ff; }}
+        .tag-europe {{ background: #3a4a4a; color: #88ffff; }}
+        .tag-africa {{ background: #4a4a3a; color: #ffff88; }}
         
-        .section {{ background: #1a1a2e; border-radius: 8px; margin-bottom: 15px; border: 1px solid #2a2a4a; }}
+        .section {{ background: var(--bg-secondary); border-radius: 8px; margin-bottom: 15px; border: 1px solid var(--border); }}
         .section-header {{ 
             padding: 12px 15px; 
             cursor: pointer; 
@@ -509,23 +542,55 @@ def generate_html(portfolios: Dict, market_data: Dict[str, dict]) -> str:
             align-items: center;
             gap: 8px;
         }}
-        .section-header:hover {{ background: #252540; }}
+        .section-header:hover {{ background: var(--bg-card); border-radius: 8px 8px 0 0; }}
         .toggle-icon {{ transition: transform 0.2s; font-size: 0.8em; }}
         .section:not(.collapsed) .toggle-icon {{ transform: rotate(90deg); }}
-        .section-content {{ display: none; padding: 0 15px 15px 15px; }}
-        .section:not(.collapsed) .section-content {{ display: block; }}
+        .section-content {{ display: block; padding: 0 15px 15px 15px; }}
+        .section.collapsed .section-content {{ display: none; }}
         
-        table {{ width: 100%; border-collapse: collapse; font-size: 0.85em; }}
-        th, td {{ padding: 8px 10px; text-align: left; border-bottom: 1px solid #2a2a4a; }}
-        th {{ background: #252540; font-weight: 500; cursor: pointer; }}
+        .table-controls {{ margin-bottom: 10px; }}
+        .search-box {{
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 0.85em;
+            width: 250px;
+        }}
+        .search-box:focus {{ outline: none; border-color: var(--accent); }}
+        
+        .table-wrapper {{ overflow-x: auto; }}
+        table {{ width: 100%; border-collapse: collapse; font-size: 0.8em; }}
+        th, td {{ padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--border); }}
+        th {{ 
+            background: var(--bg-card); 
+            font-weight: 500; 
+            cursor: pointer; 
+            user-select: none;
+            white-space: nowrap;
+        }}
         th:hover {{ background: #303050; }}
-        .market-name {{ max-width: 300px; }}
-        .market-name a {{ color: #00d4ff; text-decoration: none; }}
+        th.sort-asc::after {{ content: " ▲"; font-size: 0.7em; }}
+        th.sort-desc::after {{ content: " ▼"; font-size: 0.7em; }}
+        
+        .market-name {{ max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }}
+        .market-name a {{ color: var(--accent); text-decoration: none; }}
         .market-name a:hover {{ text-decoration: underline; }}
         
-        @media (max-width: 600px) {{
-            .stats-grid {{ grid-template-columns: 1fr; }}
+        .badge {{ padding: 3px 8px; border-radius: 4px; font-size: 0.7em; font-weight: 500; }}
+        .badge-no {{ background: #3d2929; color: #ff8a80; }}
+        .badge-yes {{ background: #2a3d29; color: #b9f6ca; }}
+        .badge-win {{ background: #2a3d29; color: #b9f6ca; }}
+        .badge-lose {{ background: #3d2929; color: #ff8a80; }}
+        
+        tr:hover {{ background: rgba(255,255,255,0.02); }}
+        
+        @media (max-width: 768px) {{
             .cards {{ grid-template-columns: 1fr; }}
+            table {{ font-size: 0.7em; }}
+            .market-name {{ max-width: 150px; }}
+            .search-box {{ width: 100%; }}
         }}
     </style>
 </head>
@@ -538,18 +603,71 @@ def generate_html(portfolios: Dict, market_data: Dict[str, dict]) -> str:
             {cards_html}
         </div>
         
-        <h2 style="color: #00d4ff; margin-top: 40px;">📈 Open Positions</h2>
+        <h2>📈 Open Positions</h2>
         {positions_html if positions_html else '<p style="color: #888;">No open positions</p>'}
         
-        <h2 style="color: #00d4ff; margin-top: 40px;">📊 Closed Trades</h2>
+        <h2>📊 Closed Trades</h2>
         {closed_html if closed_html else '<p style="color: #888;">No closed trades yet</p>'}
     </div>
     
     <script>
+        // Toggle sections
         function toggleSection(sectionId) {{
             const section = document.querySelector(`[data-section="${{sectionId}}"]`);
             if (section) section.classList.toggle('collapsed');
         }}
+        
+        // Filter table
+        function filterTable(tableId, query) {{
+            const table = document.getElementById(tableId);
+            if (!table) return;
+            
+            const rows = table.querySelectorAll('tbody tr');
+            const lowerQuery = query.toLowerCase();
+            
+            rows.forEach(row => {{
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(lowerQuery) ? '' : 'none';
+            }});
+        }}
+        
+        // Sortable tables
+        document.querySelectorAll('table.sortable th').forEach(th => {{
+            th.addEventListener('click', () => {{
+                const table = th.closest('table');
+                const tbody = table.querySelector('tbody');
+                const rows = Array.from(tbody.querySelectorAll('tr'));
+                const index = th.cellIndex;
+                const type = th.dataset.sort || 'string';
+                
+                // Toggle sort direction
+                const isAsc = th.classList.contains('sort-asc');
+                table.querySelectorAll('th').forEach(h => h.classList.remove('sort-asc', 'sort-desc'));
+                th.classList.add(isAsc ? 'sort-desc' : 'sort-asc');
+                
+                // Sort rows
+                rows.sort((a, b) => {{
+                    const aCell = a.cells[index];
+                    const bCell = b.cells[index];
+                    
+                    let aVal, bVal;
+                    
+                    if (type === 'number') {{
+                        aVal = parseFloat(aCell.dataset.value) || 0;
+                        bVal = parseFloat(bCell.dataset.value) || 0;
+                    }} else {{
+                        aVal = (aCell.dataset.value || aCell.textContent).trim().toLowerCase();
+                        bVal = (bCell.dataset.value || bCell.textContent).trim().toLowerCase();
+                    }}
+                    
+                    if (aVal < bVal) return isAsc ? 1 : -1;
+                    if (aVal > bVal) return isAsc ? -1 : 1;
+                    return 0;
+                }});
+                
+                rows.forEach(row => tbody.appendChild(row));
+            }});
+        }});
     </script>
 </body>
 </html>
