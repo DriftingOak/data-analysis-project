@@ -48,18 +48,15 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
       
-      # Scheduled runs: standard + unlimited strategies
+      # Scheduled runs: ALL strategies
       - name: Run bot (scheduled)
         if: github.event_name == 'schedule'
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
-          echo "Running standard strategies..."
-          python bot.py --paper standard
-          echo ""
-          echo "Running unlimited strategies..."
-          python bot.py --paper unlimited
+          echo "Running ALL strategies..."
+          python bot.py --paper all
       
       # Manual runs
       - name: Run bot (manual)
