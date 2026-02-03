@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 5000.0,
-  "bankroll_current": 5034.912700533911,
+  "bankroll_current": 5033.398663836664,
   "entry_cost_rate": 0.03,
   "positions": [
     {
@@ -2560,24 +2560,6 @@
       "price_yes_current": 0.61
     },
     {
-      "market_id": "1255890",
-      "question": "Will 1. FC Union Berlin win on 2026-02-06?",
-      "token_id": "51959065252707283338660992947707203368762086500399720883230418911844842288377",
-      "bet_side": "NO",
-      "entry_date": "2026-02-03 14:32",
-      "entry_price": 0.5449999999999999,
-      "size_usd": 30.0,
-      "shares": 53.39449541284404,
-      "cluster": "other",
-      "expected_close": "2026-02-06",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.55,
-      "price_yes_current": 0.45
-    },
-    {
       "market_id": "1277937",
       "question": "Will Russia strike Kyiv on February 4, 2026?",
       "token_id": "7553794475210947458839102339037507665637116829575960269541703316678431478926",
@@ -3118,12 +3100,30 @@
       "pnl": -30.0,
       "current_price": 0.9995,
       "price_yes_current": 0.0005
+    },
+    {
+      "market_id": "1255890",
+      "question": "Will 1. FC Union Berlin win on 2026-02-06?",
+      "token_id": "51959065252707283338660992947707203368762086500399720883230418911844842288377",
+      "bet_side": "NO",
+      "entry_date": "2026-02-03 14:32",
+      "entry_price": 0.5449999999999999,
+      "size_usd": 30.0,
+      "shares": 53.39449541284404,
+      "cluster": "other",
+      "expected_close": "2026-02-06",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-02-03 17:33",
+      "pnl": -1.514036697247704,
+      "current_price": 0.55,
+      "price_yes_current": 0.45
     }
   ],
   "created_at": "2026-01-19T04:52:40.034094",
-  "last_updated": "2026-02-03T17:30:21.721516",
+  "last_updated": "2026-02-03T17:33:46.659358",
   "total_trades": 146,
   "wins": 16,
-  "losses": 12,
-  "total_pnl": 34.912700533911675
+  "losses": 13,
+  "total_pnl": 33.39866383666397
 }
