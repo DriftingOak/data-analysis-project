@@ -14,11 +14,11 @@ on:
         default: 'paper'
         type: choice
         options:
-          - paper
-          - paper_conservative
-          - paper_balanced
-          - paper_aggressive
-          - paper_volume_sweet
+          - paper              # Standard strategies (4)
+          - paper_unlimited    # Unlimited strategies (4)
+          - paper_experimental # Experimental strategies
+          - paper_all          # ALL strategies
+          - paper_quick        # Quick test (balanced + unlimited_balanced)
           - dry_run
           - scan_only
           - live
@@ -48,13 +48,20 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
       
-      - name: Run bot (scheduled - all strategies)
+      # Scheduled runs: standard + unlimited strategies
+      - name: Run bot (scheduled)
         if: github.event_name == 'schedule'
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: python bot.py --paper
+        run: |
+          echo "Running standard strategies..."
+          python bot.py --paper standard
+          echo ""
+          echo "Running unlimited strategies..."
+          python bot.py --paper unlimited
       
+      # Manual runs
       - name: Run bot (manual)
         if: github.event_name == 'workflow_dispatch'
         env:
@@ -65,57 +72,69 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
-          if [ "${{ inputs.mode }}" = "scan_only" ]; then
+          MODE="${{ inputs.mode }}"
+          
+          if [ "$MODE" = "scan_only" ]; then
             python bot.py --scan-only
-          elif [ "${{ inputs.mode }}" = "live" ]; then
+          elif [ "$MODE" = "live" ]; then
             python bot.py --live <<< "CONFIRM"
-          elif [ "${{ inputs.mode }}" = "paper" ]; then
-            python bot.py --paper
-          elif [ "${{ inputs.mode }}" = "paper_conservative" ]; then
-            python bot.py --paper conservative
-          elif [ "${{ inputs.mode }}" = "paper_balanced" ]; then
-            python bot.py --paper balanced
-          elif [ "${{ inputs.mode }}" = "paper_aggressive" ]; then
-            python bot.py --paper aggressive
-          elif [ "${{ inputs.mode }}" = "paper_volume_sweet" ]; then
-            python bot.py --paper volume_sweet
-          else
+          elif [ "$MODE" = "dry_run" ]; then
             python bot.py
+          elif [ "$MODE" = "paper" ]; then
+            python bot.py --paper standard
+          elif [ "$MODE" = "paper_unlimited" ]; then
+            python bot.py --paper unlimited
+          elif [ "$MODE" = "paper_experimental" ]; then
+            python bot.py --paper experimental
+          elif [ "$MODE" = "paper_all" ]; then
+            python bot.py --paper all
+          elif [ "$MODE" = "paper_quick" ]; then
+            python bot.py --paper quick
+          else
+            python bot.py --paper standard
           fi
       
-      - name: Commit portfolio changes
+      # Commit portfolio changes and snapshots
+      - name: Commit changes
         run: |
-          echo "=== Portfolio files ==="
-          ls -la portfolio_*.json 2>/dev/null || echo "No portfolio files found"
+          echo "=== Files to commit ==="
+          ls -la portfolio_*.json 2>/dev/null || echo "No portfolio files"
+          ls -la snapshots/ 2>/dev/null || echo "No snapshots directory"
           
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
+          # Add portfolio files
+          git add portfolio_*.json 2>/dev/null || true
+          
+          # Add snapshot files (create dir if needed)
+          mkdir -p snapshots
+          git add snapshots/*.json 2>/dev/null || true
+          
+          # Add bot history
+          git add bot_history.json 2>/dev/null || true
+          
+          # Commit if there are changes
+          git diff --staged --quiet || git commit -m "Bot run: $(date -u '+%Y-%m-%d %H:%M') UTC"
+          
+          # Pull and push
           git pull --rebase origin main || true
-          git add portfolio_*.json || true
-          
-          echo "=== Staged changes ==="
-          git diff --staged --stat
-          
-          if git diff --staged --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "Update paper portfolios [$(date +'%Y-%m-%d %H:%M')]"
-            git push
-            echo "Changes pushed successfully"
-          fi
+          git push origin main || echo "Nothing to push"
       
+      # Generate dashboard
       - name: Generate dashboard
         run: |
           mkdir -p site
           python generate_dashboard.py
           mv dashboard.html site/index.html
       
+      # Upload for Pages deployment
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: site
       
+      # Upload logs for debugging
       - name: Upload logs
         uses: actions/upload-artifact@v4
         if: always()
@@ -124,8 +143,10 @@ jobs:
           path: |
             bot_history.json
             portfolio_*.json
+            snapshots/
           retention-days: 30
 
+  # SEPARATE JOB for deploying pages - this is required!
   deploy-pages:
     needs: run-bot
     runs-on: ubuntu-latest
@@ -136,3 +157,33 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  # Cleanup old snapshots (runs weekly on Sundays)
+  cleanup-snapshots:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' && github.event.schedule == '0 0 * * 0'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Cleanup old snapshots
+        run: |
+          cd snapshots 2>/dev/null || exit 0
+          
+          CUTOFF=$(date -d '30 days ago' +%Y%m%d)
+          
+          for f in snapshot_*.json; do
+            DATE=$(echo "$f" | grep -oP '\d{8}' | head -1)
+            if [ -n "$DATE" ] && [ "$DATE" -lt "$CUTOFF" ]; then
+              echo "Deleting old snapshot: $f"
+              rm "$f"
+            fi
+          done
+          
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add -A
+          git diff --staged --quiet || git commit -m "Cleanup: remove snapshots older than 30 days"
+          git push origin main || true
