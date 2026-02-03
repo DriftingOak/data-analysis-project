@@ -1,7 +1,9 @@
+#!/usr/bin/env python3
 """
 POLYMARKET BOT - Dashboard Generator
 ====================================
 Generates a visual HTML dashboard from portfolio data.
+Dynamically loads all strategies from strategies.py.
 """
 
 import json
@@ -11,16 +13,93 @@ import time
 from datetime import datetime
 from typing import Dict, List, Optional
 
+# Try to import strategies for dynamic loading
+try:
+    import strategies as strat_config
+    DYNAMIC_STRATEGIES = True
+except ImportError:
+    DYNAMIC_STRATEGIES = False
+    print("[WARN] Could not import strategies module, using static list")
+
+
+def get_strategy_names() -> Dict[str, str]:
+    """Get all strategy names with display names."""
+    if DYNAMIC_STRATEGIES:
+        # Build from strategies.py
+        names = {}
+        emojis = {
+            "conservative": "🛡️",
+            "balanced": "⚖️",
+            "aggressive": "🔥",
+            "volume_sweet": "📊",
+            "unlimited": "♾️",
+            "high_volume": "📈",
+            "micro": "🔬",
+            "contrarian": "🔄",
+            "tight": "🎯",
+            "low_volume": "💎",
+            "mideast": "🌍",
+            "europe": "🇪🇺",
+        }
+        
+        for key, params in strat_config.STRATEGIES.items():
+            # Find matching emoji
+            emoji = "📋"
+            for prefix, e in emojis.items():
+                if prefix in key:
+                    emoji = e
+                    break
+            
+            names[key] = f"{emoji} {params.get('name', key)}"
+        
+        return names
+    else:
+        # Fallback static list
+        return {
+            "conservative": "🛡️ Conservative",
+            "balanced": "⚖️ Balanced",
+            "aggressive": "🔥 Aggressive",
+            "volume_sweet": "📊 Volume Sweet Spot",
+        }
+
+
+def get_strategy_description(key: str) -> str:
+    """Get strategy description."""
+    if DYNAMIC_STRATEGIES and key in strat_config.STRATEGIES:
+        params = strat_config.STRATEGIES[key]
+        side = params.get("bet_side", "NO")
+        pmin = params.get("price_yes_min", 0) * 100
+        pmax = params.get("price_yes_max", 1) * 100
+        return f"Bet {side} on YES {pmin:.0f}-{pmax:.0f}%"
+    
+    # Fallback
+    static_desc = {
+        "conservative": "Bet NO on YES 10-25%",
+        "balanced": "Bet NO on YES 20-60%",
+        "aggressive": "Bet NO on YES 30-60%",
+        "volume_sweet": "Bet NO on YES 20-60%, Vol $15k-100k",
+    }
+    return static_desc.get(key, "")
+
+
 def load_portfolio(filepath: str) -> dict:
     """Load a portfolio JSON file."""
     if not os.path.exists(filepath):
         return None
-    with open(filepath, "r") as f:
-        return json.load(f)
+    try:
+        with open(filepath, "r") as f:
+            return json.load(f)
+    except Exception as e:
+        print(f"[WARN] Error loading {filepath}: {e}")
+        return None
+
 
 def fetch_market_data(market_ids: List[str]) -> Dict[str, dict]:
     """Fetch current data for a list of market IDs."""
     markets = {}
+    
+    if not market_ids:
+        return markets
     
     print(f"[INFO] Fetching data for {len(market_ids)} markets...")
     
@@ -74,21 +153,20 @@ def fetch_market_data(market_ids: List[str]) -> Dict[str, dict]:
     print(f"[INFO] Got data for {len(markets)}/{len(market_ids)} markets")
     return markets
 
+
 def generate_dashboard():
     """Generate HTML dashboard from all portfolio files."""
     
-    portfolios = {}
-    strategy_names = {
-        "conservative": "🛡️ Conservative",
-        "balanced": "⚖️ Balanced", 
-        "aggressive": "🔥 Aggressive",
-        "volume_sweet": "📊 Volume Sweet Spot",
-    }
+    # Get all strategy names dynamically
+    strategy_names = get_strategy_names()
     
+    portfolios = {}
     all_market_ids = set()
     
     for strat_key, strat_name in strategy_names.items():
+        # Try different filename patterns
         filepath = f"portfolio_{strat_key}.json"
+        
         data = load_portfolio(filepath)
         if data:
             portfolios[strat_key] = {
@@ -102,7 +180,13 @@ def generate_dashboard():
     
     if not portfolios:
         print("[WARN] No portfolio files found")
+        # Create empty dashboard anyway
+        html = generate_empty_dashboard()
+        with open("dashboard.html", "w", encoding="utf-8") as f:
+            f.write(html)
         return
+    
+    print(f"[INFO] Loaded {len(portfolios)} portfolios")
     
     market_data = fetch_market_data(list(all_market_ids))
     
@@ -113,24 +197,52 @@ def generate_dashboard():
     
     print(f"[INFO] Dashboard generated: dashboard.html")
 
+
+def generate_empty_dashboard() -> str:
+    """Generate an empty dashboard when no portfolios exist."""
+    now = datetime.now().strftime("%Y-%m-%d %H:%M")
+    return f"""<!DOCTYPE html>
+<html>
+<head>
+    <title>Polymarket Bot - Dashboard</title>
+    <meta charset="UTF-8">
+    <style>
+        body {{ font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #1a1a2e; color: #eee; padding: 20px; }}
+        .container {{ max-width: 800px; margin: 0 auto; text-align: center; padding: 100px 20px; }}
+        h1 {{ color: #00d4ff; }}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 Polymarket Bot</h1>
+        <p>No portfolios found yet. Run the bot to start paper trading!</p>
+        <p style="color: #888;">Last updated: {now}</p>
+    </div>
+</body>
+</html>"""
+
+
 def generate_html(portfolios: Dict, market_data: Dict[str, dict]) -> str:
     """Generate the HTML content."""
-    
     now = datetime.now().strftime("%Y-%m-%d %H:%M")
-    
-    # Strategy descriptions
-    strategy_desc = {
-        "conservative": "Bet NO on YES 10-25%",
-        "balanced": "Bet NO on YES 20-60%",
-        "aggressive": "Bet NO on YES 30-60%",
-        "volume_sweet": "Bet NO on YES 20-60%, Vol $15k-100k",
-    }
     
     cards_html = ""
     positions_html = ""
     closed_html = ""
     
-    for strat_key, strat_info in portfolios.items():
+    # Sort portfolios: standard first, then unlimited, then experimental
+    def sort_key(item):
+        key = item[0]
+        if key in ["conservative", "balanced", "aggressive", "volume_sweet"]:
+            return (0, key)
+        elif "unlimited" in key:
+            return (1, key)
+        else:
+            return (2, key)
+    
+    sorted_portfolios = sorted(portfolios.items(), key=sort_key)
+    
+    for strat_key, strat_info in sorted_portfolios:
         name = strat_info["name"]
         data = strat_info["data"]
         
@@ -172,7 +284,7 @@ def generate_html(portfolios: Dict, market_data: Dict[str, dict]) -> str:
             exposure_by_cluster[cluster] = exposure_by_cluster.get(cluster, 0) + size
             total_exposure += size
         
-        # Card colors - FIXED: check actual values
+        # Card colors
         total_pnl_display = pnl + unrealized_pnl
         if total_pnl_display > 0:
             card_class = "card-positive"
@@ -184,10 +296,12 @@ def generate_html(portfolios: Dict, market_data: Dict[str, dict]) -> str:
         pnl_class = "positive" if pnl > 0 else "negative" if pnl < 0 else ""
         unrealized_class = "positive" if unrealized_pnl > 0 else "negative" if unrealized_pnl < 0 else ""
         
+        strategy_desc = get_strategy_description(strat_key)
+        
         cards_html += f"""
         <div class="card {card_class}">
             <h2>{name}</h2>
-            <p class="strategy-desc">{strategy_desc.get(strat_key, "")}</p>
+            <p class="strategy-desc">{strategy_desc}</p>
             <div class="stats-grid">
                 <div class="stat">
                     <span class="stat-value">${current:,.0f}</span>
@@ -216,690 +330,230 @@ def generate_html(portfolios: Dict, market_data: Dict[str, dict]) -> str:
         </div>
         """
         
-        # Open positions table
+        # Open positions table (simplified)
         if positions:
             table_id = f"table-{strat_key}"
-            
-            # Get unique clusters for this strategy
-            clusters = sorted(set(p.get("cluster", "other") for p in positions))
-            cluster_buttons = "".join(f'<button class="filter-btn" data-cluster="{c}" onclick="filterCluster(\'{table_id}\', \'{c}\', this)">{c}</button>' for c in clusters)
-            
             positions_html += f"""
             <div class="section collapsed" data-section="{strat_key}">
                 <h3 class="section-header" onclick="toggleSection('{strat_key}')">
                     <span class="toggle-icon">▶</span> {name} - Open Positions ({len(positions)})
                 </h3>
                 <div class="section-content">
-                    <div class="table-controls">
-                        <input type="text" class="search-box" placeholder="Search markets..." onkeyup="filterTable('{table_id}', this.value)">
-                        <div class="cluster-filters">
-                            <button class="filter-btn active" data-cluster="all" onclick="filterCluster('{table_id}', 'all', this)">All</button>
-                            {cluster_buttons}
-                        </div>
-                    </div>
-                    <div class="table-wrapper">
-                    <table id="{table_id}" class="sortable">
-                        <thead>
-                            <tr>
-                                <th data-sort="string">Market</th>
-                                <th data-sort="string">Side</th>
-                                <th data-sort="number">YES Entry</th>
-                                <th data-sort="number">YES Current</th>
-                                <th data-sort="number">Δ</th>
-                                <th data-sort="number">P&L</th>
-                                <th data-sort="number">Size</th>
-                                <th data-sort="string">Cluster</th>
-                                <th data-sort="string">Entry Date</th>
-                                <th data-sort="string">End Date</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-            """
-            for pos in sorted(positions, key=lambda x: x.get("entry_date", ""), reverse=True):
-                market_id = pos.get("market_id")
-                entry_no_price = pos.get("entry_price", 0)
-                entry_yes = 1 - entry_no_price  # Convert to YES
-                bet_side = pos.get("bet_side", "NO")
-                shares = pos.get("shares", 0)
-                
-                mkt = market_data.get(market_id, {})
-                slug = mkt.get("slug", "")
-                current_yes = mkt.get("price_yes")
-                
-                # Build Polymarket link
-                if slug:
-                    link = f"https://polymarket.com/event/{slug}"
-                else:
-                    link = f"https://polymarket.com/markets/{market_id}"
-                
-                if current_yes is not None:
-                    delta_yes = current_yes - entry_yes
-                    
-                    # P&L calculation (based on NO position)
-                    if bet_side == "NO":
-                        delta_pnl = ((1 - current_yes) - entry_no_price) * shares
-                    else:
-                        delta_pnl = (current_yes - entry_no_price) * shares
-                    
-                    # Color: for NO bet, we PROFIT when YES goes DOWN
-                    if bet_side == "NO":
-                        delta_class = "positive" if delta_yes < 0 else "negative" if delta_yes > 0 else ""
-                    else:
-                        delta_class = "positive" if delta_yes > 0 else "negative" if delta_yes < 0 else ""
-                    
-                    pnl_class = "positive" if delta_pnl > 0 else "negative" if delta_pnl < 0 else ""
-                    
-                    current_str = f"{current_yes:.0%}"
-                    delta_str = f'{delta_yes:+.0%}'
-                    pnl_str = f'${delta_pnl:+.0f}'
-                    
-                    # Data attributes for sorting
-                    current_data = current_yes
-                    delta_data = delta_yes
-                    pnl_data = delta_pnl
-                else:
-                    current_str = "—"
-                    delta_str = "—"
-                    pnl_str = "—"
-                    delta_class = ""
-                    pnl_class = ""
-                    current_data = 0
-                    delta_data = 0
-                    pnl_data = 0
-                
-                positions_html += f"""
-                        <tr>
-                            <td class="market-name"><a href="{link}" target="_blank" title="{pos.get('question', '')}">{pos.get("question", "")[:50]}...</a></td>
-                            <td><span class="badge badge-{pos.get('bet_side', '').lower()}">{pos.get("bet_side", "")}</span></td>
-                            <td data-value="{entry_yes}">{entry_yes:.0%}</td>
-                            <td data-value="{current_data}">{current_str}</td>
-                            <td data-value="{delta_data}" class="{delta_class}">{delta_str}</td>
-                            <td data-value="{pnl_data}" class="{pnl_class}">{pnl_str}</td>
-                            <td data-value="{pos.get('size_usd', 0)}">${pos.get("size_usd", 0):.0f}</td>
-                            <td><span class="tag tag-{pos.get('cluster', 'other')}">{pos.get("cluster", "")}</span></td>
-                            <td>{pos.get("entry_date", "")[:10]}</td>
-                            <td>{pos.get("expected_close", "")[:10]}</td>
-                            <td><button class="sell-btn" onclick="sellPosition('{market_id}')" title="Sell this position">🗑️</button></td>
-                        </tr>
-                """
-            positions_html += """
-                    </tbody>
-                </table>
-                </div>
-                </div>
-            </div>
-            """
-        
-        # Closed trades table
-        if closed:
-            table_id = f"table-closed-{strat_key}"
-            closed_html += f"""
-            <div class="section collapsed" data-section="closed-{strat_key}">
-                <h3 class="section-header" onclick="toggleSection('closed-{strat_key}')">
-                    <span class="toggle-icon">▶</span> {name} - Closed Trades ({len(closed)} total)
-                </h3>
-                <div class="section-content">
-                <div class="table-wrapper">
                 <table id="{table_id}" class="sortable">
                     <thead>
                         <tr>
-                            <th data-sort="string">Market</th>
-                            <th data-sort="string">Side</th>
-                            <th data-sort="string">Result</th>
-                            <th data-sort="number">P&L</th>
-                            <th data-sort="number">YES Entry</th>
-                            <th data-sort="string">Closed</th>
+                            <th>Market</th>
+                            <th>Side</th>
+                            <th>Entry</th>
+                            <th>Current</th>
+                            <th>P&L</th>
+                            <th>Cluster</th>
                         </tr>
                     </thead>
                     <tbody>
             """
-            for trade in sorted(closed, key=lambda x: x.get("close_date", ""), reverse=True):
+            
+            for pos in sorted(positions, key=lambda x: x.get("entry_date", ""), reverse=True):
+                market_id = pos.get("market_id")
+                mkt = market_data.get(market_id, {})
+                
+                entry_no = pos.get("entry_price", 0)
+                entry_yes = 1 - entry_no
+                current_yes = mkt.get("price_yes") if mkt else None
+                
+                if current_yes is not None:
+                    current_no = 1 - current_yes
+                    shares = pos.get("shares", 0)
+                    if pos.get("bet_side") == "NO":
+                        unrealized = (current_no - entry_no) * shares
+                    else:
+                        unrealized = (current_yes - entry_yes) * shares
+                    current_str = f"{current_yes:.1%}"
+                    pnl_str = f"${unrealized:+.0f}"
+                    pnl_cls = "positive" if unrealized > 0 else "negative" if unrealized < 0 else ""
+                else:
+                    current_str = "-"
+                    pnl_str = "-"
+                    pnl_cls = ""
+                
+                slug = mkt.get("slug", "")
+                link = f"https://polymarket.com/event/{slug}" if slug else f"https://polymarket.com/markets/{market_id}"
+                
+                positions_html += f"""
+                        <tr>
+                            <td class="market-name"><a href="{link}" target="_blank">{pos.get('question', '')[:50]}...</a></td>
+                            <td>{pos.get('bet_side', 'NO')}</td>
+                            <td>{entry_yes:.1%}</td>
+                            <td>{current_str}</td>
+                            <td class="{pnl_cls}">{pnl_str}</td>
+                            <td><span class="tag tag-{pos.get('cluster', 'other')}">{pos.get('cluster', 'other')}</span></td>
+                        </tr>
+                """
+            
+            positions_html += """
+                    </tbody>
+                </table>
+                </div>
+            </div>
+            """
+        
+        # Closed trades (simplified)
+        if closed:
+            closed_html += f"""
+            <div class="section collapsed" data-section="closed-{strat_key}">
+                <h3 class="section-header" onclick="toggleSection('closed-{strat_key}')">
+                    <span class="toggle-icon">▶</span> {name} - Closed Trades ({len(closed)})
+                </h3>
+                <div class="section-content">
+                <table class="sortable">
+                    <thead>
+                        <tr>
+                            <th>Market</th>
+                            <th>Result</th>
+                            <th>P&L</th>
+                            <th>Closed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            """
+            
+            for trade in sorted(closed, key=lambda x: x.get("close_date", ""), reverse=True)[:20]:
                 result = trade.get("resolution", "")
                 pnl_trade = trade.get("pnl", 0)
                 result_class = "win" if result == "win" else "lose"
-                pnl_class = "positive" if pnl_trade > 0 else "negative" if pnl_trade < 0 else ""
-                
-                market_id = trade.get("market_id")
-                mkt = market_data.get(market_id, {})
-                slug = mkt.get("slug", "")
-                
-                entry_no_price = trade.get("entry_price", 0)
-                entry_yes = 1 - entry_no_price
-                
-                if slug:
-                    link = f"https://polymarket.com/event/{slug}"
-                else:
-                    link = f"https://polymarket.com/markets/{market_id}"
+                pnl_class = "positive" if pnl_trade > 0 else "negative"
                 
                 closed_html += f"""
                         <tr>
-                            <td class="market-name"><a href="{link}" target="_blank" title="{trade.get('question', '')}">{trade.get("question", "")[:50]}...</a></td>
-                            <td><span class="badge badge-{trade.get('bet_side', '').lower()}">{trade.get("bet_side", "")}</span></td>
-                            <td><span class="badge badge-{result_class}">{"✅ WIN" if result == "win" else "❌ LOSS"}</span></td>
-                            <td data-value="{pnl_trade}" class="{pnl_class}">${pnl_trade:+.2f}</td>
-                            <td data-value="{entry_yes}">{entry_yes:.0%}</td>
-                            <td>{trade.get("close_date", "")[:10]}</td>
+                            <td class="market-name">{trade.get('question', '')[:50]}...</td>
+                            <td class="{result_class}">{'✅' if result == 'win' else '❌'}</td>
+                            <td class="{pnl_class}">${pnl_trade:+.0f}</td>
+                            <td>{trade.get('close_date', '')[:10]}</td>
                         </tr>
                 """
+            
+            if len(closed) > 20:
+                closed_html += f"""
+                        <tr><td colspan="4" style="text-align:center; color:#888;">... and {len(closed) - 20} more</td></tr>
+                """
+            
             closed_html += """
                     </tbody>
                 </table>
                 </div>
-                </div>
             </div>
             """
     
+    # Full HTML
     html = f"""<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
+    <title>Polymarket Bot - Dashboard</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <meta http-equiv="refresh" content="300">
     <style>
-        :root {{
-            --bg-primary: #0f1419;
-            --bg-secondary: #1a1f2e;
-            --bg-card: #232b3b;
-            --text-primary: #e7e9ea;
-            --text-secondary: #8b98a5;
-            --accent: #1d9bf0;
-            --positive: #00c853;
-            --negative: #ff5252;
-            --border: #2f3947;
-        }}
-        
-        * {{
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }}
-        
-        body {{
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
+        * {{ box-sizing: border-box; }}
+        body {{ 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; 
+            background: #0f0f1a; 
+            color: #e0e0e0; 
+            margin: 0; 
+            padding: 20px;
             line-height: 1.5;
-            padding: 20px;
         }}
+        .container {{ max-width: 1400px; margin: 0 auto; }}
+        h1 {{ color: #00d4ff; margin-bottom: 5px; }}
+        .subtitle {{ color: #888; margin-bottom: 30px; }}
         
-        .container {{
-            max-width: 1400px;
-            margin: 0 auto;
+        .cards {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 30px; }}
+        .card {{ 
+            background: #1a1a2e; 
+            border-radius: 12px; 
+            padding: 20px; 
+            border: 1px solid #2a2a4a;
         }}
+        .card-positive {{ border-left: 4px solid #00ff88; }}
+        .card-negative {{ border-left: 4px solid #ff4466; }}
+        .card h2 {{ margin: 0 0 5px 0; font-size: 1.1em; color: #fff; }}
+        .strategy-desc {{ color: #888; font-size: 0.85em; margin: 0 0 15px 0; }}
         
-        header {{
-            text-align: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--border);
-        }}
+        .stats-grid {{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 15px; }}
+        .stat {{ text-align: center; }}
+        .stat-value {{ display: block; font-size: 1.3em; font-weight: 600; }}
+        .stat-label {{ font-size: 0.75em; color: #888; }}
         
-        h1 {{
-            font-size: 2rem;
-            margin-bottom: 5px;
-        }}
+        .positive {{ color: #00ff88; }}
+        .negative {{ color: #ff4466; }}
+        .win {{ color: #00ff88; }}
+        .lose {{ color: #ff4466; }}
         
-        .subtitle {{
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }}
+        .exposure-bar {{ background: #2a2a4a; height: 6px; border-radius: 3px; margin: 10px 0 5px 0; }}
+        .exposure-fill {{ background: linear-gradient(90deg, #00d4ff, #00ff88); height: 100%; border-radius: 3px; transition: width 0.3s; }}
+        .exposure-label {{ font-size: 0.8em; color: #888; }}
         
-        .cards {{
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
-        }}
+        .cluster-tags {{ margin-top: 10px; }}
+        .tag {{ display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75em; margin: 2px; background: #2a2a4a; }}
+        .tag-mideast {{ background: #4a3a2a; color: #ffaa44; }}
+        .tag-eastern_europe {{ background: #3a3a4a; color: #88aaff; }}
+        .tag-asia {{ background: #3a4a3a; color: #88ff88; }}
+        .tag-latam {{ background: #4a3a4a; color: #ff88ff; }}
         
-        .card {{
-            background: var(--bg-card);
-            border-radius: 12px;
-            padding: 20px;
-            border: 1px solid var(--border);
-        }}
-        
-        .card-positive {{
-            border-left: 4px solid var(--positive);
-        }}
-        
-        .card-negative {{
-            border-left: 4px solid var(--negative);
-        }}
-        
-        .card h2 {{
-            font-size: 1.2rem;
-            margin-bottom: 5px;
-            color: var(--text-primary);
-        }}
-        
-        .strategy-desc {{
-            font-size: 0.75rem;
-            color: var(--accent);
-            margin-bottom: 15px;
-            font-style: italic;
-        }}
-        
-        .stats-grid {{
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 15px;
-        }}
-        
-        .stat {{
-            display: flex;
-            flex-direction: column;
-        }}
-        
-        .stat-value {{
-            font-size: 1.3rem;
-            font-weight: 600;
-        }}
-        
-        .stat-label {{
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-        }}
-        
-        .positive {{ color: var(--positive) !important; }}
-        .negative {{ color: var(--negative) !important; }}
-        
-        .exposure-bar {{
-            height: 6px;
-            background: var(--bg-secondary);
-            border-radius: 3px;
-            overflow: hidden;
-            margin-bottom: 5px;
-        }}
-        
-        .exposure-fill {{
-            height: 100%;
-            background: var(--accent);
-            border-radius: 3px;
-        }}
-        
-        .exposure-label {{
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }}
-        
-        .cluster-tags {{
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-top: 10px;
-        }}
-        
-        .tag {{
-            font-size: 0.7rem;
-            padding: 3px 8px;
-            border-radius: 4px;
-            background: var(--bg-secondary);
-            color: var(--text-secondary);
-        }}
-        
-        .tag-mideast {{ background: #3d2929; color: #ff8a80; }}
-        .tag-ukraine {{ background: #2a3d29; color: #b9f6ca; }}
-        .tag-china {{ background: #3d3429; color: #ffe57f; }}
-        .tag-latam {{ background: #29333d; color: #80d8ff; }}
-        .tag-europe {{ background: #35293d; color: #ea80fc; }}
-        .tag-africa {{ background: #3d2f29; color: #ffcc80; }}
-        .tag-other {{ background: var(--bg-secondary); color: var(--text-secondary); }}
-        
-        .section {{
-            background: var(--bg-secondary);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }}
-        
-        .section-header {{
-            cursor: pointer;
+        .section {{ background: #1a1a2e; border-radius: 8px; margin-bottom: 15px; border: 1px solid #2a2a4a; }}
+        .section-header {{ 
+            padding: 12px 15px; 
+            cursor: pointer; 
+            margin: 0;
+            font-size: 0.95em;
             display: flex;
             align-items: center;
-            gap: 10px;
-            user-select: none;
+            gap: 8px;
         }}
+        .section-header:hover {{ background: #252540; }}
+        .toggle-icon {{ transition: transform 0.2s; font-size: 0.8em; }}
+        .section:not(.collapsed) .toggle-icon {{ transform: rotate(90deg); }}
+        .section-content {{ display: none; padding: 0 15px 15px 15px; }}
+        .section:not(.collapsed) .section-content {{ display: block; }}
         
-        .section-header:hover {{
-            color: var(--accent);
-        }}
-        
-        .toggle-icon {{
-            font-size: 0.8rem;
-            transition: transform 0.2s;
-        }}
-        
-        .section:not(.collapsed) .toggle-icon {{
-            transform: rotate(90deg);
-        }}
-        
-        .section.collapsed .section-content {{
-            display: none;
-        }}
-        
-        .section-content {{
-            margin-top: 15px;
-        }}
-        
-        .table-controls {{
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 15px;
-            align-items: center;
-        }}
-        
-        .search-box {{
-            padding: 8px 12px;
-            border-radius: 6px;
-            border: 1px solid var(--border);
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            font-size: 0.85rem;
-            min-width: 200px;
-        }}
-        
-        .search-box:focus {{
-            outline: none;
-            border-color: var(--accent);
-        }}
-        
-        .cluster-filters {{
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-        }}
-        
-        .filter-btn {{
-            padding: 5px 10px;
-            border-radius: 4px;
-            border: 1px solid var(--border);
-            background: var(--bg-primary);
-            color: var(--text-secondary);
-            font-size: 0.75rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }}
-        
-        .filter-btn:hover {{
-            border-color: var(--accent);
-            color: var(--text-primary);
-        }}
-        
-        .filter-btn.active {{
-            background: var(--accent);
-            border-color: var(--accent);
-            color: white;
-        }}
-        
-        .section h3 {{
-            margin-bottom: 15px;
-            font-size: 1rem;
-        }}
-        
-        .table-wrapper {{
-            overflow-x: auto;
-        }}
-        
-        table {{
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.8rem;
-        }}
-        
-        th, td {{
-            padding: 8px 10px;
-            text-align: left;
-            border-bottom: 1px solid var(--border);
-        }}
-        
-        th {{
-            color: var(--text-secondary);
-            font-weight: 500;
-            position: sticky;
-            top: 0;
-            background: var(--bg-secondary);
-            cursor: pointer;
-            user-select: none;
-        }}
-        
-        th:hover {{
-            color: var(--text-primary);
-            background: var(--bg-card);
-        }}
-        
-        th.sort-asc::after {{
-            content: " ▲";
-            font-size: 0.7rem;
-        }}
-        
-        th.sort-desc::after {{
-            content: " ▼";
-            font-size: 0.7rem;
-        }}
-        
-        .market-name {{
-            max-width: 280px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }}
-        
-        .market-name a {{
-            color: var(--text-primary);
-            text-decoration: none;
-        }}
-        
-        .market-name a:hover {{
-            color: var(--accent);
-            text-decoration: underline;
-        }}
-        
-        .badge {{
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            font-weight: 500;
-        }}
-        
-        .badge-no {{ background: #3d2929; color: #ff8a80; }}
-        .badge-yes {{ background: #2a3d29; color: #b9f6ca; }}
-        .badge-win {{ background: #2a3d29; color: #b9f6ca; }}
-        .badge-lose {{ background: #3d2929; color: #ff8a80; }}
-        
-        .sell-btn {{
-            background: #3d2929;
-            border: 1px solid #ff5252;
-            color: #ff8a80;
-            padding: 4px 8px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            transition: all 0.2s;
-        }}
-        
-        .sell-btn:hover {{
-            background: #ff5252;
-            color: white;
-        }}
-        
-        tr:hover {{
-            background: rgba(255,255,255,0.02);
-        }}
+        table {{ width: 100%; border-collapse: collapse; font-size: 0.85em; }}
+        th, td {{ padding: 8px 10px; text-align: left; border-bottom: 1px solid #2a2a4a; }}
+        th {{ background: #252540; font-weight: 500; cursor: pointer; }}
+        th:hover {{ background: #303050; }}
+        .market-name {{ max-width: 300px; }}
+        .market-name a {{ color: #00d4ff; text-decoration: none; }}
+        .market-name a:hover {{ text-decoration: underline; }}
         
         @media (max-width: 600px) {{
-            .cards {{
-                grid-template-columns: 1fr;
-            }}
-            
-            table {{
-                font-size: 0.7rem;
-            }}
-            
-            .market-name {{
-                max-width: 150px;
-            }}
+            .stats-grid {{ grid-template-columns: 1fr; }}
+            .cards {{ grid-template-columns: 1fr; }}
         }}
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>📈 Dashboard</h1>
-            <p class="subtitle">Last updated: {now} UTC</p>
-        </header>
+        <h1>🤖 Polymarket Geopolitical Bot</h1>
+        <p class="subtitle">Last updated: {now} | Auto-refresh: 5 min</p>
         
         <div class="cards">
             {cards_html}
         </div>
         
-        {closed_html}
+        <h2 style="color: #00d4ff; margin-top: 40px;">📈 Open Positions</h2>
+        {positions_html if positions_html else '<p style="color: #888;">No open positions</p>'}
         
-        {positions_html}
+        <h2 style="color: #00d4ff; margin-top: 40px;">📊 Closed Trades</h2>
+        {closed_html if closed_html else '<p style="color: #888;">No closed trades yet</p>'}
     </div>
     
     <script>
-        // GitHub repo config
-        const GITHUB_OWNER = 'DriftingOak';
-        const GITHUB_REPO = 'data-analysis-project';
-        
-        // Sell position function
-        function sellPosition(marketId) {{
-            // Copy to clipboard
-            navigator.clipboard.writeText(marketId).then(() => {{
-                // Show confirmation
-                const confirmed = confirm(
-                    `Sell position ${{marketId}}?\\n\\n` +
-                    `Market ID copied to clipboard!\\n\\n` +
-                    `Click OK to open GitHub Actions.\\n` +
-                    `Then paste the ID and type SELL to confirm.`
-                );
-                
-                if (confirmed) {{
-                    // Open GitHub Actions workflow
-                    const url = `https://github.com/${{GITHUB_OWNER}}/${{GITHUB_REPO}}/actions/workflows/sell.yml`;
-                    window.open(url, '_blank');
-                }}
-            }}).catch(err => {{
-                // Fallback: show ID in prompt
-                prompt('Copy this Market ID:', marketId);
-                const url = `https://github.com/${{GITHUB_OWNER}}/${{GITHUB_REPO}}/actions/workflows/sell.yml`;
-                window.open(url, '_blank');
-            }});
-        }}
-        
-        // Toggle sections
         function toggleSection(sectionId) {{
             const section = document.querySelector(`[data-section="${{sectionId}}"]`);
-            if (section) {{
-                section.classList.toggle('collapsed');
-            }}
+            if (section) section.classList.toggle('collapsed');
         }}
-        
-        // Search filter
-        function filterTable(tableId, query) {{
-            const table = document.getElementById(tableId);
-            if (!table) return;
-            
-            const rows = table.querySelectorAll('tbody tr');
-            const lowerQuery = query.toLowerCase();
-            
-            rows.forEach(row => {{
-                const text = row.textContent.toLowerCase();
-                const matchesSearch = text.includes(lowerQuery);
-                const currentDisplay = row.style.display;
-                
-                // Check if row is also filtered by cluster
-                const isClusterHidden = row.dataset.clusterHidden === 'true';
-                
-                if (matchesSearch && !isClusterHidden) {{
-                    row.style.display = '';
-                }} else {{
-                    row.style.display = 'none';
-                }}
-                
-                row.dataset.searchHidden = !matchesSearch;
-            }});
-        }}
-        
-        // Cluster filter
-        function filterCluster(tableId, cluster, btn) {{
-            const table = document.getElementById(tableId);
-            if (!table) return;
-            
-            // Update active button
-            const buttons = btn.parentElement.querySelectorAll('.filter-btn');
-            buttons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            
-            const rows = table.querySelectorAll('tbody tr');
-            
-            rows.forEach(row => {{
-                const rowCluster = row.querySelector('.tag')?.textContent.trim() || '';
-                const matchesCluster = cluster === 'all' || rowCluster === cluster;
-                const isSearchHidden = row.dataset.searchHidden === 'true';
-                
-                if (matchesCluster && !isSearchHidden) {{
-                    row.style.display = '';
-                }} else {{
-                    row.style.display = 'none';
-                }}
-                
-                row.dataset.clusterHidden = !matchesCluster;
-            }});
-        }}
-        
-        // Sortable tables
-        document.querySelectorAll('table.sortable').forEach(table => {{
-            const headers = table.querySelectorAll('th[data-sort]');
-            
-            headers.forEach((header, index) => {{
-                header.addEventListener('click', () => {{
-                    const type = header.dataset.sort;
-                    const tbody = table.querySelector('tbody');
-                    const rows = Array.from(tbody.querySelectorAll('tr'));
-                    
-                    // Determine sort direction
-                    const isAsc = header.classList.contains('sort-asc');
-                    
-                    // Remove sort classes from all headers
-                    headers.forEach(h => h.classList.remove('sort-asc', 'sort-desc'));
-                    
-                    // Add new sort class
-                    header.classList.add(isAsc ? 'sort-desc' : 'sort-asc');
-                    
-                    // Sort rows
-                    rows.sort((a, b) => {{
-                        const aCell = a.cells[index];
-                        const bCell = b.cells[index];
-                        
-                        let aVal, bVal;
-                        
-                        if (type === 'number') {{
-                            aVal = parseFloat(aCell.dataset.value) || 0;
-                            bVal = parseFloat(bCell.dataset.value) || 0;
-                        }} else {{
-                            aVal = aCell.textContent.trim().toLowerCase();
-                            bVal = bCell.textContent.trim().toLowerCase();
-                        }}
-                        
-                        if (aVal < bVal) return isAsc ? 1 : -1;
-                        if (aVal > bVal) return isAsc ? -1 : 1;
-                        return 0;
-                    }});
-                    
-                    // Re-append sorted rows
-                    rows.forEach(row => tbody.appendChild(row));
-                }});
-            }});
-        }});
     </script>
 </body>
 </html>
 """
-    
     return html
 
 
