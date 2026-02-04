@@ -110,6 +110,7 @@ jobs:
           git add portfolios/*.json 2>/dev/null || true
           git add bot_history/*.json 2>/dev/null || true
           git add dashboard.html 2>/dev/null || true
+          git add index.html 2>/dev/null || true
           
           # Commit if changes
           if git diff --staged --quiet; then
