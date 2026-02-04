@@ -1,9 +1,10 @@
 diff --git a/.github/workflows/run.yml b/.github/workflows/run.yml
-index e435449f659f8d227c1ded7d0c16165ac301436e..870b9433497a6dd738c0865d8930b8a46b000411 100644
+index e435449f659f8d227c1ded7d0c16165ac301436e..ff5afa4591bdfab366d34cb10d314208a9d1d249 100644
 --- a/.github/workflows/run.yml
 +++ b/.github/workflows/run.yml
-@@ -1,90 +1,114 @@
+@@ -1,90 +1,115 @@
  name: Polymarket Paper Trading Bot
++run-name: "Paper trading (${{ inputs.strategy || 'default' }})"
  
  # ============================================================================
  # PAPER TRADING PIPELINE - INDÉPENDANT DES SNAPSHOTS
