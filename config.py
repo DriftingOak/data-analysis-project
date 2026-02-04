@@ -527,3 +527,7 @@ LOG_FILE = "bot_history.json"
 
 # Paper trading settings
 PAPER_ENTRY_COST_RATE = 0.03  # 3% simulated spread + slippage
+
+# Backward compatible aliases (some modules expect these names)
+ENTRY_COST_RATE = PAPER_ENTRY_COST_RATE  # alias
+EXIT_COST_RATE = 0.03  # default exit cost rate (paper trading)
