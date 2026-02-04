@@ -12,6 +12,7 @@ Usage:
     python bot.py --paper balanced       # Paper trading - single strategy
     python bot.py --paper unlimited      # Paper trading - unlimited group
     python bot.py --paper all            # Paper trading - ALL strategies
+    python bot.py --paper --strategy balanced  # Paper trading - single strategy
     python bot.py --sell "iran"          # Manually sell position(s) matching "iran"
     python bot.py --strategies           # Show available strategies
     python bot.py --help                 # Show this help
@@ -641,7 +642,12 @@ def main():
         return
     
     if args[0] == "--paper":
-        strategy_name = args[1] if len(args) > 1 else None
+        strategy_name = None
+        if len(args) > 1:
+            if args[1] in ["--strategy", "-s"] and len(args) > 2:
+                strategy_name = args[2]
+            else:
+                strategy_name = args[1]
         run_paper_trading(strategy_name)
         return
     

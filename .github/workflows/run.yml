@@ -1,4 +1,5 @@
 name: Polymarket Paper Trading Bot
+run-name: "Paper trading (${{ inputs.strategy || 'default' }})"
 
 # ============================================================================
 # PAPER TRADING PIPELINE - INDÉPENDANT DES SNAPSHOTS
@@ -14,10 +15,34 @@ on:
   workflow_dispatch:
     inputs:
       strategy:
-        description: 'Strategy to run'
+        description: 'Strategy or group to run'
         required: false
         default: 'default'
-        type: string
+        type: choice
+        options:
+          - default
+          - standard
+          - unlimited
+          - experimental
+          - regional
+          - all
+          - quick
+          - full_backtest
+          - conservative
+          - balanced
+          - aggressive
+          - volume_sweet
+          - unlimited_conservative
+          - unlimited_balanced
+          - unlimited_aggressive
+          - unlimited_wide
+          - high_volume_only
+          - micro_bets
+          - contrarian_yes
+          - tight_spread
+          - low_volume_gems
+          - mideast_focus
+          - europe_focus
 
 permissions:
   contents: write
@@ -62,7 +87,7 @@ jobs:
           if [ -z "$STRATEGY" ] || [ "$STRATEGY" = "default" ]; then
             python bot.py --paper
           else
-            python bot.py --paper --strategy "$STRATEGY"
+            python bot.py --paper "$STRATEGY"
           fi
 
       - name: Generate dashboard
