@@ -172,8 +172,7 @@ def generate_dashboard():
     if not portfolios:
         print("[WARN] No portfolio files found")
         html = generate_empty_dashboard()
-        with open(os.path.join(base_dir, "dashboard.html"), "w", encoding="utf-8") as f:
-            f.write(html)
+        write_dashboard_files(base_dir, html)
         return
     
     print(f"[INFO] Loaded {len(portfolios)} portfolios")
@@ -182,10 +181,21 @@ def generate_dashboard():
     
     html = generate_html(portfolios, market_data)
     
-    with open(os.path.join(base_dir, "dashboard.html"), "w", encoding="utf-8") as f:
-        f.write(html)
+    write_dashboard_files(base_dir, html)
     
     print(f"[INFO] Dashboard generated: {os.path.join(base_dir, 'dashboard.html')}")
+
+
+def write_dashboard_files(base_dir: str, html: str) -> None:
+    """Write dashboard HTML to both dashboard.html and index.html."""
+    dashboard_path = os.path.join(base_dir, "dashboard.html")
+    index_path = os.path.join(base_dir, "index.html")
+
+    with open(dashboard_path, "w", encoding="utf-8") as f:
+        f.write(html)
+
+    with open(index_path, "w", encoding="utf-8") as f:
+        f.write(html)
 
 
 def generate_empty_dashboard() -> str:
