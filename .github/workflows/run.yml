@@ -1,36 +1,35 @@
-name: Polymarket Bot
+name: Polymarket Paper Trading Bot
+
+# ============================================================================
+# PAPER TRADING PIPELINE - INDÉPENDANT DES SNAPSHOTS
+# ============================================================================
+# Ce workflow fait tourner le bot de paper trading.
+# Il ne touche PAS aux snapshots (géré par snapshot.yml).
+# ============================================================================
 
 on:
-  # Run every 6 hours for paper trading
   schedule:
+    # Toutes les 6h: 00:00, 06:00, 12:00, 18:00 UTC
     - cron: '0 */6 * * *'
-  
-  # Manual trigger
   workflow_dispatch:
     inputs:
-      mode:
-        description: 'Run mode'
-        required: true
-        default: 'paper'
-        type: choice
-        options:
-          - paper              # Standard strategies (4)
-          - paper_unlimited    # Unlimited strategies (4)
-          - paper_experimental # Experimental strategies
-          - paper_all          # ALL strategies
-          - paper_quick        # Quick test (balanced + unlimited_balanced)
-          - dry_run
-          - scan_only
-          - live
+      strategy:
+        description: 'Strategy to run'
+        required: false
+        default: 'default'
+        type: string
 
-# Required for pushing commits and deploying pages
 permissions:
   contents: write
   pages: write
   id-token: write
 
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
-  run-bot:
+  paper-trading:
     runs-on: ubuntu-latest
     
     steps:
@@ -39,28 +38,18 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
-      
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      
+
       - name: Install dependencies
-        run: pip install -r requirements.txt
-      
-      # Scheduled runs: ALL strategies
-      - name: Run bot (scheduled)
-        if: github.event_name == 'schedule'
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
-          echo "Running ALL strategies..."
-          python bot.py --paper all
-      
-      # Manual runs
-      - name: Run bot (manual)
-        if: github.event_name == 'workflow_dispatch'
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run paper trading bot
         env:
           POLYMARKET_API_KEY: ${{ secrets.POLYMARKET_API_KEY }}
           POLYMARKET_SECRET: ${{ secrets.POLYMARKET_SECRET }}
@@ -69,118 +58,56 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
-          MODE="${{ inputs.mode }}"
-          
-          if [ "$MODE" = "scan_only" ]; then
-            python bot.py --scan-only
-          elif [ "$MODE" = "live" ]; then
-            python bot.py --live <<< "CONFIRM"
-          elif [ "$MODE" = "dry_run" ]; then
-            python bot.py
-          elif [ "$MODE" = "paper" ]; then
-            python bot.py --paper standard
-          elif [ "$MODE" = "paper_unlimited" ]; then
-            python bot.py --paper unlimited
-          elif [ "$MODE" = "paper_experimental" ]; then
-            python bot.py --paper experimental
-          elif [ "$MODE" = "paper_all" ]; then
-            python bot.py --paper all
-          elif [ "$MODE" = "paper_quick" ]; then
-            python bot.py --paper quick
+          STRATEGY="${{ inputs.strategy }}"
+          if [ -z "$STRATEGY" ] || [ "$STRATEGY" = "default" ]; then
+            python bot.py --paper
           else
-            python bot.py --paper standard
+            python bot.py --paper --strategy "$STRATEGY"
           fi
-      
-      # Commit portfolio changes and snapshots
+
+      - name: Generate dashboard
+        run: python dashboard.py
+
       - name: Commit changes
         run: |
-          echo "=== Files to commit ==="
-          ls -la portfolio_*.json 2>/dev/null || echo "No portfolio files"
-          ls -la snapshots/ 2>/dev/null || echo "No snapshots directory"
-          
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          # Add portfolio files
-          git add portfolio_*.json 2>/dev/null || true
-          
-          # Add snapshot files (create dir if needed)
-          mkdir -p snapshots
-          git add snapshots/*.json 2>/dev/null || true
-          
-          # Add bot history
-          git add bot_history.json 2>/dev/null || true
-          
-          # Commit if there are changes
-          git diff --staged --quiet || git commit -m "Bot run: $(date -u '+%Y-%m-%d %H:%M') UTC"
-          
-          # Pull and push
+          # Pull latest to avoid conflicts
           git pull --rebase origin main || true
-          git push origin main || echo "Nothing to push"
-      
-      # Generate dashboard
-      - name: Generate dashboard
-        run: |
-          mkdir -p site
-          python generate_dashboard.py
-          mv dashboard.html site/index.html
-      
-      # Upload for Pages deployment
-      - name: Upload Pages artifact
+          
+          # ============================================================
+          # NOTE: On ne commit plus snapshots/*.json ici
+          # Les snapshots sont gérés par le workflow snapshot.yml
+          # ============================================================
+          
+          # Add portfolio and history files ONLY
+          git add portfolios/*.json 2>/dev/null || true
+          git add bot_history/*.json 2>/dev/null || true
+          git add dashboard.html 2>/dev/null || true
+          
+          # Commit if changes
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "🤖 Paper trading $(date -u '+%Y-%m-%d %H:%M') UTC"
+            git push origin main
+          fi
+
+      - name: Upload artifact for Pages
         uses: actions/upload-pages-artifact@v3
         with:
-          path: site
-      
-      # Upload logs for debugging
-      - name: Upload logs
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: bot-logs-${{ github.run_number }}
-          path: |
-            bot_history.json
-            portfolio_*.json
-            snapshots/
-          retention-days: 30
+          path: '.'
 
-  # SEPARATE JOB for deploying pages - this is required!
   deploy-pages:
-    needs: run-bot
+    needs: paper-trading
     runs-on: ubuntu-latest
+    
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
-  # Cleanup old snapshots (runs weekly on Sundays)
-  cleanup-snapshots:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'schedule' && github.event.schedule == '0 0 * * 0'
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-      
-      - name: Cleanup old snapshots
-        run: |
-          cd snapshots 2>/dev/null || exit 0
-          
-          CUTOFF=$(date -d '30 days ago' +%Y%m%d)
-          
-          for f in snapshot_*.json; do
-            DATE=$(echo "$f" | grep -oP '\d{8}' | head -1)
-            if [ -n "$DATE" ] && [ "$DATE" -lt "$CUTOFF" ]; then
-              echo "Deleting old snapshot: $f"
-              rm "$f"
-            fi
-          done
-          
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add -A
-          git diff --staged --quiet || git commit -m "Cleanup: remove snapshots older than 30 days"
-          git push origin main || true

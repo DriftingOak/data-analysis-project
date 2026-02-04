@@ -2,6 +2,8 @@
 POLYMARKET BOT - Strategy
 =========================
 Trade selection logic based on simple rules.
+
+MODIFIÉ: Utilise filters.py pour is_geopolitical et get_cluster (ENTITY + ACTION)
 """
 
 from typing import Dict, List, Optional, Tuple
@@ -9,6 +11,11 @@ from datetime import datetime
 from dataclasses import dataclass
 
 import config
+
+# =============================================================================
+# IMPORTANT: Import depuis filters.py (nouveau filtre ENTITY + ACTION)
+# =============================================================================
+from filters import is_geopolitical, get_cluster
 
 # =============================================================================
 # DATA CLASSES
@@ -32,40 +39,13 @@ class TradeCandidate:
 # FILTERING
 # =============================================================================
 
-def is_geopolitical(question: str) -> bool:
-    """Check if market is geopolitical based on keywords.
-    
-    Strategy:
-    1. Must NOT contain any exclusion keyword
-    2. Must contain at least one GEO keyword (country, leader, org, city)
-    3. Action keywords alone are NOT sufficient
-    """
-    q = question.lower()
-    
-    # First: hard exclusions (fast path out)
-    if any(excl in q for excl in config.EXCLUDE_KEYWORDS):
-        return False
-    
-    # Must have at least one real geo keyword (not just action words)
-    has_geo = any(kw in q for kw in config.GEO_KEYWORDS)
-    
-    return has_geo
-
-
-def get_cluster(question: str) -> str:
-    """Identify which geopolitical cluster a market belongs to.
-    
-    Returns the FIRST matching cluster (order matters for priority).
-    """
-    q = question.lower()
-    
-    # Check clusters in priority order
-    for cluster_name in ["ukraine", "mideast", "china", "latam", "europe", "africa"]:
-        keywords = config.CLUSTERS.get(cluster_name, [])
-        if any(kw in q for kw in keywords):
-            return cluster_name
-    
-    return "other"
+# NOTE: is_geopolitical() et get_cluster() sont maintenant importés depuis filters.py
+# Ils utilisent la logique ENTITY + ACTION (plus strict, moins de faux positifs)
+#
+# L'ancienne version utilisait seulement config.GEO_KEYWORDS qui matchait
+# n'importe quel mot-clé. La nouvelle version requiert:
+# - Un ENTITY (pays, leader, organisation)
+# - ET une ACTION (strike, invade, ceasefire, sanctions, etc.)
 
 
 def get_region_detail(question: str) -> str:
@@ -100,7 +80,7 @@ def is_valid_market(
         
     question = market.get("question", "")
     
-    # Must be geopolitical
+    # Must be geopolitical (now uses ENTITY + ACTION from filters.py)
     if not is_geopolitical(question):
         return False, "not_geopolitical"
     
@@ -243,7 +223,7 @@ def evaluate_market(
         price_yes=price_yes,
         price_entry=price_entry,
         volume=float(market.get("volume", 0) or 0),
-        cluster=get_cluster(market.get("question", "")),
+        cluster=get_cluster(market.get("question", "")),  # Utilise filters.get_cluster
         days_to_close=days_to_close,
         end_ts=end_ts,
     )
@@ -265,7 +245,7 @@ def calculate_exposure(positions: List[Dict]) -> Tuple[float, Dict[str, float]]:
     for pos in positions:
         size = float(pos.get("size", 0))
         question = pos.get("question", "")
-        cluster = get_cluster(question)
+        cluster = get_cluster(question)  # Utilise filters.get_cluster
         
         total += size
         by_cluster[cluster] = by_cluster.get(cluster, 0) + size
@@ -286,11 +266,8 @@ def select_trades(
 ) -> List[TradeCandidate]:
     """Select which trades to execute based on constraints.
     
-    Prioritization:
-    - If cash is low (< 30%), prioritize fast-resolving markets
-    - Otherwise, prioritize high volume (liquidity)
+    Returns list of TradeCandidate objects to execute.
     """
-    # Use defaults from config if not specified
     if max_exposure_pct is None:
         max_exposure_pct = config.MAX_TOTAL_EXPOSURE_PCT
     if max_cluster_pct is None:
@@ -298,69 +275,39 @@ def select_trades(
     if bet_size is None:
         bet_size = config.BET_SIZE
     
-    # Filter out markets we already have positions in
-    candidates = [c for c in candidates if c.market_id not in existing_market_ids]
-    
-    if not candidates:
-        return []
-    
-    # Determine prioritization mode
-    cash_pct = cash_available / bankroll if bankroll > 0 else 0
-    
-    if cash_pct < config.MIN_CASH_PCT:
-        # Low cash: prioritize fast resolution
-        candidates.sort(key=lambda c: c.days_to_close)
-        print(f"[INFO] Low cash mode ({cash_pct:.1%}): prioritizing fast resolution")
-    else:
-        # Normal: prioritize liquidity
-        candidates.sort(key=lambda c: c.volume, reverse=True)
-        print(f"[INFO] Normal mode ({cash_pct:.1%}): prioritizing volume")
-    
-    # Select trades within constraints
-    selected = []
-    running_exposure = current_exposure
-    running_cluster_exposure = exposure_by_cluster.copy()
-    
     max_total = bankroll * max_exposure_pct
     max_cluster = bankroll * max_cluster_pct
     
-    for candidate in candidates:
-        # Check if we have enough cash
+    # Sort by volume (prefer more liquid markets)
+    sorted_candidates = sorted(candidates, key=lambda x: x.volume, reverse=True)
+    
+    selected = []
+    sim_exposure = current_exposure
+    sim_cluster_exp = dict(exposure_by_cluster)
+    
+    for candidate in sorted_candidates:
+        # Skip if already in this market
+        if candidate.market_id in existing_market_ids:
+            continue
+        
+        # Check if we have cash
         if cash_available < bet_size:
-            print(f"[INFO] No more cash available (${cash_available:.2f})")
             break
         
         # Check total exposure
-        if running_exposure + bet_size > max_total:
-            print(f"[INFO] Would exceed max total exposure ({running_exposure + bet_size:.0f} > {max_total:.0f})")
+        if sim_exposure + bet_size > max_total:
             continue
         
         # Check cluster exposure
-        cluster_exp = running_cluster_exposure.get(candidate.cluster, 0)
+        cluster_exp = sim_cluster_exp.get(candidate.cluster, 0)
         if cluster_exp + bet_size > max_cluster:
-            print(f"[INFO] Would exceed max {candidate.cluster} exposure ({cluster_exp + bet_size:.0f} > {max_cluster:.0f})")
             continue
         
-        # Add to selection
+        # Accept this trade
         selected.append(candidate)
+        sim_exposure += bet_size
+        sim_cluster_exp[candidate.cluster] = cluster_exp + bet_size
         cash_available -= bet_size
-        running_exposure += bet_size
-        running_cluster_exposure[candidate.cluster] = cluster_exp + bet_size
+        existing_market_ids.add(candidate.market_id)
     
     return selected
-
-
-# =============================================================================
-# SUMMARY
-# =============================================================================
-
-def format_candidate_summary(candidate: TradeCandidate) -> str:
-    """Format a candidate for logging."""
-    return (
-        f"{candidate.bet_side} @ {candidate.price_entry:.1%} | "
-        f"YES={candidate.price_yes:.1%} | "
-        f"Vol=${candidate.volume:,.0f} | "
-        f"{candidate.days_to_close:.0f}d | "
-        f"[{candidate.cluster}] | "
-        f"{candidate.question[:50]}..."
-    )
