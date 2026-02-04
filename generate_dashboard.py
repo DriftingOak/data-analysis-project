@@ -149,13 +149,14 @@ def fetch_market_data(market_ids: List[str]) -> Dict[str, dict]:
 
 def generate_dashboard():
     """Generate HTML dashboard from all portfolio files."""
+    base_dir = os.path.dirname(os.path.abspath(__file__))
     strategy_names = get_strategy_names()
     
     portfolios = {}
     all_market_ids = set()
     
     for strat_key, strat_name in strategy_names.items():
-        filepath = f"portfolio_{strat_key}.json"
+        filepath = os.path.join(base_dir, f"portfolio_{strat_key}.json")
         
         data = load_portfolio(filepath)
         if data:
@@ -171,8 +172,9 @@ def generate_dashboard():
     if not portfolios:
         print("[WARN] No portfolio files found")
         html = generate_empty_dashboard()
-        with open("dashboard.html", "w", encoding="utf-8") as f:
-            f.write(html)
+        for filename in ("dashboard.html", "index.html"):
+            with open(os.path.join(base_dir, filename), "w", encoding="utf-8") as f:
+                f.write(html)
         return
     
     print(f"[INFO] Loaded {len(portfolios)} portfolios")
@@ -181,10 +183,15 @@ def generate_dashboard():
     
     html = generate_html(portfolios, market_data)
     
-    with open("dashboard.html", "w", encoding="utf-8") as f:
-        f.write(html)
+    for filename in ("dashboard.html", "index.html"):
+        with open(os.path.join(base_dir, filename), "w", encoding="utf-8") as f:
+            f.write(html)
     
-    print(f"[INFO] Dashboard generated: dashboard.html")
+    print(
+        "[INFO] Dashboard generated: "
+        f"{os.path.join(base_dir, 'dashboard.html')} and "
+        f"{os.path.join(base_dir, 'index.html')}"
+    )
 
 
 def generate_empty_dashboard() -> str:
