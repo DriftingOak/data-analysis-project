@@ -220,7 +220,8 @@ def run_paper_trading(strategy_name: str = None):
     # Run each strategy
     for strat_name, strat_params in strategies_to_run.items():
         log("\n" + "=" * 60)
-        log(f"STRATEGY: {strat_params['name']}")
+        display_name = strat_params.get("name", strat_name)
+        log(f"STRATEGY: {display_name}")
         log("=" * 60)
         
         portfolio_file = strat_params.get("portfolio_file", f"portfolio_{strat_name}.json")
@@ -350,12 +351,12 @@ def run_paper_trading(strategy_name: str = None):
         pt.save_portfolio(portfolio, portfolio_file)
         
         # 6) Summary for this strategy
-        pt.print_portfolio_summary(portfolio, strat_params["name"])
+        pt.print_portfolio_summary(portfolio, display_name)
         
         # Add to Telegram summary
         open_count = len([p for p in portfolio.positions if p.status == "open"])
         summary_lines.append(
-            f"<b>{strat_params['name']}</b>: ${portfolio.total_pnl:+.2f} "
+            f"<b>{display_name}</b>: ${portfolio.total_pnl:+.2f} "
             f"({portfolio.wins}W/{portfolio.losses}L) | {open_count} open"
         )
     
