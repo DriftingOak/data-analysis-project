@@ -30,17 +30,6 @@ import strategies as strat_config
 
 
 # =============================================================================
-# HELPER: Get strategy param with fallback for old/new key names
-# =============================================================================
-
-def get_strategy_param(params: Dict, new_key: str, old_key: str, default):
-    """Get a strategy parameter, supporting both old and new key names."""
-    if params is None:
-        return default
-    return params.get(new_key, params.get(old_key, default))
-
-
-# =============================================================================
 # BACKTEST STRUCTURES
 # =============================================================================
 
@@ -78,9 +67,9 @@ def analyze_snapshot_for_strategy(
 ) -> BacktestResult:
     """Analyze what a strategy would see in a snapshot."""
     
-    # Support both old and new key names
-    price_yes_min = get_strategy_param(strategy_params, "price_min", "price_yes_min", 0)
-    price_yes_max = get_strategy_param(strategy_params, "price_max", "price_yes_max", 1)
+    # Use original key names: price_yes_min, price_yes_max
+    price_yes_min = strategy_params.get("price_yes_min", 0)
+    price_yes_max = strategy_params.get("price_yes_max", 1)
     min_volume = strategy_params.get("min_volume", 0)
     max_volume = strategy_params.get("max_volume", float("inf"))
     
@@ -318,9 +307,9 @@ def main():
     elif cmd == "strategies":
         print("\nAvailable strategies:")
         for name, params in strat_config.STRATEGIES.items():
-            side = params.get("side", params.get("bet_side", "NO"))
-            pmin = params.get("price_min", params.get("price_yes_min", 0)) * 100
-            pmax = params.get("price_max", params.get("price_yes_max", 1)) * 100
+            side = params.get("bet_side", "NO")
+            pmin = params.get("price_yes_min", 0) * 100
+            pmax = params.get("price_yes_max", 1) * 100
             print(f"  {name:<25} {side} {pmin:.0f}-{pmax:.0f}%")
     
     else:

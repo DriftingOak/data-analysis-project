@@ -63,18 +63,6 @@ class TradeCandidate:
 
 
 # =============================================================================
-# HELPER: Get strategy param with fallback for old/new key names
-# =============================================================================
-
-def get_strategy_param(params: Dict, new_key: str, old_key: str, default):
-    """Get a strategy parameter, supporting both old and new key names."""
-    if params is None:
-        return default
-    # Try new key first, then old key, then default
-    return params.get(new_key, params.get(old_key, default))
-
-
-# =============================================================================
 # FILTERING
 # =============================================================================
 
@@ -169,22 +157,21 @@ def evaluate_market(
         timestamps: Parsed timestamps
         tokens: Token IDs for YES/NO
         current_ts: Current timestamp
-        strategy_params: Optional dict with strategy overrides.
-            Supports both old and new key names:
-            - side / bet_side: "YES" or "NO"
-            - price_min / price_yes_min: Minimum YES price
-            - price_max / price_yes_max: Maximum YES price
+        strategy_params: Optional dict with strategy overrides:
+            - bet_side: "YES" or "NO"
+            - price_yes_min: Minimum YES price
+            - price_yes_max: Maximum YES price
             - min_volume: Minimum volume
             - max_volume: Maximum volume
     """
-    # Use strategy params with fallback to old key names
+    # Use strategy params with original key names
     if strategy_params is None:
         strategy_params = {}
     
-    # Support both old and new key names
-    bet_side = get_strategy_param(strategy_params, "side", "bet_side", getattr(config, 'BET_SIDE', "NO"))
-    price_yes_min = get_strategy_param(strategy_params, "price_min", "price_yes_min", getattr(config, 'PRICE_YES_MIN', 0.02))
-    price_yes_max = get_strategy_param(strategy_params, "price_max", "price_yes_max", getattr(config, 'PRICE_YES_MAX', 0.60))
+    # Original key names: bet_side, price_yes_min, price_yes_max
+    bet_side = strategy_params.get("bet_side", getattr(config, 'BET_SIDE', "NO"))
+    price_yes_min = strategy_params.get("price_yes_min", getattr(config, 'PRICE_YES_MIN', 0.20))
+    price_yes_max = strategy_params.get("price_yes_max", getattr(config, 'PRICE_YES_MAX', 0.60))
     min_volume = strategy_params.get("min_volume", getattr(config, 'MIN_VOLUME', 10000))
     max_volume = strategy_params.get("max_volume", float("inf"))
     

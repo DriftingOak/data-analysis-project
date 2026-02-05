@@ -67,24 +67,30 @@ def get_strategy_description(key: str) -> str:
     """Get strategy description."""
     if DYNAMIC_STRATEGIES and key in strat_config.STRATEGIES:
         params = strat_config.STRATEGIES[key]
-        # Support both old and new key names
-        side = params.get("side", params.get("bet_side", "NO"))
-        pmin = params.get("price_min", params.get("price_yes_min", 0)) * 100
-        pmax = params.get("price_max", params.get("price_yes_max", 1)) * 100
+        # Use original key names: bet_side, price_yes_min, price_yes_max
+        side = params.get("bet_side", "NO")
+        pmin = params.get("price_yes_min", 0) * 100
+        pmax = params.get("price_yes_max", 1) * 100
         min_vol = params.get("min_volume", 0)
+        max_vol = params.get("max_volume", float("inf"))
         
         desc = f"Bet {side} on YES {pmin:.0f}-{pmax:.0f}%"
         if min_vol >= 1_000_000:
             desc += f", Vol>${min_vol/1_000_000:.0f}M"
         elif min_vol >= 1_000:
             desc += f", Vol>${min_vol/1_000:.0f}k"
+        
+        if max_vol < float("inf"):
+            desc += f"-{max_vol/1_000:.0f}k"
+        
         return desc
     
+    # Fallback static descriptions (original values)
     static_desc = {
-        "conservative": "Bet NO on YES 2-12%, Vol>$200k",
-        "balanced": "Bet NO on YES 2-18%, Vol>$100k",
-        "aggressive": "Bet NO on YES 2-25%, Vol>$50k",
-        "volume_sweet": "Bet NO on YES 3-20%, Vol>$300k",
+        "conservative": "Bet NO on YES 10-25%, Vol>$10k",
+        "balanced": "Bet NO on YES 20-60%, Vol>$10k",
+        "aggressive": "Bet NO on YES 30-60%, Vol>$10k",
+        "volume_sweet": "Bet NO on YES 20-60%, Vol $15k-100k",
     }
     return static_desc.get(key, "")
 

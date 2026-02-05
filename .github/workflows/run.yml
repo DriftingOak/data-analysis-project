@@ -91,25 +91,27 @@ jobs:
           fi
 
       - name: Generate dashboard
-        run: python dashboard.py
-
-      - name: Commit changes
         run: |
+          mkdir -p site
+          python generate_dashboard.py
+          mv dashboard.html site/index.html
+
+      - name: Commit portfolio changes
+        run: |
+          echo "=== Portfolio files ==="
+          ls -la portfolio_*.json 2>/dev/null || echo "No portfolio files found"
+          
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
           # Pull latest to avoid conflicts
           git pull --rebase origin main || true
           
-          # ============================================================
-          # NOTE: On ne commit plus snapshots/*.json ici
-          # Les snapshots sont gérés par le workflow snapshot.yml
-          # ============================================================
+          # Add portfolio files (at root, not in subfolder)
+          git add portfolio_*.json || true
           
-          # Add portfolio and history files ONLY
-          git add portfolios/*.json 2>/dev/null || true
-          git add bot_history/*.json 2>/dev/null || true
-          git add dashboard.html 2>/dev/null || true
+          echo "=== Staged changes ==="
+          git diff --staged --stat
           
           # Commit if changes
           if git diff --staged --quiet; then
@@ -119,10 +121,20 @@ jobs:
             git push origin main
           fi
 
-      - name: Upload artifact for Pages
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: site
+
+      - name: Upload logs
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bot-logs-${{ github.run_number }}
+          path: |
+            bot_history.json
+            portfolio_*.json
+          retention-days: 30
 
   deploy-pages:
     needs: paper-trading
