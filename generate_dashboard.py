@@ -4,6 +4,8 @@ POLYMARKET BOT - Dashboard Generator
 ====================================
 Generates a visual HTML dashboard from portfolio data.
 Dynamically loads all strategies from strategies.py.
+
+UPDATED: Uses new strategy key names (side, price_min, price_max)
 """
 
 import json
@@ -47,7 +49,9 @@ def get_strategy_names() -> Dict[str, str]:
                 if prefix in key:
                     emoji = e
                     break
-            names[key] = f"{emoji} {params.get('name', key)}"
+            # Format display name from key
+            display_name = key.replace("_", " ").title()
+            names[key] = f"{emoji} {display_name}"
         
         return names
     else:
@@ -63,16 +67,24 @@ def get_strategy_description(key: str) -> str:
     """Get strategy description."""
     if DYNAMIC_STRATEGIES and key in strat_config.STRATEGIES:
         params = strat_config.STRATEGIES[key]
-        side = params.get("bet_side", "NO")
-        pmin = params.get("price_yes_min", 0) * 100
-        pmax = params.get("price_yes_max", 1) * 100
-        return f"Bet {side} on YES {pmin:.0f}-{pmax:.0f}%"
+        # Support both old and new key names
+        side = params.get("side", params.get("bet_side", "NO"))
+        pmin = params.get("price_min", params.get("price_yes_min", 0)) * 100
+        pmax = params.get("price_max", params.get("price_yes_max", 1)) * 100
+        min_vol = params.get("min_volume", 0)
+        
+        desc = f"Bet {side} on YES {pmin:.0f}-{pmax:.0f}%"
+        if min_vol >= 1_000_000:
+            desc += f", Vol>${min_vol/1_000_000:.0f}M"
+        elif min_vol >= 1_000:
+            desc += f", Vol>${min_vol/1_000:.0f}k"
+        return desc
     
     static_desc = {
-        "conservative": "Bet NO on YES 10-25%",
-        "balanced": "Bet NO on YES 20-60%",
-        "aggressive": "Bet NO on YES 30-60%",
-        "volume_sweet": "Bet NO on YES 20-60%, Vol $15k-100k",
+        "conservative": "Bet NO on YES 2-12%, Vol>$200k",
+        "balanced": "Bet NO on YES 2-18%, Vol>$100k",
+        "aggressive": "Bet NO on YES 2-25%, Vol>$50k",
+        "volume_sweet": "Bet NO on YES 3-20%, Vol>$300k",
     }
     return static_desc.get(key, "")
 
@@ -339,9 +351,7 @@ def generate_html(portfolios: Dict, market_data: Dict[str, dict]) -> str:
                     <span class="toggle-icon">▶</span> {name} - Open Positions ({len(positions)})
                 </h3>
                 <div class="section-content">
-                <div class="table-controls">
-                    <input type="text" class="search-box" placeholder="Search..." onkeyup="filterTable('{table_id}', this.value)">
-                </div>
+                <input type="text" class="search-box" placeholder="Filter positions..." onkeyup="filterTable('{table_id}', this.value)">
                 <div class="table-wrapper">
                 <table id="{table_id}" class="sortable">
                     <thead>
@@ -364,25 +374,29 @@ def generate_html(portfolios: Dict, market_data: Dict[str, dict]) -> str:
                 market_id = pos.get("market_id")
                 mkt = market_data.get(market_id, {})
                 
-                entry_no = pos.get("entry_price", 0)
-                entry_yes = 1 - entry_no
-                current_yes = mkt.get("price_yes") if mkt else None
+                entry_price = pos.get("entry_price", 0)
+                shares = pos.get("shares", 0)
                 size_usd = pos.get("size_usd", 0)
-                
-                # Entry date and expected close
+                bet_side = pos.get("bet_side", "NO")
                 entry_date = pos.get("entry_date", "")[:10] if pos.get("entry_date") else "-"
                 expected_close = pos.get("expected_close", "")[:10] if pos.get("expected_close") else "-"
                 
+                # Entry YES price
+                if bet_side == "NO":
+                    entry_yes = 1 - entry_price
+                else:
+                    entry_yes = entry_price
+                
+                current_yes = mkt.get("price_yes")
                 if current_yes is not None:
-                    current_no = 1 - current_yes
-                    shares = pos.get("shares", 0)
-                    if pos.get("bet_side") == "NO":
-                        unrealized = (current_no - entry_no) * shares
+                    if bet_side == "NO":
+                        current_no = 1 - current_yes
+                        unrealized = (current_no - entry_price) * shares
                     else:
-                        unrealized = (current_yes - entry_yes) * shares
+                        unrealized = (current_yes - entry_price) * shares
+                    
                     current_str = f"{current_yes:.0%}"
-                    pnl_pct = (unrealized / size_usd * 100) if size_usd > 0 else 0
-                    pnl_str = f"{pnl_pct:+.0f}% (${unrealized:+.0f})"
+                    pnl_str = f"${unrealized:+.0f}"
                     pnl_cls = "positive" if unrealized > 0 else "negative" if unrealized < 0 else ""
                 else:
                     current_str = "-"
@@ -445,7 +459,15 @@ def generate_html(portfolios: Dict, market_data: Dict[str, dict]) -> str:
                 pnl_trade = trade.get("pnl", 0)
                 result_class = "win" if result == "win" else "lose"
                 pnl_class = "positive" if pnl_trade > 0 else "negative"
-                entry_yes = 1 - trade.get("entry_price", 0)
+                
+                # Entry YES price
+                entry_price = trade.get("entry_price", 0)
+                bet_side = trade.get("bet_side", "NO")
+                if bet_side == "NO":
+                    entry_yes = 1 - entry_price
+                else:
+                    entry_yes = entry_price
+                
                 entry_date = trade.get("entry_date", "")[:10] if trade.get("entry_date") else "-"
                 close_date = trade.get("close_date", "")[:10] if trade.get("close_date") else "-"
                 
@@ -530,52 +552,50 @@ def generate_html(portfolios: Dict, market_data: Dict[str, dict]) -> str:
         .win {{ color: var(--positive); }}
         .lose {{ color: var(--negative); }}
         
-        .exposure-bar {{ background: var(--border); height: 6px; border-radius: 3px; margin: 10px 0 5px 0; }}
-        .exposure-fill {{ background: linear-gradient(90deg, var(--accent), var(--positive)); height: 100%; border-radius: 3px; }}
-        .exposure-label {{ font-size: 0.8em; color: var(--text-secondary); }}
+        .exposure-bar {{ background: var(--border); height: 6px; border-radius: 3px; margin: 10px 0 5px 0; overflow: hidden; }}
+        .exposure-fill {{ background: var(--accent); height: 100%; border-radius: 3px; }}
+        .exposure-label {{ font-size: 0.75em; color: var(--text-secondary); }}
         
-        .cluster-tags {{ margin-top: 10px; }}
-        .tag {{ display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75em; margin: 2px; background: var(--border); }}
-        .tag-mideast {{ background: #4a3a2a; color: #ffaa44; }}
-        .tag-eastern_europe, .tag-ukraine {{ background: #3a3a4a; color: #88aaff; }}
-        .tag-asia, .tag-china {{ background: #3a4a3a; color: #88ff88; }}
-        .tag-latam {{ background: #4a3a4a; color: #ff88ff; }}
-        .tag-europe {{ background: #3a4a4a; color: #88ffff; }}
-        .tag-africa {{ background: #4a4a3a; color: #ffff88; }}
+        .cluster-tags {{ margin-top: 10px; display: flex; flex-wrap: wrap; gap: 5px; }}
+        .tag {{ padding: 2px 8px; border-radius: 4px; font-size: 0.7em; background: var(--border); }}
+        .tag-mideast {{ background: #3d3529; color: #ffcc80; }}
+        .tag-eastern_europe {{ background: #2a3d2a; color: #a5d6a7; }}
+        .tag-china {{ background: #3d2929; color: #ef9a9a; }}
+        .tag-korea {{ background: #29353d; color: #81d4fa; }}
+        .tag-latam {{ background: #3d2940; color: #ce93d8; }}
+        .tag-other {{ background: var(--border); color: var(--text-secondary); }}
         
-        .section {{ background: var(--bg-secondary); border-radius: 8px; margin-bottom: 15px; border: 1px solid var(--border); }}
+        .section {{ margin-bottom: 20px; }}
         .section-header {{ 
-            padding: 12px 15px; 
             cursor: pointer; 
-            margin: 0;
-            font-size: 0.95em;
+            padding: 12px 15px; 
+            background: var(--bg-secondary); 
+            border-radius: 8px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }}
-        .section-header:hover {{ background: var(--bg-card); border-radius: 8px 8px 0 0; }}
-        .toggle-icon {{ transition: transform 0.2s; font-size: 0.8em; }}
+        .section-header:hover {{ background: var(--bg-card); }}
+        .toggle-icon {{ font-size: 0.7em; transition: transform 0.2s; }}
         .section:not(.collapsed) .toggle-icon {{ transform: rotate(90deg); }}
-        .section-content {{ display: block; padding: 0 15px 15px 15px; }}
         .section.collapsed .section-content {{ display: none; }}
+        .section-content {{ padding: 15px 0; }}
         
-        .table-controls {{ margin-bottom: 10px; }}
-        .search-box {{
-            padding: 8px 12px;
-            border-radius: 6px;
-            border: 1px solid var(--border);
-            background: var(--bg-primary);
+        .search-box {{ 
+            padding: 8px 12px; 
+            border: 1px solid var(--border); 
+            border-radius: 6px; 
+            background: var(--bg-card); 
             color: var(--text-primary);
-            font-size: 0.85em;
-            width: 250px;
+            margin-bottom: 10px;
+            width: 300px;
         }}
-        .search-box:focus {{ outline: none; border-color: var(--accent); }}
         
         .table-wrapper {{ overflow-x: auto; }}
-        table {{ width: 100%; border-collapse: collapse; font-size: 0.8em; }}
-        th, td {{ padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--border); }}
+        table {{ width: 100%; border-collapse: collapse; font-size: 0.85em; }}
+        th, td {{ padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }}
         th {{ 
-            background: var(--bg-card); 
+            background: var(--bg-secondary); 
             font-weight: 500; 
             cursor: pointer; 
             user-select: none;
@@ -643,32 +663,26 @@ def generate_html(portfolios: Dict, market_data: Dict[str, dict]) -> str:
         }}
         
         // Sortable tables
-        document.querySelectorAll('table.sortable th').forEach(th => {{
-            th.addEventListener('click', () => {{
-                const table = th.closest('table');
+        document.querySelectorAll('th[data-sort]').forEach(th => {{
+            th.addEventListener('click', function() {{
+                const table = this.closest('table');
                 const tbody = table.querySelector('tbody');
                 const rows = Array.from(tbody.querySelectorAll('tr'));
-                const index = th.cellIndex;
-                const type = th.dataset.sort || 'string';
+                const colIndex = Array.from(this.parentNode.children).indexOf(this);
+                const sortType = this.dataset.sort;
                 
-                // Toggle sort direction
-                const isAsc = th.classList.contains('sort-asc');
+                // Toggle direction
+                const isAsc = this.classList.contains('sort-asc');
                 table.querySelectorAll('th').forEach(h => h.classList.remove('sort-asc', 'sort-desc'));
-                th.classList.add(isAsc ? 'sort-desc' : 'sort-asc');
+                this.classList.add(isAsc ? 'sort-desc' : 'sort-asc');
                 
-                // Sort rows
                 rows.sort((a, b) => {{
-                    const aCell = a.cells[index];
-                    const bCell = b.cells[index];
+                    let aVal = a.children[colIndex]?.dataset.value || a.children[colIndex]?.textContent || '';
+                    let bVal = b.children[colIndex]?.dataset.value || b.children[colIndex]?.textContent || '';
                     
-                    let aVal, bVal;
-                    
-                    if (type === 'number') {{
-                        aVal = parseFloat(aCell.dataset.value) || 0;
-                        bVal = parseFloat(bCell.dataset.value) || 0;
-                    }} else {{
-                        aVal = (aCell.dataset.value || aCell.textContent).trim().toLowerCase();
-                        bVal = (bCell.dataset.value || bCell.textContent).trim().toLowerCase();
+                    if (sortType === 'number') {{
+                        aVal = parseFloat(aVal) || 0;
+                        bVal = parseFloat(bVal) || 0;
                     }}
                     
                     if (aVal < bVal) return isAsc ? 1 : -1;

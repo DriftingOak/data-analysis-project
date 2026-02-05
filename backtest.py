@@ -4,6 +4,8 @@ POLYMARKET BOT - Backtest Module
 =================================
 Replay strategies on historical snapshots.
 
+UPDATED: Supports both old and new strategy key names.
+
 Usage:
     python backtest.py list                     # List available snapshots
     python backtest.py analyze <snapshot>       # Analyze a single snapshot
@@ -25,6 +27,17 @@ from dataclasses import dataclass
 
 from snapshot import load_snapshot, list_snapshots, filter_snapshot_by_strategy, RunSnapshot
 import strategies as strat_config
+
+
+# =============================================================================
+# HELPER: Get strategy param with fallback for old/new key names
+# =============================================================================
+
+def get_strategy_param(params: Dict, new_key: str, old_key: str, default):
+    """Get a strategy parameter, supporting both old and new key names."""
+    if params is None:
+        return default
+    return params.get(new_key, params.get(old_key, default))
 
 
 # =============================================================================
@@ -65,13 +78,19 @@ def analyze_snapshot_for_strategy(
 ) -> BacktestResult:
     """Analyze what a strategy would see in a snapshot."""
     
+    # Support both old and new key names
+    price_yes_min = get_strategy_param(strategy_params, "price_min", "price_yes_min", 0)
+    price_yes_max = get_strategy_param(strategy_params, "price_max", "price_yes_max", 1)
+    min_volume = strategy_params.get("min_volume", 0)
+    max_volume = strategy_params.get("max_volume", float("inf"))
+    
     # Filter markets by strategy params
     qualified = filter_snapshot_by_strategy(
         snapshot,
-        price_yes_min=strategy_params.get("price_yes_min", 0),
-        price_yes_max=strategy_params.get("price_yes_max", 1),
-        min_volume=strategy_params.get("min_volume", 0),
-        max_volume=strategy_params.get("max_volume", float("inf")),
+        price_yes_min=price_yes_min,
+        price_yes_max=price_yes_max,
+        min_volume=min_volume,
+        max_volume=max_volume,
     )
     
     # Apply cluster filter if present
@@ -96,9 +115,12 @@ def analyze_snapshot_for_strategy(
     for m in qualified:
         by_cluster[m.cluster] = by_cluster.get(m.cluster, 0) + 1
     
+    # Get strategy name - support both formats
+    strategy_name = strategy_params.get("name", "Unknown")
+    
     return BacktestResult(
         snapshot_id=snapshot.run_id,
-        strategy_name=strategy_params.get("name", "Unknown"),
+        strategy_name=strategy_name,
         timestamp=snapshot.timestamp,
         total_eligible=len(snapshot.markets),
         strategy_qualified=len(qualified),
@@ -162,93 +184,55 @@ def run_simulation(
 def print_snapshot_analysis(result: BacktestResult):
     """Print analysis of a single snapshot."""
     print(f"\n{'='*60}")
-    print(f"Snapshot: {result.snapshot_id}")
+    print(f"SNAPSHOT: {result.snapshot_id}")
     print(f"Strategy: {result.strategy_name}")
-    print(f"Timestamp: {result.timestamp[:16]}")
     print(f"{'='*60}")
-    
-    print(f"\nMarkets:")
-    print(f"  Total eligible (geo): {result.total_eligible}")
-    print(f"  Strategy qualified:   {result.strategy_qualified}")
-    
+    print(f"Total eligible markets: {result.total_eligible}")
+    print(f"Strategy qualified: {result.strategy_qualified}")
     print(f"\nPrice YES distribution:")
-    print(f"  Min:  {result.min_price_yes:.1%}")
-    print(f"  Avg:  {result.avg_price_yes:.1%}")
-    print(f"  Max:  {result.max_price_yes:.1%}")
-    
+    print(f"  Avg: {result.avg_price_yes:.1%}")
+    print(f"  Min: {result.min_price_yes:.1%}")
+    print(f"  Max: {result.max_price_yes:.1%}")
     print(f"\nVolume:")
-    print(f"  Avg:   ${result.avg_volume:,.0f}")
+    print(f"  Avg: ${result.avg_volume:,.0f}")
     print(f"  Total: ${result.total_volume:,.0f}")
-    
-    if result.by_cluster:
-        print(f"\nBy cluster:")
-        for cluster, count in sorted(result.by_cluster.items(), key=lambda x: -x[1]):
-            print(f"  {cluster}: {count}")
+    print(f"\nBy cluster:")
+    for cluster, count in sorted(result.by_cluster.items(), key=lambda x: -x[1]):
+        print(f"  {cluster}: {count}")
 
 
-def print_strategy_comparison(
-    snapshot: RunSnapshot,
-    results: Dict[str, BacktestResult],
-):
-    """Print comparison of strategies on a snapshot."""
+def print_strategy_comparison(snapshot: RunSnapshot, results: Dict[str, BacktestResult]):
+    """Print comparison of multiple strategies."""
     print(f"\n{'='*70}")
-    print(f"STRATEGY COMPARISON - {snapshot.run_id}")
+    print(f"STRATEGY COMPARISON - Snapshot {snapshot.run_id}")
     print(f"{'='*70}")
-    
-    # Header
-    print(f"\n{'Strategy':<25} | {'Qualified':>10} | {'Avg YES':>8} | {'Avg Vol':>12}")
+    print(f"{'Strategy':<25} {'Qualified':>10} {'Avg YES':>10} {'Avg Vol':>12}")
     print("-" * 70)
     
     for name, result in sorted(results.items(), key=lambda x: -x[1].strategy_qualified):
-        print(
-            f"{result.strategy_name:<25} | "
-            f"{result.strategy_qualified:>10} | "
-            f"{result.avg_price_yes:>7.1%} | "
-            f"${result.avg_volume:>10,.0f}"
-        )
+        print(f"{name:<25} {result.strategy_qualified:>10} {result.avg_price_yes:>10.1%} ${result.avg_volume:>11,.0f}")
 
 
 def print_simulation_summary(results: List[BacktestResult], strategy_name: str):
     """Print summary of simulation across snapshots."""
     if not results:
-        print("No results")
+        print("No results to display")
         return
     
-    print(f"\n{'='*70}")
+    print(f"\n{'='*60}")
     print(f"SIMULATION SUMMARY: {strategy_name}")
-    print(f"{'='*70}")
+    print(f"{'='*60}")
     print(f"Snapshots analyzed: {len(results)}")
     
-    # Aggregate stats
-    total_qualified = sum(r.strategy_qualified for r in results)
-    avg_qualified = total_qualified / len(results)
+    avg_qualified = sum(r.strategy_qualified for r in results) / len(results)
     avg_price = sum(r.avg_price_yes for r in results) / len(results)
     
-    print(f"\nAcross all snapshots:")
-    print(f"  Avg markets per run: {avg_qualified:.1f}")
-    print(f"  Total opportunities: {total_qualified}")
-    print(f"  Avg YES price:       {avg_price:.1%}")
+    print(f"Avg markets qualified per run: {avg_qualified:.1f}")
+    print(f"Avg YES price: {avg_price:.1%}")
     
-    # Trend over time
-    print(f"\nTrend (first 5 → last 5 snapshots):")
-    first_5 = results[:5] if len(results) >= 5 else results
-    last_5 = results[-5:] if len(results) >= 5 else results
-    
-    avg_first = sum(r.strategy_qualified for r in first_5) / len(first_5)
-    avg_last = sum(r.strategy_qualified for r in last_5) / len(last_5)
-    
-    print(f"  First 5 avg: {avg_first:.1f} markets")
-    print(f"  Last 5 avg:  {avg_last:.1f} markets")
-    
-    # Cluster breakdown across all
-    all_clusters = {}
-    for r in results:
-        for cluster, count in r.by_cluster.items():
-            all_clusters[cluster] = all_clusters.get(cluster, 0) + count
-    
-    print(f"\nCluster distribution (total):")
-    for cluster, count in sorted(all_clusters.items(), key=lambda x: -x[1]):
-        print(f"  {cluster}: {count}")
+    print(f"\nTimeline:")
+    for result in results[-10:]:  # Last 10
+        print(f"  {result.timestamp[:16]}: {result.strategy_qualified} markets")
 
 
 # =============================================================================
@@ -260,7 +244,7 @@ def main():
         print(__doc__)
         return
     
-    cmd = sys.argv[1]
+    cmd = sys.argv[1].lower()
     
     if cmd == "list":
         snapshots = list_snapshots()
@@ -332,7 +316,12 @@ def main():
         print_simulation_summary(results, strategy_name)
     
     elif cmd == "strategies":
-        strat_config.print_strategies()
+        print("\nAvailable strategies:")
+        for name, params in strat_config.STRATEGIES.items():
+            side = params.get("side", params.get("bet_side", "NO"))
+            pmin = params.get("price_min", params.get("price_yes_min", 0)) * 100
+            pmax = params.get("price_max", params.get("price_yes_max", 1)) * 100
+            print(f"  {name:<25} {side} {pmin:.0f}-{pmax:.0f}%")
     
     else:
         print(f"Unknown command: {cmd}")
