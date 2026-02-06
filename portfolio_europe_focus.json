@@ -18,8 +18,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.565,
-      "price_yes_current": 0.435
+      "current_price": 0.575,
+      "price_yes_current": 0.425
     },
     {
       "market_id": "567689",
@@ -54,8 +54,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.4,
-      "price_yes_current": 0.6
+      "current_price": 0.39,
+      "price_yes_current": 0.61
     },
     {
       "market_id": "1171663",
@@ -72,8 +72,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.76,
-      "price_yes_current": 0.24
+      "current_price": 0.755,
+      "price_yes_current": 0.245
     },
     {
       "market_id": "677361",
@@ -90,8 +90,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.46499999999999997,
-      "price_yes_current": 0.535
+      "current_price": 0.55,
+      "price_yes_current": 0.45
     },
     {
       "market_id": "665224",
@@ -108,8 +108,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.7150000000000001,
-      "price_yes_current": 0.285
+      "current_price": 0.675,
+      "price_yes_current": 0.325
     },
     {
       "market_id": "956449",
@@ -126,8 +126,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.735,
-      "price_yes_current": 0.265
+      "current_price": 0.785,
+      "price_yes_current": 0.215
     },
     {
       "market_id": "1236458",
@@ -146,12 +146,30 @@
       "pnl": null,
       "current_price": 0.685,
       "price_yes_current": 0.315
+    },
+    {
+      "market_id": "904731",
+      "question": "U.S. x Russia Nuclear deal by June 30?",
+      "token_id": "2452887062059300263521301461584427066986296468335615456329484799980344628172",
+      "bet_side": "NO",
+      "entry_date": "2026-02-06 05:13",
+      "entry_price": 0.51,
+      "size_usd": 25.0,
+      "shares": 47.549019607843135,
+      "cluster": "ukraine",
+      "expected_close": "2026-06-30",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": 0.51,
+      "price_yes_current": 0.49
     }
   ],
   "closed_trades": [],
   "created_at": "2026-02-03T18:47:36.675530",
-  "last_updated": "2026-02-05T14:41:11.585973",
-  "total_trades": 8,
+  "last_updated": "2026-02-06T05:13:00.384480",
+  "total_trades": 9,
   "wins": 0,
   "losses": 0,
   "total_pnl": 0.0
