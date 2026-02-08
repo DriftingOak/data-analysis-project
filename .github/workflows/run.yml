@@ -94,6 +94,7 @@ jobs:
           
           # Add portfolio files (at root)
           git add portfolio_*.json || true
+          git add pnl_history.json || true
           
           echo "=== Staged changes ==="
           git diff --staged --stat
