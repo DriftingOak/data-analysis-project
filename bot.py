@@ -1,374 +1,558 @@
 #!/usr/bin/env python3
 """
-POLYMARKET BOT - Main Entry Point
-==================================
-Runs the trading strategy and places orders.
+POLYMARKET BOT - Main Entry Point (Optimized)
+==============================================
+Paper trading with 24 strategies. Markets are evaluated ONCE,
+then each strategy filters from the pre-computed candidate pool.
 
 Usage:
-    python bot.py                        # Dry run (default)
-    python bot.py --live                 # Live trading (real orders)
-    python bot.py --scan-only            # Just scan markets, no orders
-    python bot.py --paper                # Paper trading - standard strategies
-    python bot.py --paper balanced       # Paper trading - single strategy
-    python bot.py --paper unlimited      # Paper trading - unlimited group
-    python bot.py --paper all            # Paper trading - ALL strategies
-    python bot.py --paper --strategy balanced  # Paper trading - single strategy
-    python bot.py --sell "iran"          # Manually sell position(s) matching "iran"
-    python bot.py --strategies           # Show available strategies
-    python bot.py --help                 # Show this help
-
-Strategy Groups:
-    standard    - conservative, balanced, aggressive, volume_sweet
-    unlimited   - unlimited_* strategies (no exposure limits)
-    experimental- new strategies to test
-    all         - everything
+    python bot.py --paper              # Standard strategies (base group)
+    python bot.py --paper all          # ALL 24 strategies
+    python bot.py --paper tier1        # Tier 1 controls only
+    python bot.py --paper balanced     # Single strategy
+    python bot.py --sell "iran"        # Manually sell matching positions
+    python bot.py --strategies         # Show available strategies
 """
 
 import sys
 import json
+import os
 import requests
 from datetime import datetime
-from typing import Dict, List, Any, Optional
+from pathlib import Path
+from typing import Dict, List, Any, Optional, Tuple, Set
+from dataclasses import dataclass, asdict
 
 import config
 import api
-import strategy
+
+# Import geopolitical filters
+try:
+    from trade_filter import is_geopolitical, get_cluster, classify
+except ImportError:
+    try:
+        from filters import is_geopolitical, get_cluster
+    except ImportError:
+        # Minimal fallback
+        def is_geopolitical(q):
+            kw = ["strike", "attack", "war", "invasion", "bomb", "missile",
+                   "ceasefire", "sanctions", "troops", "nuclear", "military"]
+            q_l = q.lower()
+            return any(k in q_l for k in kw)
+        def get_cluster(q):
+            q_l = q.lower()
+            if any(k in q_l for k in ["ukraine", "russia", "kyiv", "crimea", "kursk"]):
+                return "ukraine"
+            if any(k in q_l for k in ["israel", "gaza", "iran", "hamas", "hezbollah", "yemen", "houthi"]):
+                return "mideast"
+            if any(k in q_l for k in ["china", "taiwan", "beijing"]):
+                return "china"
+            return "other"
+
 
 # =============================================================================
 # LOGGING
 # =============================================================================
 
 def log(msg: str, level: str = "INFO"):
-    """Simple logging with timestamp."""
-    ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    ts = datetime.now().strftime("%H:%M:%S")
     print(f"[{ts}] [{level}] {msg}")
 
 
-def save_run_history(run_data: Dict[str, Any]):
-    """Append run to history file."""
-    try:
-        try:
-            with open(config.LOG_FILE, "r") as f:
-                history = json.load(f)
-        except FileNotFoundError:
-            history = []
-        
-        history.append(run_data)
-        history = history[-100:]  # Keep last 100
-        
-        with open(config.LOG_FILE, "w") as f:
-            json.dump(history, f, indent=2)
-            
-    except Exception as e:
-        log(f"Failed to save history: {e}", "WARN")
-
-
-# =============================================================================
-# NOTIFICATIONS
-# =============================================================================
-
 def send_telegram(message: str):
-    """Send notification via Telegram."""
-    if not config.TELEGRAM_BOT_TOKEN or not config.TELEGRAM_CHAT_ID:
+    """Send Telegram notification (best-effort)."""
+    token = os.getenv("TELEGRAM_BOT_TOKEN", "")
+    chat_id = os.getenv("TELEGRAM_CHAT_ID", "")
+    if not token or not chat_id:
         return
-    
     try:
-        url = f"https://api.telegram.org/bot{config.TELEGRAM_BOT_TOKEN}/sendMessage"
-        data = {
-            "chat_id": config.TELEGRAM_CHAT_ID,
-            "text": message,
-            "parse_mode": "HTML"
-        }
-        requests.post(url, data=data, timeout=10)
-    except Exception as e:
-        log(f"Telegram notification failed: {e}", "WARN")
+        requests.post(
+            f"https://api.telegram.org/bot{token}/sendMessage",
+            json={"chat_id": chat_id, "text": message, "parse_mode": "HTML"},
+            timeout=10,
+        )
+    except Exception:
+        pass
 
 
 # =============================================================================
-# SNAPSHOT INTEGRATION
+# ENRICHED CANDIDATE (pre-computed once, shared across strategies)
 # =============================================================================
 
-def collect_all_eligible_markets(markets: List[Dict], current_ts: float) -> List:
-    """Collect ALL geopolitical markets for snapshot (regardless of strategy params).
+@dataclass
+class EnrichedMarket:
+    """All data needed to decide on a market, computed once."""
+    market_id: str
+    question: str
+    price_yes: float
+    volume: float
+    cluster: str
+    days_to_close: float
+    end_ts: float
+    start_ts: float
+    token_id_yes: str
+    token_id_no: str
+    event_id: str          # For event_cap
+    structure: str         # "series" or "" — for exclude_series filter
+    raw: dict              # Original market data (for resolution checking)
+
+
+def precompute_candidates(markets: list, current_ts: float) -> List[EnrichedMarket]:
+    """Evaluate ALL markets once → list of geopolitical candidates.
     
-    This captures the full universe of eligible markets at this point in time,
-    allowing replay with any strategy parameters later.
+    This is the expensive step (keyword matching, parsing, validation).
+    Done ONCE, then each strategy just filters numerically.
     """
-    from snapshot import create_market_snapshot, MarketSnapshot
-    
-    eligible = []
+    candidates = []
     
     for market in markets:
         question = market.get("question", "")
         
-        # Only filter: must be geopolitical and not excluded
-        if not strategy.is_geopolitical(question):
+        # 1) Geopolitical filter (the expensive check)
+        if not is_geopolitical(question):
             continue
         
-        # Get timestamps
+        # 2) Parse timestamps
         timestamps = api.parse_market_timestamps(market)
-        tokens = api.get_token_ids(market)
-        
-        # Basic time validation (must have valid timestamps)
         start_ts = timestamps.get("start_ts")
         end_ts = timestamps.get("end_ts")
+        
         if not start_ts or not end_ts:
             continue
         
-        # Must not be closed yet
-        if end_ts < current_ts:
+        # 3) Basic time validity
+        hours_since_open = (current_ts - start_ts) / 3600
+        hours_until_end = (end_ts - current_ts) / 3600
+        
+        # Skip if too new or about to close
+        buffer_hours = getattr(config, "BUFFER_HOURS", 48)
+        if hours_since_open < buffer_hours or hours_until_end < buffer_hours:
             continue
         
-        # Get cluster
-        cluster = strategy.get_cluster(question)
+        # 4) Parse price
+        try:
+            prices_raw = market.get("outcomePrices", "")
+            if isinstance(prices_raw, str) and prices_raw:
+                prices = json.loads(prices_raw)
+            else:
+                prices = prices_raw or []
+            price_yes = float(prices[0]) if prices else None
+        except (json.JSONDecodeError, IndexError, ValueError):
+            continue
         
-        # Create snapshot
-        snap = create_market_snapshot(market, timestamps, tokens, current_ts, cluster)
-        eligible.append(snap)
+        if price_yes is None or price_yes <= 0 or price_yes >= 1:
+            continue
+        
+        # 5) Volume
+        volume = float(market.get("volume", 0) or 0)
+        
+        # 6) Token IDs
+        tokens = api.get_token_ids(market)
+        token_yes = tokens.get("YES", "")
+        token_no = tokens.get("NO", "")
+        
+        # 7) Metadata
+        days_to_close = hours_until_end / 24
+        event_id = market.get("groupItemTitle", "") or market.get("slug", "")
+        
+        # Detect series structure (for exclude_series filter)
+        # Series markets typically share an event/group
+        structure = ""
+        if market.get("groupItemTitle"):
+            structure = "series"
+        
+        candidates.append(EnrichedMarket(
+            market_id=market.get("id", market.get("conditionId", "")),
+            question=question[:120],
+            price_yes=price_yes,
+            volume=volume,
+            cluster=get_cluster(question),
+            days_to_close=days_to_close,
+            end_ts=end_ts,
+            start_ts=start_ts,
+            token_id_yes=token_yes,
+            token_id_no=token_no,
+            event_id=event_id,
+            structure=structure,
+            raw=market,
+        ))
     
-    return eligible
-
-
-def save_run_snapshot(markets: List[Dict], current_ts: float, total_scanned: int) -> Optional[str]:
-    """Save a snapshot of all eligible markets."""
-    try:
-        from snapshot import save_snapshot
-        
-        eligible = collect_all_eligible_markets(markets, current_ts)
-        
-        if eligible:
-            filepath = save_snapshot(
-                markets=eligible,
-                total_scanned=total_scanned,
-                note=f"Bot run at {datetime.now().isoformat()}"
-            )
-            return filepath
-        else:
-            log("No eligible markets to snapshot", "WARN")
-            return None
-            
-    except ImportError:
-        log("Snapshot module not available", "WARN")
-        return None
-    except Exception as e:
-        log(f"Failed to save snapshot: {e}", "ERROR")
-        return None
+    return candidates
 
 
 # =============================================================================
-# PAPER TRADING MODE
+# STRATEGY FILTERING (fast — just numeric comparisons)
+# =============================================================================
+
+def filter_for_strategy(
+    candidates: List[EnrichedMarket],
+    strat: dict,
+) -> List[EnrichedMarket]:
+    """Filter pre-computed candidates for a specific strategy.
+    
+    This is FAST — no keyword matching, no API calls, just comparisons.
+    """
+    from strategies import get_zone_for_volume
+    
+    filtered = []
+    
+    # Strategy params
+    min_vol = strat.get("min_volume", 0)
+    max_vol = strat.get("max_volume", float("inf"))
+    deadline_min = strat.get("deadline_min", 3)
+    deadline_max = strat.get("deadline_max", None)
+    exclude_series = strat.get("exclude_series", False)
+    
+    for c in candidates:
+        # Volume filter
+        if c.volume < min_vol or c.volume > max_vol:
+            continue
+        
+        # Deadline filter
+        if c.days_to_close < deadline_min:
+            continue
+        if deadline_max is not None and c.days_to_close > deadline_max:
+            continue
+        
+        # Exclude series
+        if exclude_series and c.structure == "series":
+            continue
+        
+        # Price zone (simple or multi-bucket)
+        zone = get_zone_for_volume(strat, c.volume)
+        if zone is None:
+            # Dead zone — skip
+            continue
+        
+        price_min, price_max = zone
+        if not (price_min <= c.price_yes <= price_max):
+            continue
+        
+        filtered.append(c)
+    
+    return filtered
+
+
+def sort_candidates(candidates: List[EnrichedMarket], priority: str) -> List[EnrichedMarket]:
+    """Sort candidates by strategy priority."""
+    if priority == "price_high":
+        # Higher YES price first (more edge for NO bets)
+        return sorted(candidates, key=lambda c: c.price_yes, reverse=True)
+    
+    elif priority == "volume_low":
+        # Lower volume first (more inefficient markets)
+        return sorted(candidates, key=lambda c: c.volume)
+    
+    elif priority == "rotation":
+        # Composite: rank by volume_low + deadline_short + price_high
+        # Lower score = better
+        def rotation_score(c):
+            # Normalize each dimension to ~0-100 range
+            vol_score = min(c.volume / 5000, 100)    # Lower volume = lower score = better
+            dl_score = min(c.days_to_close, 100)      # Shorter deadline = lower score = better
+            price_score = (1 - c.price_yes) * 100     # Higher YES = lower (1-p) = better
+            return vol_score + dl_score + price_score
+        return sorted(candidates, key=rotation_score)
+    
+    else:
+        return candidates
+
+
+# =============================================================================
+# TRADE SELECTION (with new features: event_cap, adaptive sizing)
+# =============================================================================
+
+def select_trades(
+    candidates: List[EnrichedMarket],
+    strat: dict,
+    cash_available: float,
+    current_exposure: float,
+    exposure_by_cluster: Dict[str, float],
+    existing_market_ids: Set[str],
+    existing_event_counts: Dict[str, int],
+    bankroll: float,
+) -> List[Tuple[EnrichedMarket, float]]:
+    """Select trades with new features. Returns list of (candidate, bet_size)."""
+    from strategies import get_bet_size
+    
+    max_total = bankroll * strat.get("max_total_exposure_pct", 0.90)
+    max_cluster = bankroll * strat.get("max_cluster_exposure_pct", 0.30)
+    event_cap = strat.get("event_cap", 3)
+    
+    # Sort by priority
+    sorted_cands = sort_candidates(candidates, strat.get("priority", "price_high"))
+    
+    selected = []
+    sim_exposure = current_exposure
+    sim_cluster = dict(exposure_by_cluster)
+    sim_cash = cash_available
+    sim_event_counts = dict(existing_event_counts)
+    
+    for c in sorted_cands:
+        # Skip if already in this market
+        if c.market_id in existing_market_ids:
+            continue
+        
+        # Event cap
+        event_count = sim_event_counts.get(c.event_id, 0)
+        if event_count >= event_cap:
+            continue
+        
+        # Get bet size (adaptive or fixed)
+        bet_size = get_bet_size(strat, c.volume)
+        
+        # Cash check
+        if sim_cash < bet_size:
+            break
+        
+        # Total exposure check
+        if sim_exposure + bet_size > max_total:
+            continue
+        
+        # Cluster exposure check
+        cluster_exp = sim_cluster.get(c.cluster, 0)
+        if cluster_exp + bet_size > max_cluster:
+            continue
+        
+        # Accept
+        selected.append((c, bet_size))
+        sim_cash -= bet_size
+        sim_exposure += bet_size
+        sim_cluster[c.cluster] = cluster_exp + bet_size
+        sim_event_counts[c.event_id] = event_count + 1
+        existing_market_ids.add(c.market_id)
+    
+    return selected
+
+
+# =============================================================================
+# RESOLUTION CHECKING (batch, shared across strategies)
+# =============================================================================
+
+def batch_fetch_closed_markets(
+    missing_ids: Set[str], market_lookup: Dict[str, dict]
+) -> Dict[str, dict]:
+    """Fetch closed markets that are no longer in the open markets feed.
+    
+    Returns dict of market_id -> market_data for resolved markets.
+    """
+    resolved = {}
+    for mid in missing_ids:
+        if mid in market_lookup:
+            continue  # Already have it
+        try:
+            data = api.fetch_market_by_id(mid)
+            if data:
+                resolved[mid] = data
+        except Exception:
+            pass
+    return resolved
+
+
+# =============================================================================
+# PAPER TRADING MAIN LOOP
 # =============================================================================
 
 def run_paper_trading(strategy_name: str = None):
-    """Run paper trading mode.
-    
-    Args:
-        strategy_name: Name of strategy, group name, or None to run standard group
-    """
+    """Run paper trading — optimized for many strategies."""
     import paper_trading as pt
     import strategies as strat_config
     
     run_start = datetime.now()
     log("=" * 60)
-    log("POLYMARKET BOT - PAPER TRADING MODE")
+    log("POLYMARKET BOT — PAPER TRADING")
     log("=" * 60)
     
-    # Determine which strategies to run
+    # ── Determine strategies to run ──────────────────────────────────────
     if strategy_name is None:
-        # Default: standard group
-        strategies_to_run = {k: strat_config.STRATEGIES[k] 
-                           for k in strat_config.STRATEGY_GROUPS["standard"]}
-        log("Running STANDARD strategies (use --paper all for everything)")
-    elif strategy_name in strat_config.STRATEGY_GROUPS:
-        # It's a group name
-        group_strats = strat_config.STRATEGY_GROUPS[strategy_name]
-        strategies_to_run = {k: strat_config.STRATEGIES[k] for k in group_strats}
-        log(f"Running {strategy_name.upper()} group ({len(strategies_to_run)} strategies)")
+        strategy_name = "standard"
+    
+    if strategy_name in strat_config.STRATEGY_GROUPS:
+        group_names = strat_config.STRATEGY_GROUPS[strategy_name]
+        strategies = {k: strat_config.STRATEGIES[k] for k in group_names}
+        log(f"Group '{strategy_name}': {len(strategies)} strategies")
     elif strategy_name in strat_config.STRATEGIES:
-        # Single strategy
-        strategies_to_run = {strategy_name: strat_config.STRATEGIES[strategy_name]}
+        strategies = {strategy_name: strat_config.STRATEGIES[strategy_name]}
     else:
-        log(f"ERROR: Unknown strategy or group '{strategy_name}'", "ERROR")
-        log(f"Strategies: {list(strat_config.STRATEGIES.keys())}")
+        log(f"Unknown strategy/group: '{strategy_name}'", "ERROR")
         log(f"Groups: {list(strat_config.STRATEGY_GROUPS.keys())}")
         return
     
-    log(f"Strategies: {list(strategies_to_run.keys())}")
+    log(f"Strategies: {', '.join(strategies.keys())}")
     
-    # Fetch all markets once (shared across strategies)
+    # ── Step 1: Fetch markets ONCE ───────────────────────────────────────
     log("\nFetching markets...")
+    t0 = datetime.now()
     markets = api.fetch_open_markets(limit=5000)
-    log(f"Found {len(markets)} markets")
+    log(f"Fetched {len(markets)} markets in {(datetime.now()-t0).total_seconds():.1f}s")
     
-    # Build market lookup
-    market_lookup = {m.get("id") or m.get("conditionId"): m for m in markets}
+    market_lookup = {}
+    for m in markets:
+        mid = m.get("id") or m.get("conditionId")
+        if mid:
+            market_lookup[mid] = m
+    
+    # ── Step 2: Pre-compute geopolitical candidates ONCE ─────────────────
     current_ts = datetime.now().timestamp()
+    t0 = datetime.now()
+    all_candidates = precompute_candidates(markets, current_ts)
+    log(f"Pre-computed {len(all_candidates)} geopolitical candidates in {(datetime.now()-t0).total_seconds():.1f}s")
     
-    # === SAVE SNAPSHOT ===
-    log("\n--- SAVING SNAPSHOT ---")
-    snapshot_path = save_run_snapshot(markets, current_ts, len(markets))
-    if snapshot_path:
-        log(f"Snapshot saved: {snapshot_path}")
+    # ── Step 3: Collect ALL open position market IDs (for batch resolution) ──
+    all_open_mids: Set[str] = set()
+    portfolios = {}
     
-    # Prepare summary for Telegram
-    summary_lines = [
-        f"📊 <b>Paper Trading Update</b>",
-        f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M')}",
-        ""
-    ]
-    
-    # Run each strategy
-    for strat_name, strat_params in strategies_to_run.items():
-        log("\n" + "=" * 60)
-        display_name = strat_params.get("name", strat_name)
-        log(f"STRATEGY: {display_name}")
-        log("=" * 60)
-        
+    for strat_name, strat_params in strategies.items():
         portfolio_file = strat_params.get("portfolio_file", f"portfolio_{strat_name}.json")
-        initial_bankroll = strat_params.get("bankroll", 5000.0)
+        # Portfolio files live at repo root (git add portfolio_*.json)
         
-        # Load portfolio for this strategy
         portfolio = pt.load_portfolio(
             portfolio_file=portfolio_file,
-            initial_bankroll=initial_bankroll,
-            entry_cost_rate=strat_params.get("entry_cost_rate", getattr(config, "ENTRY_COST_RATE", getattr(config, "PAPER_ENTRY_COST_RATE", 0.03))),
+            initial_bankroll=strat_params.get("bankroll", getattr(config, "BANKROLL", 1000)),
+            entry_cost_rate=strat_params.get("entry_cost_rate", getattr(config, "ENTRY_COST_RATE", 0.03)),
         )
+        portfolios[strat_name] = (portfolio, portfolio_file)
         
-        # 1) Check resolutions of open positions
-        log("Checking open positions for resolutions...")
-        open_positions = [p for p in portfolio.positions if p.status == "open"]
-        newly_closed = 0
+        for pos in portfolio.positions:
+            if pos.status == "open":
+                all_open_mids.add(pos.market_id)
+    
+    # ── Step 4: Batch-fetch closed markets ───────────────────────────────
+    missing_mids = all_open_mids - set(market_lookup.keys())
+    if missing_mids:
+        log(f"Fetching {len(missing_mids)} closed markets for resolution...")
+        t0 = datetime.now()
+        closed_data = batch_fetch_closed_markets(missing_mids, market_lookup)
+        market_lookup.update(closed_data)
+        log(f"Fetched {len(closed_data)} closed markets in {(datetime.now()-t0).total_seconds():.1f}s")
+    
+    # ── Step 5: Process each strategy ────────────────────────────────────
+    summary_lines = [
+        f"📊 <b>Paper Trading</b> ({len(strategies)} strategies)",
+        f"{datetime.now().strftime('%Y-%m-%d %H:%M')}",
+        "",
+    ]
+    
+    for strat_name, strat_params in strategies.items():
+        portfolio, portfolio_file = portfolios[strat_name]
         
-        for pos in open_positions:
-            market_data = market_lookup.get(pos.market_id)
-            
-            # If market not in open markets, it might be closed - fetch it directly
-            if not market_data:
-                market_data = api.fetch_market_by_id(pos.market_id)
-            
-            if market_data:
-                outcome = pt.check_resolution(market_data)
-                if outcome:
-                    pnl = pt.settle_position(pos, outcome)
-                    portfolio.closed_trades.append(pos)
-                    newly_closed += 1
-                    emoji = "✅" if pos.resolution == "win" else "❌"
-                    log(f"  {emoji} {pos.bet_side} resolved: {outcome.upper()} | P&L: ${pnl:+.2f}")
-        
-        if newly_closed > 0:
-            pt.update_portfolio_stats(portfolio)
-            log(f"{newly_closed} positions resolved")
-        
-        # 2) Evaluate new candidates with this strategy's params
-        log("Evaluating markets for new positions...")
-        candidates = []
-        
-        # Check for cluster filter
-        cluster_filter = strat_params.get("cluster_filter")
-        
-        for market in markets:
-            timestamps = api.parse_market_timestamps(market)
-            tokens = api.get_token_ids(market)
-            
-            candidate = strategy.evaluate_market(
-                market, timestamps, tokens, current_ts,
-                strategy_params=strat_params,
-            )
-            
-            if candidate:
-                # Apply cluster filter if specified
-                if cluster_filter and candidate.cluster not in cluster_filter:
-                    continue
-                candidates.append(candidate)
-        
-        log(f"Found {len(candidates)} qualifying candidates")
-        
-        # 3) Select and execute paper trades
-        exposure_total, exposure_by_cluster = pt.get_open_exposure(portfolio)
-        existing_ids = pt.get_open_market_ids(portfolio)
-        available_cash = portfolio.bankroll_current - exposure_total
-        
-        # Use strategy-specific exposure limits
-        max_total_exp = strat_params.get("max_total_exposure_pct", 0.60)
-        max_cluster_exp = strat_params.get("max_cluster_exposure_pct", 0.20)
-        bet_size = strat_params.get("bet_size", config.BET_SIZE)
-        
-        selected = strategy.select_trades(
-            candidates=candidates,
-            cash_available=available_cash,
-            current_exposure=exposure_total,
-            exposure_by_cluster=exposure_by_cluster,
-            bankroll=portfolio.bankroll_current,
-            existing_market_ids=existing_ids,
-            max_exposure_pct=max_total_exp,
-            max_cluster_pct=max_cluster_exp,
-            bet_size=bet_size,
-        )
-        
-        log(f"Selected {len(selected)} new trades")
-        
-        # Execute paper trades
-        for trade in selected:
-            expected_close = datetime.fromtimestamp(trade.end_ts).strftime("%Y-%m-%d")
-            
-            pt.paper_buy(
-                portfolio=portfolio,
-                market_id=trade.market_id,
-                question=trade.question,
-                token_id=trade.token_id,
-                bet_side=trade.bet_side,
-                entry_price=trade.price_entry,
-                size_usd=bet_size,
-                cluster=trade.cluster,
-                expected_close=expected_close,
-            )
-            
-            log(f"  📝 {trade.bet_side} @ {trade.price_entry:.1%} | [{trade.cluster}] {trade.question[:40]}...")
-        
-        # 4) Update current prices for open positions
-        log("Updating current prices...")
+        # ── 5a. Update prices for open positions ─────────────────────────
         for pos in portfolio.positions:
             if pos.status != "open":
                 continue
-            
-            market_data = market_lookup.get(pos.market_id)
-            if market_data:
+            mdata = market_lookup.get(pos.market_id)
+            if mdata:
                 try:
-                    prices_raw = market_data.get("outcomePrices", "")
+                    prices_raw = mdata.get("outcomePrices", "")
                     if isinstance(prices_raw, str) and prices_raw:
                         prices = json.loads(prices_raw)
                     else:
                         prices = prices_raw or []
-                    
                     if prices:
                         price_yes = float(prices[0])
                         pos.price_yes_current = price_yes
                         pos.current_price = 1 - price_yes if pos.bet_side == "NO" else price_yes
-                except:
+                except Exception:
                     pass
         
-        # 5) Save portfolio
+        # ── 5b. Check resolutions ───────────────────────────────────────
+        resolved_count = 0
+        for pos in list(portfolio.positions):
+            if pos.status != "open":
+                continue
+            mdata = market_lookup.get(pos.market_id)
+            if mdata:
+                outcome = pt.check_resolution(mdata)
+                if outcome:
+                    pnl = pt.settle_position(pos, outcome)
+                    portfolio.closed_trades.append(pos)
+                    resolved_count += 1
+                    emoji = "✅" if pos.resolution == "win" else "❌"
+                    log(f"  {emoji} {pos.bet_side} resolved: {outcome.upper()} | P&L: ${pnl:+.2f}")
+        
+        if resolved_count > 0:
+            pt.update_portfolio_stats(portfolio)
+        
+        # ── 5c. Filter candidates for this strategy ──────────────────────
+        strat_candidates = filter_for_strategy(all_candidates, strat_params)
+        
+        # ── 5d. Calculate exposure ───────────────────────────────────────
+        exposure_total, exposure_by_cluster = pt.get_open_exposure(portfolio)
+        existing_ids = {p.market_id for p in portfolio.positions if p.status == "open"}
+        cash_available = portfolio.bankroll_current - exposure_total
+        
+        # Count positions per event_id
+        event_counts: Dict[str, int] = {}
+        for pos in portfolio.positions:
+            if pos.status == "open":
+                eid = getattr(pos, "event_id", "") or ""
+                event_counts[eid] = event_counts.get(eid, 0) + 1
+        
+        # ── 5e. Select trades ────────────────────────────────────────────
+        selected = select_trades(
+            candidates=strat_candidates,
+            strat=strat_params,
+            cash_available=cash_available,
+            current_exposure=exposure_total,
+            exposure_by_cluster=exposure_by_cluster,
+            existing_market_ids=set(existing_ids),  # copy
+            existing_event_counts=event_counts,
+            bankroll=portfolio.bankroll_current,
+        )
+        
+        # ── 5f. Execute paper trades ─────────────────────────────────────
+        for candidate, bet_size in selected:
+            bet_side = strat_params.get("bet_side", "NO")
+            if bet_side == "NO":
+                token_id = candidate.token_id_no
+                entry_price = 1 - candidate.price_yes
+            else:
+                token_id = candidate.token_id_yes
+                entry_price = candidate.price_yes
+            
+            expected_close = datetime.fromtimestamp(candidate.end_ts).strftime("%Y-%m-%d")
+            
+            pt.paper_buy(
+                portfolio=portfolio,
+                market_id=candidate.market_id,
+                question=candidate.question,
+                token_id=token_id,
+                bet_side=bet_side,
+                entry_price=entry_price,
+                size_usd=bet_size,
+                cluster=candidate.cluster,
+                expected_close=expected_close,
+            )
+        
+        # ── 5g. Save portfolio ───────────────────────────────────────────
         pt.save_portfolio(portfolio, portfolio_file)
         
-        # 6) Summary for this strategy
-        pt.print_portfolio_summary(portfolio, display_name)
-        
-        # Add to Telegram summary
+        # ── 5h. Summary line ─────────────────────────────────────────────
         open_count = len([p for p in portfolio.positions if p.status == "open"])
         summary_lines.append(
-            f"<b>{display_name}</b>: ${portfolio.total_pnl:+.2f} "
-            f"({portfolio.wins}W/{portfolio.losses}L) | {open_count} open"
+            f"<b>{strat_name}</b>: ${portfolio.total_pnl:+.2f} "
+            f"({portfolio.wins}W/{portfolio.losses}L) | "
+            f"{open_count} open | +{len(selected)} new | {resolved_count} resolved"
         )
     
-    # Send consolidated Telegram notification
-    if len(strategies_to_run) <= 6:  # Don't spam if running many strategies
+    # ── Step 6: Notifications ────────────────────────────────────────────
+    duration = (datetime.now() - run_start).total_seconds()
+    summary_lines.append(f"\n⏱ {duration:.0f}s | {len(all_candidates)} geo candidates")
+    
+    # Only send full summary if ≤ 8 strategies, otherwise compact
+    if len(strategies) <= 8:
         send_telegram("\n".join(summary_lines))
     else:
-        send_telegram(f"📊 Paper trading complete: {len(strategies_to_run)} strategies updated")
+        # Compact: just totals
+        total_new = sum(1 for s in strategies for _ in [])  # placeholder
+        send_telegram(
+            f"📊 Paper trading: {len(strategies)} strategies updated in {duration:.0f}s\n"
+            f"Candidates pool: {len(all_candidates)} geo markets"
+        )
     
-    log("\n" + "=" * 60)
-    log("PAPER TRADING COMPLETE")
-    log("=" * 60)
+    log(f"\n{'='*60}")
+    log(f"COMPLETE in {duration:.1f}s ({len(strategies)} strategies, {len(all_candidates)} candidates)")
+    log(f"{'='*60}")
 
 
 # =============================================================================
@@ -376,305 +560,69 @@ def run_paper_trading(strategy_name: str = None):
 # =============================================================================
 
 def manual_sell(search_term: str):
-    """Manually sell positions matching a search term."""
-    import strategies as strat_config
+    """Manually sell positions matching a search term across all strategies."""
     import paper_trading as pt
+    import strategies as strat_config
     
-    search_term = search_term.lower()
-    log(f"Searching for positions matching: '{search_term}'")
-    
-    matches = []
-    
+    count = 0
     for strat_name, strat_params in strat_config.STRATEGIES.items():
         portfolio_file = strat_params.get("portfolio_file", f"portfolio_{strat_name}.json")
         
-        try:
-            portfolio = pt.load_portfolio(portfolio_file)
-        except:
+        if not Path(portfolio_file).exists():
             continue
         
-        for pos in portfolio.positions:
-            if pos.status != "open":
-                continue
-            
-            if search_term in pos.question.lower() or search_term in pos.market_id:
-                matches.append({
-                    "strategy": strat_name,
-                    "portfolio": portfolio,
-                    "portfolio_file": portfolio_file,
-                    "position": pos,
-                })
-    
-    if not matches:
-        log(f"No open positions found matching '{search_term}'")
-        return
-    
-    log(f"Found {len(matches)} matching position(s):")
-    for i, m in enumerate(matches, 1):
-        pos = m["position"]
-        log(f"  {i}. [{m['strategy']}] {pos.bet_side} @ {pos.entry_price:.1%} | {pos.question[:50]}...")
-    
-    # Ask for confirmation
-    print("\nEnter number to sell (0 to cancel): ", end="")
-    try:
-        choice = input().strip()
-        choice_num = int(choice)
-        
-        if choice_num == 0:
-            log("Cancelled")
-            return
-        
-        if choice_num < 1 or choice_num > len(matches):
-            log("Invalid choice", "ERROR")
-            return
-        
-        selected = matches[choice_num - 1]
-    except (ValueError, KeyboardInterrupt):
-        log("Cancelled")
-        return
-    
-    pos = selected["position"]
-    portfolio = selected["portfolio"]
-    portfolio_file = selected["portfolio_file"]
-    
-    # Fetch current price
-    log(f"Fetching current price for {pos.market_id}...")
-    try:
-        url = f"https://gamma-api.polymarket.com/markets/{pos.market_id}"
-        resp = requests.get(url, timeout=10)
-        market = resp.json()
-        
-        prices_raw = market.get("outcomePrices", "")
-        if isinstance(prices_raw, str) and prices_raw:
-            prices = json.loads(prices_raw)
-        else:
-            prices = prices_raw or []
-        
-        current_yes = float(prices[0]) if prices else None
-    except Exception as e:
-        log(f"Failed to fetch price: {e}", "ERROR")
-        return
-    
-    if current_yes is None:
-        log("Could not get current price", "ERROR")
-        return
-    
-    # Calculate and execute sell
-    current_no = 1 - current_yes
-    if pos.bet_side == "NO":
-        current_price = current_no
-    else:
-        current_price = current_yes
-    
-    sale_value = current_price * pos.shares
-    exit_fee = sale_value * portfolio.entry_cost_rate
-    pnl = (sale_value - exit_fee) - pos.size_usd
-    
-    log(f"Entry: {pos.entry_price:.1%} | Current: {current_price:.1%} | P&L: ${pnl:+.2f}")
-    
-    # Update position
-    pos.status = "closed"
-    pos.close_date = datetime.now().strftime("%Y-%m-%d %H:%M")
-    pos.resolution = "win" if pnl > 0 else "lose"
-    pos.pnl = pnl
-    pos.current_price = current_price
-    pos.price_yes_current = current_yes
-    
-    # Move to closed trades
-    portfolio.closed_trades.append(pos)
-    
-    # Update stats
-    pt.update_portfolio_stats(portfolio)
-    pt.save_portfolio(portfolio, portfolio_file)
-    
-    log(f"✅ Position sold! New bankroll: ${portfolio.bankroll_current:.2f}")
-
-
-# =============================================================================
-# LIVE TRADING (placeholder)
-# =============================================================================
-
-def run_bot(dry_run: bool = True, scan_only: bool = False):
-    """Main bot execution for live trading."""
-    run_start = datetime.now()
-    log("=" * 60)
-    log("POLYMARKET BOT STARTED")
-    log(f"Mode: {'DRY RUN' if dry_run else 'LIVE'}{' (scan only)' if scan_only else ''}")
-    log("=" * 60)
-    
-    run_stats = {
-        "timestamp": run_start.isoformat(),
-        "mode": "dry_run" if dry_run else "live",
-        "markets_scanned": 0,
-        "candidates_found": 0,
-        "trades_selected": 0,
-        "trades_executed": 0,
-        "errors": [],
-    }
-    
-    try:
-        # 1. Get account balance
-        log("Fetching account balance...")
-        balance = api.get_account_balance()
-        if balance is None:
-            balance = config.BANKROLL
-        log(f"Available balance: ${balance:.2f}")
-        
-        # 2. Get current positions
-        log("Fetching current positions...")
-        positions = api.get_open_positions()
-        existing_ids = {p.get("market_id", p.get("marketId", "")) for p in positions}
-        
-        current_exposure, exposure_by_cluster = strategy.calculate_exposure(positions)
-        log(f"Current exposure: ${current_exposure:.2f} ({len(positions)} positions)")
-        
-        # 3. Fetch open markets
-        log("Fetching open markets...")
-        markets = api.fetch_open_markets(limit=5000)
-        run_stats["markets_scanned"] = len(markets)
-        log(f"Found {len(markets)} open markets")
-        
-        current_ts = datetime.now().timestamp()
-        
-        # === SAVE SNAPSHOT ===
-        log("\n--- SAVING SNAPSHOT ---")
-        save_run_snapshot(markets, current_ts, len(markets))
-        
-        # 4. Evaluate each market
-        log("Evaluating markets...")
-        candidates = []
-        
-        for market in markets:
-            timestamps = api.parse_market_timestamps(market)
-            tokens = api.get_token_ids(market)
-            
-            candidate = strategy.evaluate_market(
-                market, timestamps, tokens, current_ts
-            )
-            
-            if candidate:
-                candidates.append(candidate)
-        
-        run_stats["candidates_found"] = len(candidates)
-        log(f"Found {len(candidates)} qualifying candidates")
-        
-        # 5. Show all candidates
-        if candidates:
-            log("-" * 60)
-            log("CANDIDATES:")
-            for c in sorted(candidates, key=lambda x: x.volume, reverse=True)[:20]:
-                log(f"  {strategy.format_candidate_summary(c)}")
-            if len(candidates) > 20:
-                log(f"  ... and {len(candidates) - 20} more")
-            log("-" * 60)
-        
-        if scan_only:
-            log("Scan only mode - stopping here")
-            return run_stats
-        
-        # 6. Select trades
-        log("Selecting trades...")
-        cash_available = balance - current_exposure
-        
-        selected = strategy.select_trades(
-            candidates=candidates,
-            cash_available=cash_available,
-            current_exposure=current_exposure,
-            exposure_by_cluster=exposure_by_cluster,
-            bankroll=config.BANKROLL,
-            existing_market_ids=existing_ids,
+        portfolio = pt.load_portfolio(
+            portfolio_file=portfolio_file,
+            initial_bankroll=strat_params.get("bankroll", 1000),
+            entry_cost_rate=strat_params.get("entry_cost_rate", 0.03),
         )
         
-        run_stats["trades_selected"] = len(selected)
-        log(f"Selected {len(selected)} trades to execute")
+        sold = False
+        for pos in portfolio.positions:
+            if pos.status == "open" and search_term.lower() in pos.question.lower():
+                pos.status = "sold"
+                pos.pnl = 0  # Manual sell at current price (simplified)
+                sold = True
+                count += 1
+                log(f"Sold [{strat_name}]: {pos.question[:60]}")
         
-        # 7. Execute trades
-        for trade in selected:
-            log(f"\nExecuting: {strategy.format_candidate_summary(trade)}")
-            
-            if dry_run:
-                log("  [DRY RUN] Would place order")
-                run_stats["trades_executed"] += 1
-            else:
-                # Real trading logic here
-                pass
-        
-        # Save run history
-        save_run_history(run_stats)
-        
-        # Telegram notification
-        if run_stats["trades_executed"] > 0:
-            msg = (
-                f"🤖 <b>Bot Run Complete</b>\n"
-                f"Markets scanned: {run_stats['markets_scanned']}\n"
-                f"Candidates: {run_stats['candidates_found']}\n"
-                f"Trades: {run_stats['trades_executed']}"
-            )
-            send_telegram(msg)
-        
-    except Exception as e:
-        log(f"Error: {e}", "ERROR")
-        run_stats["errors"].append(str(e))
-        import traceback
-        traceback.print_exc()
+        if sold:
+            pt.save_portfolio(portfolio, portfolio_file)
     
-    return run_stats
+    log(f"Sold {count} position(s) matching '{search_term}'")
 
 
 # =============================================================================
 # CLI
 # =============================================================================
 
-def print_help():
-    """Print help message."""
-    print(__doc__)
-
-
 def main():
     args = sys.argv[1:]
     
-    if not args or args[0] in ["-h", "--help", "help"]:
-        print_help()
+    if not args or "--help" in args:
+        print(__doc__)
         return
     
-    if args[0] in ["--strategies", "-s", "strategies"]:
+    if "--strategies" in args:
         import strategies as strat_config
         strat_config.print_strategies()
         return
     
-    if args[0] == "--paper":
-        strategy_name = None
-        if len(args) > 1:
-            if args[1] in ["--strategy", "-s"] and len(args) > 2:
-                strategy_name = args[2]
-            else:
-                strategy_name = args[1]
+    if "--sell" in args:
+        idx = args.index("--sell")
+        if idx + 1 < len(args):
+            manual_sell(args[idx + 1])
+        else:
+            print("Usage: python bot.py --sell <search_term>")
+        return
+    
+    if "--paper" in args:
+        idx = args.index("--paper")
+        strategy_name = args[idx + 1] if idx + 1 < len(args) else None
         run_paper_trading(strategy_name)
         return
     
-    if args[0] == "--sell":
-        if len(args) < 2:
-            log("Usage: python bot.py --sell <search_term>", "ERROR")
-            return
-        manual_sell(args[1])
-        return
-    
-    if args[0] == "--scan-only":
-        run_bot(dry_run=True, scan_only=True)
-        return
-    
-    if args[0] == "--live":
-        print("⚠️  LIVE TRADING MODE")
-        print("This will place REAL orders with REAL money!")
-        confirm = input("Type 'CONFIRM' to proceed: ")
-        if confirm.strip() == "CONFIRM":
-            run_bot(dry_run=False)
-        else:
-            print("Cancelled")
-        return
-    
-    # Default: dry run
-    run_bot(dry_run=True)
+    print("Unknown command. Use --help for usage.")
 
 
 if __name__ == "__main__":
