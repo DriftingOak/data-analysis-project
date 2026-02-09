@@ -90,7 +90,7 @@ STRATEGIES: Dict[str, Dict[str, Any]] = {}
 STRATEGIES["conservative"] = {
     "name": "Conservative",
         "mode": "paper",  # "paper" or "live"
-    "description": "High win rate, low risk - targets very likely NO outcomes",
+    "description": "Mise NO sur les marchés à 10-25% YES (très peu probable). Petits gains fréquents. Volume min 10k$.",
     "bet_side": "NO",
     "price_yes_min": 0.10,
     "price_yes_max": 0.25,
@@ -114,7 +114,7 @@ STRATEGIES["conservative"] = {
 STRATEGIES["balanced"] = {
     "name": "Balanced",
         "mode": "paper",  # "paper" or "live"
-    "description": "Balanced risk/reward - the baseline strategy from backtest",
+    "description": "Mise NO sur les marchés à 20-60% YES. Zone large, stratégie de référence. Volume min 10k$.",
     "bet_side": "NO",
     "price_yes_min": 0.20,
     "price_yes_max": 0.60,
@@ -137,7 +137,7 @@ STRATEGIES["balanced"] = {
 STRATEGIES["aggressive"] = {
     "name": "Aggressive",
         "mode": "paper",  # "paper" or "live"
-    "description": "Higher risk, targets the 30-60% sweet spot",
+    "description": "Mise NO sur les marchés à 30-60% YES. Zone plus risquée mais meilleur rendement par trade. Volume min 10k$.",
     "bet_side": "NO",
     "price_yes_min": 0.30,
     "price_yes_max": 0.60,
@@ -160,7 +160,7 @@ STRATEGIES["aggressive"] = {
 STRATEGIES["volume_sweet"] = {
     "name": "Volume Sweet Spot",
         "mode": "paper",  # "paper" or "live"
-    "description": "Targets the 15k-100k volume range where edge was strongest",
+    "description": "Mise NO sur marchés à 20-60% YES, volume limité à 15k-100k$. Cible les marchés moyens où l'edge est le plus fort.",
     "bet_side": "NO",
     "price_yes_min": 0.20,
     "price_yes_max": 0.60,
@@ -188,7 +188,7 @@ STRATEGIES["volume_sweet"] = {
 
 STRATEGIES["t1_baseline_flat"] = _strat(
     name="t1_baseline_flat",
-    description="Control: does the NO signal exist live? Flat 40-80% zone",
+    description="Contrôle : mise NO zone 40-80% YES, $25 fixe. Vérifie que le signal de salience existe en live.",
     bankroll=1000,
     zone_or_zones=(0.40, 0.80),
     bet_size=25, sizing="fixed", priority="price_high",
@@ -196,7 +196,7 @@ STRATEGIES["t1_baseline_flat"] = _strat(
 
 STRATEGIES["t1_baseline_v1_zone"] = _strat(
     name="t1_baseline_v1_zone",
-    description="Control: old 20-60% zone vs new 40-80%? Expected: underperform",
+    description="Contrôle : ancienne zone 20-60% YES. Compare à la nouvelle zone 40-80%. Devrait sous-performer.",
     bankroll=1000,
     zone_or_zones=(0.20, 0.60),
     bet_size=25, sizing="fixed", priority="price_high",
@@ -204,7 +204,7 @@ STRATEGIES["t1_baseline_v1_zone"] = _strat(
 
 STRATEGIES["t1_baseline_volume_high"] = _strat(
     name="t1_baseline_volume_high",
-    description="Negative control: high-volume markets have edge? Expected: ~0% ROI",
+    description="Contrôle négatif : uniquement gros marchés (>250k$ volume). Devrait avoir ~0% ROI car marchés efficients.",
     bankroll=1000,
     zone_or_zones=(0.50, 0.80),
     min_volume=250000,
@@ -213,7 +213,7 @@ STRATEGIES["t1_baseline_volume_high"] = _strat(
 
 STRATEGIES["t1_baseline_contrarian"] = _strat(
     name="t1_baseline_contrarian",
-    description="Control: ultra-safe low prices. Expected: high WR, low ROI",
+    description="Contrôle : zone ultra-safe 10-35% YES. Beaucoup de wins mais petit gain par trade.",
     bankroll=1000,
     zone_or_zones=(0.10, 0.35),
     bet_size=25, sizing="fixed", priority="price_high",
@@ -227,7 +227,7 @@ STRATEGIES["t1_baseline_contrarian"] = _strat(
 
 STRATEGIES["t2_small_vol"] = _strat(
     name="t2_small_vol",
-    description="Core strategy: volume <100k captures the edge. Backtest: +181% ROI",
+    description="Zone 40-80% YES, volume <100k$ uniquement. Mise adaptative (5-25$ selon volume). Priorité aux petits marchés.",
     bankroll=1000,
     zone_or_zones=(0.40, 0.80),
     max_volume=100000,
@@ -236,7 +236,7 @@ STRATEGIES["t2_small_vol"] = _strat(
 
 STRATEGIES["t2_micro_vol"] = _strat(
     name="t2_micro_vol",
-    description="Micro markets (<50k) goldmine? Shifted zone. Backtest: +153% ROI",
+    description="Zone 30-65% YES, volume <50k$ uniquement. Cible les micro-marchés peu suivis. Mise adaptative.",
     bankroll=1000,
     zone_or_zones=(0.30, 0.65),
     max_volume=50000,
@@ -245,7 +245,7 @@ STRATEGIES["t2_micro_vol"] = _strat(
 
 STRATEGIES["t2_noseries"] = _strat(
     name="t2_noseries",
-    description="Exclude series structure. Backtest: +27.6% ROI, best ROI/DD",
+    description="Zone 40-80% YES, exclut les marchés 'series' (récurrents). Teste si les séries diluent le signal.",
     bankroll=1000,
     zone_or_zones=(0.40, 0.80),
     sizing="adaptive", priority="volume_low",
@@ -260,7 +260,7 @@ STRATEGIES["t2_noseries"] = _strat(
 
 STRATEGIES["t3_mb_simple"] = _strat(
     name="t3_mb_simple",
-    description="2-bucket: different zones by volume. If beats t2_small_vol, concept validated",
+    description="2 zones selon volume : <100k → 30-65% YES, >100k → 50-80% YES. Teste si adapter la zone au volume aide.",
     bankroll=1000,
     zone_or_zones=[
         {"vol_min": 0,      "vol_max": 100000,       "price_yes_min": 0.30, "price_yes_max": 0.65},
@@ -271,7 +271,7 @@ STRATEGIES["t3_mb_simple"] = _strat(
 
 STRATEGIES["t3_mb_3bucket"] = _strat(
     name="t3_mb_3bucket",
-    description="3-bucket: granularity sweet spot. Backtest: +73.9% ROI, 13.7% DD",
+    description="3 zones : <25k → 30-60%, 25k-250k → 40-70%, >250k → 50-80%. Plus granulaire que 2 zones.",
     bankroll=1000,
     zone_or_zones=[
         {"vol_min": 0,      "vol_max": 25000,        "price_yes_min": 0.30, "price_yes_max": 0.60},
@@ -283,7 +283,7 @@ STRATEGIES["t3_mb_3bucket"] = _strat(
 
 STRATEGIES["t3_mb_4bucket_skip"] = _strat(
     name="t3_mb_4bucket_skip",
-    description="4-bucket with dead zone skip (100k-250k). Backtest: +99% ROI, best ROI/DD",
+    description="3 zones + zone morte 100k-250k (ignorée). Exclut les marchés moyens-gros jugés inefficaces.",
     bankroll=1000,
     zone_or_zones=[
         {"vol_min": 0,      "vol_max": 25000,        "price_yes_min": 0.30, "price_yes_max": 0.60},
@@ -297,7 +297,7 @@ STRATEGIES["t3_mb_4bucket_skip"] = _strat(
 
 STRATEGIES["t3_mb_aggressive"] = _strat(
     name="t3_mb_aggressive",
-    description="4-bucket aggressive zones. Max overfit risk. Tests if fine zones add value",
+    description="4 zones très fines (<5k, 5-50k, 50-250k, >250k). Maximum de granularité, risque d'overfitting.",
     bankroll=1000,
     zone_or_zones=[
         {"vol_min": 0,      "vol_max": 5000,         "price_yes_min": 0.30, "price_yes_max": 0.65},
@@ -316,7 +316,7 @@ STRATEGIES["t3_mb_aggressive"] = _strat(
 
 STRATEGIES["t4_cstr_baseline"] = _strat(
     name="t4_cstr_baseline",
-    description="Cash-constrained baseline, no deadline. MUST FAIL (-93%). Validates hypothesis",
+    description="500$ de bankroll, $50/trade, zone 40-80%, sans filtre deadline. Devrait perdre (capital bloqué trop longtemps).",
     bankroll=500,
     zone_or_zones=(0.40, 0.80),
     bet_size=50, sizing="fixed", priority="volume_low",
@@ -324,7 +324,7 @@ STRATEGIES["t4_cstr_baseline"] = _strat(
 
 STRATEGIES["t4_cstr_dl60"] = _strat(
     name="t4_cstr_dl60",
-    description="Same as cstr_baseline + deadline 3-60d. Backtest: +131.6%. THE key test",
+    description="500$ bankroll, $50/trade, zone 40-80% + deadline max 60 jours. Test clé : le filtre deadline transforme-t-il la performance ?",
     bankroll=500,
     zone_or_zones=(0.40, 0.80),
     bet_size=50, sizing="fixed", priority="volume_low",
@@ -333,7 +333,7 @@ STRATEGIES["t4_cstr_dl60"] = _strat(
 
 STRATEGIES["t4_cstr_rotation_dl60"] = _strat(
     name="t4_cstr_rotation_dl60",
-    description="Rotation priority in constrained. Backtest: +209.8% (best ROI overall)",
+    description="500$ bankroll, $50/trade, zone 40-80%, deadline 60j. Priorité rotation (préfère les trades qui se résolvent vite).",
     bankroll=500,
     zone_or_zones=(0.40, 0.80),
     bet_size=50, sizing="fixed", priority="rotation",
@@ -342,7 +342,7 @@ STRATEGIES["t4_cstr_rotation_dl60"] = _strat(
 
 STRATEGIES["t4_cstr_adaptive_dl90"] = _strat(
     name="t4_cstr_adaptive_dl90",
-    description="Adaptive sizing for more diversification in constrained. Backtest: +101%",
+    description="1000$ bankroll, zone 40-80%, deadline 90j, mise adaptative (5-25$ selon volume). Plus diversifié que les $50 fixes.",
     bankroll=1000,
     zone_or_zones=(0.40, 0.80),
     sizing="adaptive", priority="volume_low",
@@ -351,7 +351,7 @@ STRATEGIES["t4_cstr_adaptive_dl90"] = _strat(
 
 STRATEGIES["t4_cstr_mb3_dl90"] = _strat(
     name="t4_cstr_mb3_dl90",
-    description="MB3 + deadline combo in constrained. Best of both worlds. Backtest: +110.6%",
+    description="1000$ bankroll, 3 zones volume, deadline 90j, mise adaptative. Combine multi-zone et filtre temporel.",
     bankroll=1000,
     zone_or_zones=[
         {"vol_min": 0,      "vol_max": 25000,        "price_yes_min": 0.30, "price_yes_max": 0.60},
@@ -370,7 +370,7 @@ STRATEGIES["t4_cstr_mb3_dl90"] = _strat(
 
 STRATEGIES["t5_deploy_conservative"] = _strat(
     name="t5_deploy_conservative",
-    description="Min risk, max ROI/DD (8.7x). Micro focus, skip >250k. Backtest: +31.4%, DD 3.6%",
+    description="Candidat prudent : 2 zones, ignore >250k$, max 2 positions/événement, mise adaptative. Risque minimal.",
     bankroll=1000,
     zone_or_zones=[
         {"vol_min": 0,      "vol_max": 50000,        "price_yes_min": 0.30, "price_yes_max": 0.65},
@@ -383,7 +383,7 @@ STRATEGIES["t5_deploy_conservative"] = _strat(
 
 STRATEGIES["t5_deploy_balanced"] = _strat(
     name="t5_deploy_balanced",
-    description="Good ROI with controlled DD. Backtest: +39%, DD 8.3%, 13.6 turns/yr",
+    description="Candidat équilibré : 3 zones volume, deadline 90j, rotation prioritaire, mise adaptative. Bon compromis risque/rendement.",
     bankroll=1000,
     zone_or_zones=[
         {"vol_min": 0,      "vol_max": 25000,        "price_yes_min": 0.30, "price_yes_max": 0.60},
@@ -396,7 +396,7 @@ STRATEGIES["t5_deploy_balanced"] = _strat(
 
 STRATEGIES["t5_deploy_speed"] = _strat(
     name="t5_deploy_speed",
-    description="Max rotation for min capital. 19 turns/yr. Backtest: +16.5%, DD 4.1%",
+    description="Candidat rapide : 500$ bankroll, 2 zones, deadline 60j, rotation. Maximise la vitesse de rotation du capital.",
     bankroll=500,
     zone_or_zones=[
         {"vol_min": 0,      "vol_max": 50000,        "price_yes_min": 0.30, "price_yes_max": 0.65},
@@ -409,7 +409,7 @@ STRATEGIES["t5_deploy_speed"] = _strat(
 
 STRATEGIES["t5_deploy_max_growth"] = _strat(
     name="t5_deploy_max_growth",
-    description="Max ROI, high DD accepted. Backtest: +110.6%, DD 41.3%. Aggressive but realistic",
+    description="Candidat agressif : 1000$ bankroll, 3 zones, $50/trade fixe, deadline 90j. Maximum de rendement, drawdown élevé accepté.",
     bankroll=1000,
     zone_or_zones=[
         {"vol_min": 0,      "vol_max": 25000,        "price_yes_min": 0.30, "price_yes_max": 0.60},

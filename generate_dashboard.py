@@ -498,9 +498,9 @@ def generate_html(
             open_rows += f"""<tr>
 <td class="q-cell"><a href="{link}" target="_blank">{question}</a></td>
 <td><span class="badge badge-{bs.lower()}">{bs}</span></td>
-<td>{entry_yes:.0%}</td><td>{cur_str}</td>
-<td class="{pnl_cls}">{pnl_str}</td>
-<td>${size:.0f}</td><td>{cluster}</td><td>{entry_d}</td>
+<td data-v="{entry_yes:.4f}">{entry_yes:.0%}</td><td data-v="{cy if cy is not None else 0:.4f}">{cur_str}</td>
+<td class="{pnl_cls}" data-v="{unr if cy is not None else 0:.2f}">{pnl_str}</td>
+<td data-v="{size:.2f}">${size:.0f}</td><td>{cluster}</td><td data-v="{(pos.get('entry_date') or '')[:10]}">{entry_d}</td>
 </tr>\n"""
 
         closed_rows = ""
@@ -517,10 +517,10 @@ def generate_html(
             closed_rows += f"""<tr>
 <td class="q-cell">{question}</td>
 <td><span class="badge badge-{bs.lower()}">{bs}</span></td>
-<td>{entry_yes:.0%}</td>
-<td class="{'pos' if res=='win' else 'neg'}"><span class="badge badge-{res}">{res}</span></td>
-<td class="{pnl_cls}">${pnl:+,.0f}</td>
-<td>{entry_d}</td><td>{close_d}</td>
+<td data-v="{entry_yes:.4f}">{entry_yes:.0%}</td>
+<td class="{'pos' if res=='win' else 'neg'}" data-v="{'1' if res=='win' else '0'}"><span class="badge badge-{res}">{res}</span></td>
+<td class="{pnl_cls}" data-v="{pnl:.2f}">${pnl:+,.0f}</td>
+<td data-v="{entry_d}">{entry_d}</td><td data-v="{close_d}">{close_d}</td>
 </tr>\n"""
 
         cluster_tags = " ".join(
@@ -543,10 +543,10 @@ def generate_html(
     <button class="tab-btn" onclick="switchTab('{s['key']}','closed')">Closed ({s['closed_count']})</button>
   </div>
   <div class="tab-content" id="tab-{s['key']}-open">
-    {f'<div class="table-wrap"><table class="data-table sm"><thead><tr><th>Market</th><th>Side</th><th>Entry</th><th>Current</th><th>P&L</th><th>Size</th><th>Cluster</th><th>Date</th></tr></thead><tbody>' + open_rows + '</tbody></table></div>' if open_rows else '<p class="empty">No open positions</p>'}
+    {f'<div class="table-wrap"><table class="data-table sm sortable"><thead><tr><th data-col="0" data-type="str">Market</th><th data-col="1" data-type="str">Side</th><th data-col="2" data-type="num">Entry</th><th data-col="3" data-type="num">Current</th><th data-col="4" data-type="num">P&L</th><th data-col="5" data-type="num">Size</th><th data-col="6" data-type="str">Cluster</th><th data-col="7" data-type="str">Date</th></tr></thead><tbody>' + open_rows + '</tbody></table></div>' if open_rows else '<p class="empty">No open positions</p>'}
   </div>
   <div class="tab-content" id="tab-{s['key']}-closed" style="display:none">
-    {f'<div class="table-wrap"><table class="data-table sm"><thead><tr><th>Market</th><th>Side</th><th>Entry</th><th>Result</th><th>P&L</th><th>Opened</th><th>Closed</th></tr></thead><tbody>' + closed_rows + '</tbody></table></div>' if closed_rows else '<p class="empty">No closed trades</p>'}
+    {f'<div class="table-wrap"><table class="data-table sm sortable"><thead><tr><th data-col="0" data-type="str">Market</th><th data-col="1" data-type="str">Side</th><th data-col="2" data-type="num">Entry</th><th data-col="3" data-type="num">Result</th><th data-col="4" data-type="num">P&L</th><th data-col="5" data-type="str">Opened</th><th data-col="6" data-type="str">Closed</th></tr></thead><tbody>' + closed_rows + '</tbody></table></div>' if closed_rows else '<p class="empty">No closed trades</p>'}
   </div>
 </div>\n"""
 
@@ -588,13 +588,13 @@ def generate_html(
 }}
 
 * {{ margin:0; padding:0; box-sizing:border-box; }}
-body {{ background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; font-size:14px; -webkit-font-smoothing:antialiased; }}
+body {{ background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; font-size:17px; -webkit-font-smoothing:antialiased; }}
 
 .wrap {{ max-width:1400px; margin:0 auto; padding:20px 16px; }}
 
 /* ── Header ── */
 header {{ display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; flex-wrap:wrap; gap:8px; }}
-header h1 {{ font-size:1.4em; font-weight:700; color:#fff; }}
+header h1 {{ font-size:1.6em; font-weight:700; color:#fff; }}
 header h1 .logo {{ color:var(--accent); }}
 .updated {{ font-size:0.75em; color:var(--text2); font-family:'DM Mono',monospace; }}
 
@@ -618,8 +618,8 @@ header h1 .logo {{ color:var(--accent); }}
   background:var(--bg2); border:1px solid var(--border); border-radius:8px;
   padding:12px 14px; text-align:center;
 }}
-.stat-val {{ display:block; font-family:'DM Mono',monospace; font-size:1.2em; font-weight:700; }}
-.stat-lbl {{ font-size:0.68em; color:var(--text2); text-transform:uppercase; letter-spacing:0.05em; margin-top:2px; }}
+.stat-val {{ display:block; font-family:'DM Mono',monospace; font-size:1.4em; font-weight:700; }}
+.stat-lbl {{ font-size:0.75em; color:var(--text2); text-transform:uppercase; letter-spacing:0.05em; margin-top:2px; }}
 
 /* ── Cards ── */
 .card {{
@@ -637,17 +637,21 @@ header h1 .logo {{ color:var(--accent); }}
 
 /* ── Tables ── */
 .table-wrap {{ overflow-x:auto; }}
-.data-table {{ width:100%; border-collapse:collapse; font-size:0.82em; }}
+.data-table {{ width:100%; border-collapse:collapse; font-size:0.92em; }}
 .data-table th {{
-  text-align:left; padding:8px 10px; color:var(--text2); font-weight:500;
-  border-bottom:1px solid var(--border); font-size:0.78em;
+  text-align:left; padding:10px 12px; color:var(--text2); font-weight:500;
+  border-bottom:1px solid var(--border); font-size:0.82em;
   text-transform:uppercase; letter-spacing:0.03em; white-space:nowrap;
+  cursor:pointer; user-select:none; transition:color .1s;
 }}
+.data-table th:hover {{ color:var(--accent); }}
+.data-table th.sorted-asc::after {{ content:" ▲"; font-size:0.6em; }}
+.data-table th.sorted-desc::after {{ content:" ▼"; font-size:0.6em; }}
 .data-table td {{
-  padding:7px 10px; border-bottom:1px solid rgba(38,38,64,0.5);
-  font-family:'DM Mono',monospace; font-size:0.9em; white-space:nowrap;
+  padding:8px 12px; border-bottom:1px solid rgba(38,38,64,0.5);
+  font-family:'DM Mono',monospace; font-size:0.95em; white-space:nowrap;
 }}
-.data-table.sm td {{ font-size:0.85em; padding:5px 8px; }}
+.data-table.sm td {{ font-size:0.9em; padding:7px 10px; }}
 
 .trade-id {{
   color:var(--blue); cursor:pointer; font-size:0.82em;
@@ -661,7 +665,7 @@ header h1 .logo {{ color:var(--accent); }}
 .q-cell a:hover {{ text-decoration:underline; }}
 .expires {{ color:var(--text2); font-size:0.85em; }}
 
-.badge {{ padding:2px 7px; border-radius:4px; font-size:0.75em; font-weight:600; }}
+.badge {{ padding:3px 8px; border-radius:4px; font-size:0.82em; font-weight:600; }}
 .badge-no {{ background:var(--neg-dim); color:var(--neg); }}
 .badge-yes {{ background:var(--accent-dim); color:var(--accent); }}
 .badge-win {{ background:var(--accent-dim); color:var(--accent); }}
@@ -671,19 +675,19 @@ header h1 .logo {{ color:var(--accent); }}
 .neg {{ color:var(--neg); }}
 
 /* ── Comparison table ── */
-.comp {{ width:100%; border-collapse:collapse; font-size:0.82em; }}
+.comp {{ width:100%; border-collapse:collapse; font-size:0.92em; }}
 .comp th {{
-  text-align:left; padding:8px 10px; color:var(--text2); font-weight:500;
+  text-align:left; padding:10px 12px; color:var(--text2); font-weight:500;
   border-bottom:2px solid var(--border); cursor:pointer; white-space:nowrap;
-  font-size:0.76em; text-transform:uppercase; letter-spacing:0.03em;
+  font-size:0.8em; text-transform:uppercase; letter-spacing:0.03em;
   user-select:none; position:sticky; top:0; background:var(--bg);
 }}
 .comp th:hover {{ color:var(--accent); }}
 .comp th.sorted-asc::after {{ content:" ▲"; font-size:0.6em; }}
 .comp th.sorted-desc::after {{ content:" ▼"; font-size:0.6em; }}
 .comp td {{
-  padding:7px 10px; border-bottom:1px solid var(--border);
-  font-family:'DM Mono',monospace; font-size:0.9em; white-space:nowrap;
+  padding:8px 12px; border-bottom:1px solid var(--border);
+  font-family:'DM Mono',monospace; font-size:0.95em; white-space:nowrap;
 }}
 .comp tr {{ cursor:pointer; transition:background .1s; }}
 .comp tr:hover {{ background:var(--bg-hover); }}
@@ -708,7 +712,7 @@ header h1 .logo {{ color:var(--accent); }}
 .filters {{ display:flex; gap:5px; margin-bottom:12px; flex-wrap:wrap; }}
 .filter-btn {{
   background:var(--bg2); border:1px solid var(--border); color:var(--text2);
-  padding:5px 12px; border-radius:6px; font-size:0.75em; cursor:pointer;
+  padding:6px 14px; border-radius:6px; font-size:0.82em; cursor:pointer;
   font-family:'DM Sans',sans-serif; transition:all .15s;
 }}
 .filter-btn:hover {{ border-color:var(--accent); color:var(--text); }}
@@ -722,12 +726,12 @@ header h1 .logo {{ color:var(--accent); }}
 @keyframes slideDown {{ from {{ opacity:0; }} to {{ opacity:1; }} }}
 .detail-header {{ padding:14px 16px 6px; }}
 .detail-header h3 {{ font-size:0.95em; color:#fff; }}
-.desc {{ color:var(--text2); font-size:0.78em; margin:2px 0 4px; }}
-.detail-meta {{ font-size:0.75em; color:var(--text2); }}
+.desc {{ color:var(--text2); font-size:0.85em; margin:2px 0 4px; }}
+.detail-meta {{ font-size:0.82em; color:var(--text2); }}
 .detail-tabs {{ padding:0 16px; display:flex; gap:4px; }}
 .tab-btn {{
   background:none; border:none; color:var(--text2); padding:8px 14px;
-  font-family:'DM Sans',sans-serif; font-size:0.8em; cursor:pointer;
+  font-family:'DM Sans',sans-serif; font-size:0.88em; cursor:pointer;
   border-bottom:2px solid transparent; transition:all .15s;
 }}
 .tab-btn:hover {{ color:var(--text); }}
@@ -747,12 +751,13 @@ header h1 .logo {{ color:var(--accent); }}
 
 /* ── Responsive ── */
 @media (max-width:768px) {{
-  .stats-bar {{ grid-template-columns:repeat(3, 1fr); }}
-  .stat-val {{ font-size:1em; }}
-  .comp {{ font-size:0.72em; }}
-  .q-cell {{ max-width:140px; }}
-  .trade-id {{ font-size:0.72em; }}
-  header h1 {{ font-size:1.2em; }}
+  body {{ font-size:15px; }}
+  .stats-bar {{ grid-template-columns:repeat(2, 1fr); }}
+  .stat-val {{ font-size:1.2em; }}
+  .comp {{ font-size:0.82em; }}
+  .q-cell {{ max-width:160px; }}
+  .trade-id {{ font-size:0.8em; }}
+  header h1 {{ font-size:1.3em; }}
 }}
 </style>
 </head>
@@ -786,15 +791,6 @@ header h1 .logo {{ color:var(--accent); }}
 
 <!-- ═══════════ PAPER TRADING ═══════════ -->
 <div class="tab-panel" id="panel-paper">
-
-<div class="stats-bar">
-  <div class="stat"><span class="stat-val {agg_pnl_cls}">${total_realized:+,.0f}</span><span class="stat-lbl">Realized</span></div>
-  <div class="stat"><span class="stat-val {agg_pnl_cls}">${total_unrealized:+,.0f}</span><span class="stat-lbl">Unrealized</span></div>
-  <div class="stat"><span class="stat-val">{total_open}</span><span class="stat-lbl">Open</span></div>
-  <div class="stat"><span class="stat-val">{total_closed}</span><span class="stat-lbl">Closed</span></div>
-  <div class="stat"><span class="stat-val">{agg_wr:.0f}%</span><span class="stat-lbl">Win Rate</span></div>
-  <div class="stat"><span class="stat-val">{total_wins}W/{total_losses}L</span><span class="stat-lbl">Record</span></div>
-</div>
 
 <div class="chart-wrap">
   <h2>P&L History</h2>
@@ -987,6 +983,33 @@ function switchTab(key, tab) {{
   document.getElementById('tab-' + key + '-' + tab).style.display = 'block';
   event.target.classList.add('active');
 }}
+
+// ── Sortable detail tables ──
+document.querySelectorAll('.data-table.sortable th[data-col]').forEach(th => {{
+  th.addEventListener('click', () => {{
+    const table = th.closest('table');
+    const tbody = table.querySelector('tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    const col = parseInt(th.dataset.col);
+    const isNum = th.dataset.type === 'num';
+    const asc = th.classList.contains('sorted-asc');
+    table.querySelectorAll('th').forEach(h => h.classList.remove('sorted-asc','sorted-desc'));
+    th.classList.add(asc ? 'sorted-desc' : 'sorted-asc');
+    rows.sort((a, b) => {{
+      const ac = a.children[col], bc = b.children[col];
+      let av, bv;
+      if (isNum) {{
+        av = parseFloat(ac?.dataset?.v || ac?.textContent) || 0;
+        bv = parseFloat(bc?.dataset?.v || bc?.textContent) || 0;
+      }} else {{
+        av = ac?.dataset?.v || ac?.textContent || '';
+        bv = bc?.dataset?.v || bc?.textContent || '';
+      }}
+      return asc ? (av < bv ? -1 : 1) : (av > bv ? -1 : 1);
+    }});
+    rows.forEach(r => tbody.appendChild(r));
+  }});
+}});
 </script>
 </body>
 </html>"""
@@ -1008,7 +1031,7 @@ def generate_dashboard():
         html = """<!DOCTYPE html><html><head><title>Polymarket Bot</title>
 <style>body{background:#0c0c14;color:#cccce0;font-family:sans-serif;display:flex;justify-content:center;align-items:center;height:100vh;}
 </style></head><body><div><h1 style="color:#00e5a0">◆ Polymarket Bot</h1><p>No data yet. Run the bot first.</p></div></body></html>"""
-        with open("dashboard.html", "w") as f:
+        with open("dashboard.html", "w", encoding="utf-8") as f:
             f.write(html)
         return
 
@@ -1026,9 +1049,9 @@ def generate_dashboard():
 
     html = generate_html(all_stats, market_data, history, pending_trades, live_portfolios)
 
-    with open("dashboard.html", "w") as f:
+    with open("dashboard.html", "w", encoding="utf-8") as f:
         f.write(html)
-    with open("index.html", "w") as f:
+    with open("index.html", "w", encoding="utf-8") as f:
         f.write(html)
 
     print(f"[INFO] Dashboard v3 generated ({len(all_stats)} paper strategies, {len(pending_trades)} pending trades)")
