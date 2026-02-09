@@ -41,7 +41,7 @@ CHAIN_ID = 137  # Polygon
 
 # Safety limits
 MAX_TRADES_PER_BATCH = 5          # Max trades in a single execution
-MAX_PRICE_DIVERGENCE = 0.03       # 3% max divergence between Gamma and CLOB
+MAX_PRICE_DIVERGENCE = 0.10       # 10% max divergence between Gamma and CLOB
 PROPOSAL_EXPIRY_HOURS = 6         # Proposals expire after this
 ORDER_EXPIRY_HOURS = 6            # GTD orders expire after this
 MIN_BALANCE_USDC = 5.0            # Don't trade if balance < $5
@@ -198,7 +198,21 @@ def check_orderbook_price(token_id: str, expected_price: float) -> Tuple[bool, f
         if not asks:
             return False, 0.0, "No asks in orderbook"
         
-        best_ask = float(asks[0].price if hasattr(asks[0], 'price') else asks[0]["price"])
+        # Sort asks by price ascending to get actual best ask
+        ask_prices = []
+        for a in asks:
+            try:
+                p = float(a.price if hasattr(a, 'price') else a["price"])
+                ask_prices.append(p)
+            except (ValueError, KeyError):
+                continue
+        
+        if not ask_prices:
+            return False, 0.0, "No valid ask prices in orderbook"
+        
+        best_ask = min(ask_prices)
+        print(f"  [ORDERBOOK] {len(ask_prices)} asks, best={best_ask:.4f}, "
+              f"all={sorted(ask_prices)[:5]}, expected={expected_price:.4f}")
         divergence = abs(best_ask - expected_price)
         
         if divergence > MAX_PRICE_DIVERGENCE:
@@ -384,8 +398,14 @@ def _execute_single_trade(trade: PendingTrade) -> Dict[str, Any]:
         # If it fails, we'll proceed with caution
         
         # 2. Orderbook sanity check
+        # proposed_price is the YES probability from Gamma API
+        # If betting NO, the CLOB token price = 1 - YES_price
+        check_price = trade.proposed_price
+        if trade.bet_side == "NO":
+            check_price = round(1.0 - trade.proposed_price, 4)
+        
         price_ok, actual_price, price_msg = check_orderbook_price(
-            trade.token_id, trade.proposed_price
+            trade.token_id, check_price
         )
         result["orderbook_check"] = price_msg
         
@@ -396,7 +416,8 @@ def _execute_single_trade(trade: PendingTrade) -> Dict[str, Any]:
         
         # 3. Calculate order parameters
         # Limit price: actual best ask + 1 cent (to increase fill probability)
-        limit_price = round(min(actual_price + 0.01, trade.proposed_price + 0.02), 2)
+        # Use check_price (NO price) as reference, not proposed_price (YES price)
+        limit_price = round(min(actual_price + 0.01, check_price + 0.05), 2)
         # Ensure price is between 0.01 and 0.99
         limit_price = max(0.01, min(0.99, limit_price))
         
