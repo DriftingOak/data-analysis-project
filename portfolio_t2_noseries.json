@@ -36,8 +36,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.5549999999999999,
-      "price_yes_current": 0.445
+      "current_price": 0.525,
+      "price_yes_current": 0.475
     },
     {
       "market_id": "1336363",
@@ -54,8 +54,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.6,
-      "price_yes_current": 0.4
+      "current_price": 0.605,
+      "price_yes_current": 0.395
     },
     {
       "market_id": "1117207",
@@ -72,8 +72,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.405,
-      "price_yes_current": 0.595
+      "current_price": 0.43000000000000005,
+      "price_yes_current": 0.57
     },
     {
       "market_id": "1178277",
@@ -90,8 +90,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.44499999999999995,
-      "price_yes_current": 0.555
+      "current_price": 0.44999999999999996,
+      "price_yes_current": 0.55
     },
     {
       "market_id": "567688",
@@ -108,8 +108,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.5700000000000001,
-      "price_yes_current": 0.43
+      "current_price": 0.575,
+      "price_yes_current": 0.425
     },
     {
       "market_id": "791703",
@@ -126,8 +126,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.51,
-      "price_yes_current": 0.49
+      "current_price": 0.49,
+      "price_yes_current": 0.51
     },
     {
       "market_id": "661700",
@@ -144,8 +144,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.595,
-      "price_yes_current": 0.405
+      "current_price": 0.585,
+      "price_yes_current": 0.415
     },
     {
       "market_id": "567687",
@@ -164,12 +164,30 @@
       "pnl": null,
       "current_price": 0.565,
       "price_yes_current": 0.435
+    },
+    {
+      "market_id": "1336700",
+      "question": "UK Cabinet Minister resigns in February?",
+      "token_id": "35968686103771879673339867671096377349965410292948599182591546058154057690711",
+      "bet_side": "NO",
+      "entry_date": "2026-02-09 15:15",
+      "entry_price": 0.515,
+      "size_usd": 10.0,
+      "shares": 19.320388349514563,
+      "cluster": "europe",
+      "expected_close": "2026-02-28",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
     }
   ],
   "closed_trades": [],
   "created_at": "2026-02-08T22:16:55.329048",
-  "last_updated": "2026-02-09T08:08:09.511749",
-  "total_trades": 9,
+  "last_updated": "2026-02-09T15:15:53.626694",
+  "total_trades": 10,
   "wins": 0,
   "losses": 0,
   "total_pnl": 0.0
