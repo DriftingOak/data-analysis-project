@@ -420,6 +420,34 @@ STRATEGIES["t5_deploy_max_growth"] = _strat(
     deadline_max=90,
 )
 
+# ─────────────────────────────────────────────────────────────────────────────
+# LIVE TEST — Micro trades to validate the pipeline
+# ─────────────────────────────────────────────────────────────────────────────
+
+STRATEGIES["test_live"] = {
+    "name": "Test Live",
+    "mode": "live",
+    "description": "Micro $1 trades to validate live trading pipeline. Max 4 positions.",
+    "bet_side": "NO",
+    "price_yes_min": 0.20,
+    "price_yes_max": 0.60,
+    "min_volume": 10000,
+    "max_volume": float("inf"),
+    "max_total_exposure_pct": 1.00,
+    "max_cluster_exposure_pct": 1.00,
+    "bet_size": 1.0,
+    "bankroll": 4.0,
+    "entry_cost_rate": 0.03,
+    "portfolio_file": "portfolio_test_live.json",
+    "sizing": "fixed",
+    "priority": "price_high",
+    "deadline_min": 3,
+    "deadline_max": None,
+    "event_cap": 3,
+    "exclude_series": False,
+}
+
+
 
 # =============================================================================
 # STRATEGY GROUPS
@@ -457,6 +485,9 @@ STRATEGY_GROUPS: Dict[str, List[str]] = {
 
     # Quick test
     "quick": ["balanced", "t1_baseline_flat"],
+
+    # Live trading
+    "live": ["test_live"],
 }
 
 
