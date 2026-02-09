@@ -128,22 +128,14 @@ def get_client():
         )
     
     private_key = config.PRIVATE_KEY
-    proxy_address = getattr(config, "POLYMARKET_PROXY_ADDRESS", "") or os.getenv("POLYMARKET_PROXY_ADDRESS", "")
     
     if not private_key:
         raise ValueError("PRIVATE_KEY not set. Add it to GitHub Secrets.")
-    if not proxy_address:
-        raise ValueError(
-            "POLYMARKET_PROXY_ADDRESS not set. "
-            "Find it on polymarket.com → Deposit → Deposit Address."
-        )
     
     _client = ClobClient(
         HOST,
         key=private_key,
         chain_id=CHAIN_ID,
-        signature_type=2,  # Browser wallet (MetaMask)
-        funder=proxy_address,
     )
     _client.set_api_creds(_client.create_or_derive_api_creds())
     
@@ -420,7 +412,9 @@ def _execute_single_trade(trade: PendingTrade) -> Dict[str, Any]:
         limit_price = max(0.01, min(0.99, limit_price))
         
         # Size in shares (not dollars)
-        shares = round(trade.size_usd / limit_price, 2)
+        # Round UP to ensure order value >= $1 minimum
+        import math
+        shares = math.ceil(trade.size_usd / limit_price * 100) / 100
         
         result["limit_price"] = limit_price
         result["shares"] = shares

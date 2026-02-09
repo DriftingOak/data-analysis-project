@@ -73,7 +73,13 @@ jobs:
             python bot.py --paper "$STRATEGY"
           fi
 
-      - name: Commit portfolio changes
+      - name: Generate dashboard
+        run: |
+          mkdir -p site
+          python generate_dashboard.py
+          mv dashboard.html site/index.html
+
+      - name: Commit changes
         run: |
           echo "=== Portfolio files ==="
           ls -la portfolio_*.json 2>/dev/null || echo "No portfolio files found"
@@ -84,11 +90,12 @@ jobs:
           # Pull latest to avoid conflicts
           git pull --rebase origin main || true
           
-          # Add portfolio files (at root)
+          # Add portfolio files + dashboard
           git add portfolio_*.json || true
           git add pnl_history.json || true
           git add pending_trades.json || true
           git add live_portfolio.json || true
+          git add site/ || true
           
           echo "=== Staged changes ==="
           git diff --staged --stat
