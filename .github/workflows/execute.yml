@@ -1,0 +1,87 @@
+name: Execute Live Trades
+
+on:
+  workflow_dispatch:
+    inputs:
+      trade_ids:
+        description: 'Trade IDs to execute (comma-separated, or "all")'
+        required: true
+        type: string
+      confirm:
+        description: 'Type CONFIRM to proceed with real money'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  execute-trades:
+    runs-on: ubuntu-latest
+    
+    # Safety: require explicit confirmation
+    if: ${{ inputs.confirm == 'CONFIRM' }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install py-clob-client web3==6.14.0
+
+      - name: Show pending trades
+        run: python -m live_trading pending
+
+      - name: Execute approved trades
+        env:
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+          POLYMARKET_PROXY_ADDRESS: ${{ secrets.POLYMARKET_PROXY_ADDRESS }}
+          POLYMARKET_API_KEY: ${{ secrets.POLYMARKET_API_KEY }}
+          POLYMARKET_SECRET: ${{ secrets.POLYMARKET_SECRET }}
+          POLYMARKET_PASSPHRASE: ${{ secrets.POLYMARKET_PASSPHRASE }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          LIVE_TRADING_ENABLED: "true"
+        run: |
+          echo "🔔 Executing trades: ${{ inputs.trade_ids }}"
+          python -m live_trading execute "${{ inputs.trade_ids }}"
+
+      - name: Show live status
+        run: python -m live_trading status
+
+      - name: Commit portfolio changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          git pull --rebase origin main || true
+          
+          git add pending_trades.json live_portfolio.json 2>/dev/null || true
+          
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "💰 Live trade executed $(date -u '+%Y-%m-%d %H:%M') UTC"
+            git push origin main
+          fi
+
+      - name: Upload execution logs
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: execution-logs-${{ github.run_number }}
+          path: |
+            pending_trades.json
+            live_portfolio.json
+          retention-days: 90

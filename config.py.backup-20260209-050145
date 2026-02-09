@@ -17,10 +17,6 @@ POLYMARKET_PASSPHRASE = os.getenv("POLYMARKET_PASSPHRASE", "")
 # Wallet (for signing transactions)
 PRIVATE_KEY = os.getenv("PRIVATE_KEY", "")
 
-# Polymarket proxy address (for browser wallet / signature_type=2)
-# Find it: polymarket.com → Deposit → Deposit Address
-POLYMARKET_PROXY_ADDRESS = os.getenv("POLYMARKET_PROXY_ADDRESS", "")
-
 # Telegram notifications (optional)
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "")
@@ -46,17 +42,6 @@ BUFFER_HOURS = 48   # Don't trade within 48h of open/close
 # Exposure limits
 MAX_TOTAL_EXPOSURE_PCT = 0.60   # Max 60% of bankroll exposed
 MAX_CLUSTER_EXPOSURE_PCT = 0.20 # Max 20% per geo cluster
-
-
-# =============================================================================
-# LIVE TRADING SETTINGS
-# =============================================================================
-
-# Master switch: must be "true" to execute real trades
-LIVE_TRADING_ENABLED = os.getenv("LIVE_TRADING_ENABLED", "false").lower() == "true"
-
-# Shadow mode: runs full pipeline but doesn't place orders  
-LIVE_SHADOW_MODE = os.getenv("LIVE_SHADOW_MODE", "false").lower() == "true"
 
 # =============================================================================
 # KEYWORDS FOR FILTERING (COMPREHENSIVE)
