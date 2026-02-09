@@ -24,6 +24,7 @@ import os
 import sys
 
 def check(name, passed, detail=""):
+    passed = bool(passed)
     emoji = "✅" if passed else "❌"
     print(f"  {emoji} {name}")
     if detail:
@@ -176,14 +177,15 @@ def main():
         
         if test_token:
             book = client.get_order_book(test_token)
-            has_bids = len(book.get("bids", [])) > 0
-            has_asks = len(book.get("asks", [])) > 0
+            # SDK returns an object, not a dict
+            bids = getattr(book, 'bids', None) or []
+            asks = getattr(book, 'asks', None) or []
             all_ok &= check("Orderbook fetch", True,
                            f"Market: {test_question}...")
-            all_ok &= check("Orderbook has bids", has_bids,
-                           f"{len(book.get('bids', []))} bids")
-            all_ok &= check("Orderbook has asks", has_asks,
-                           f"{len(book.get('asks', []))} asks")
+            all_ok &= check("Orderbook has bids", len(bids) > 0,
+                           f"{len(bids)} bids")
+            all_ok &= check("Orderbook has asks", len(asks) > 0,
+                           f"{len(asks)} asks")
             
             # Test midpoint
             mid = client.get_midpoint(test_token)
@@ -200,22 +202,35 @@ def main():
     print("-" * 40)
     
     try:
-        bal = client.get_balance_allowance()
-        if isinstance(bal, dict):
-            balance = bal.get("balance", "unknown")
-            allowance = bal.get("allowance", "unknown")
+        # Try multiple approaches to get balance
+        bal = None
+        try:
+            bal = client.get_balance_allowance()
+        except Exception:
+            pass
+        
+        if bal is not None:
+            # Could be object or dict
+            if isinstance(bal, dict):
+                balance = bal.get("balance", "unknown")
+                allowance = bal.get("allowance", "unknown")
+            else:
+                balance = getattr(bal, 'balance', "unknown")
+                allowance = getattr(bal, 'allowance', "unknown")
+            
             check("Balance data", True, f"Raw balance: {balance}, allowance: {allowance}")
             
-            # Try to parse USDC balance (6 decimals)
             try:
                 usdc = float(balance) / 1e6
                 check("USDC balance", usdc > 0, f"${usdc:.2f} USDC")
                 if usdc < 10:
                     print("     ⚠️  Low balance - deposit more USDC before trading")
-            except:
+            except Exception:
                 check("USDC parse", False, f"Could not parse: {balance}")
         else:
-            check("Balance data", True, f"Response: {bal}")
+            check("Balance data", False, "get_balance_allowance() returned None - may need allowances set")
+            print("     ℹ️  This is normal if you haven't set token allowances yet")
+            print("     ℹ️  Allowances will be set automatically on first trade via polymarket.com")
     except Exception as e:
         check("Balance check", False, str(e))
         print("     ℹ️  Balance check may require allowances to be set first")

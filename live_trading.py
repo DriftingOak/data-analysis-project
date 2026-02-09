@@ -194,10 +194,11 @@ def check_orderbook_price(token_id: str, expected_price: float) -> Tuple[bool, f
         client = get_client()
         book = client.get_order_book(token_id)
         
-        if not book or not book.get("asks"):
+        asks = getattr(book, 'asks', None) or []
+        if not asks:
             return False, 0.0, "No asks in orderbook"
         
-        best_ask = float(book["asks"][0]["price"])
+        best_ask = float(asks[0].price if hasattr(asks[0], 'price') else asks[0]["price"])
         divergence = abs(best_ask - expected_price)
         
         if divergence > MAX_PRICE_DIVERGENCE:
