@@ -398,14 +398,12 @@ def _execute_single_trade(trade: PendingTrade) -> Dict[str, Any]:
         # If it fails, we'll proceed with caution
         
         # 2. Orderbook sanity check
-        # proposed_price is the YES probability from Gamma API
-        # If betting NO, the CLOB token price = 1 - YES_price
-        check_price = trade.proposed_price
-        if trade.bet_side == "NO":
-            check_price = round(1.0 - trade.proposed_price, 4)
-        
+        # bot.py already passes the correct token_id and price:
+        #   - token_id = NO token (when betting NO)
+        #   - proposed_price = NO price (1 - price_yes, when betting NO)
+        # So we compare directly against the orderbook of the stored token
         price_ok, actual_price, price_msg = check_orderbook_price(
-            trade.token_id, check_price
+            trade.token_id, trade.proposed_price
         )
         result["orderbook_check"] = price_msg
         
@@ -415,9 +413,9 @@ def _execute_single_trade(trade: PendingTrade) -> Dict[str, Any]:
             return result
         
         # 3. Calculate order parameters
-        # Limit price: actual best ask + 1 cent (to increase fill probability)
-        # Use check_price (NO price) as reference, not proposed_price (YES price)
-        limit_price = round(min(actual_price + 0.01, check_price + 0.05), 2)
+        # Limit price: best ask + 1 cent (to increase fill probability)
+        # Cap at proposed_price + 5 cents to avoid overpaying
+        limit_price = round(min(actual_price + 0.01, trade.proposed_price + 0.05), 2)
         # Ensure price is between 0.01 and 0.99
         limit_price = max(0.01, min(0.99, limit_price))
         
