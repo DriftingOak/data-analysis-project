@@ -26,7 +26,6 @@ on:
           - phase4
           - quick
           - deployable
-          - live
 
 permissions:
   contents: write
@@ -57,12 +56,8 @@ jobs:
           POLYMARKET_API_KEY: ${{ secrets.POLYMARKET_API_KEY }}
           POLYMARKET_SECRET: ${{ secrets.POLYMARKET_SECRET }}
           POLYMARKET_PASSPHRASE: ${{ secrets.POLYMARKET_PASSPHRASE }}
-          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-          POLYMARKET_PROXY_ADDRESS: ${{ secrets.POLYMARKET_PROXY_ADDRESS }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          LIVE_TRADING_ENABLED: ${{ secrets.LIVE_TRADING_ENABLED }}
-          LIVE_SHADOW_MODE: ${{ secrets.LIVE_SHADOW_MODE }}
         run: |
           STRATEGY="${{ inputs.strategy }}"
           if [ -z "$STRATEGY" ]; then
@@ -93,8 +88,6 @@ jobs:
           # Add portfolio files + dashboard
           git add portfolio_*.json || true
           git add pnl_history.json || true
-          git add pending_trades.json || true
-          git add live_portfolio.json || true
           git add site/ || true
           
           echo "=== Staged changes ==="

@@ -89,7 +89,6 @@ STRATEGIES: Dict[str, Dict[str, Any]] = {}
 
 STRATEGIES["conservative"] = {
     "name": "Conservative",
-        "mode": "paper",  # "paper" or "live"
     "description": "Mise NO sur les marchés à 10-25% YES (très peu probable). Petits gains fréquents. Volume min 10k$.",
     "bet_side": "NO",
     "price_yes_min": 0.10,
@@ -113,7 +112,6 @@ STRATEGIES["conservative"] = {
 
 STRATEGIES["balanced"] = {
     "name": "Balanced",
-        "mode": "paper",  # "paper" or "live"
     "description": "Mise NO sur les marchés à 20-60% YES. Zone large, stratégie de référence. Volume min 10k$.",
     "bet_side": "NO",
     "price_yes_min": 0.20,
@@ -136,7 +134,6 @@ STRATEGIES["balanced"] = {
 
 STRATEGIES["aggressive"] = {
     "name": "Aggressive",
-        "mode": "paper",  # "paper" or "live"
     "description": "Mise NO sur les marchés à 30-60% YES. Zone plus risquée mais meilleur rendement par trade. Volume min 10k$.",
     "bet_side": "NO",
     "price_yes_min": 0.30,
@@ -159,7 +156,6 @@ STRATEGIES["aggressive"] = {
 
 STRATEGIES["volume_sweet"] = {
     "name": "Volume Sweet Spot",
-        "mode": "paper",  # "paper" or "live"
     "description": "Mise NO sur marchés à 20-60% YES, volume limité à 15k-100k$. Cible les marchés moyens où l'edge est le plus fort.",
     "bet_side": "NO",
     "price_yes_min": 0.20,
@@ -424,30 +420,6 @@ STRATEGIES["t5_deploy_max_growth"] = _strat(
 # LIVE TEST — Micro trades to validate the pipeline
 # ─────────────────────────────────────────────────────────────────────────────
 
-STRATEGIES["test_live"] = {
-    "name": "Test Live",
-    "mode": "live",
-    "description": "Micro $1 trades to validate live trading pipeline. Max 4 positions.",
-    "bet_side": "NO",
-    "price_yes_min": 0.20,
-    "price_yes_max": 0.60,
-    "min_volume": 10000,
-    "max_volume": float("inf"),
-    "max_total_exposure_pct": 1.00,
-    "max_cluster_exposure_pct": 1.00,
-    "bet_size": 1.0,
-    "bankroll": 4.0,
-    "entry_cost_rate": 0.03,
-    "portfolio_file": "portfolio_test_live.json",
-    "sizing": "fixed",
-    "priority": "price_high",
-    "deadline_min": 3,
-    "deadline_max": None,
-    "event_cap": 3,
-    "exclude_series": False,
-}
-
-
 
 # =============================================================================
 # STRATEGY GROUPS
@@ -487,7 +459,6 @@ STRATEGY_GROUPS: Dict[str, List[str]] = {
     "quick": ["balanced", "t1_baseline_flat"],
 
     # Live trading
-    "live": ["test_live"],
 }
 
 

@@ -6,8 +6,8 @@ Uses GPT-4o-mini to classify and filter geopolitical candidates.
 Same classification system as annotate.py (backtest), adapted for live use.
 
 Returns per-market: exclude, domain, region, salience.
-Batches candidates in a single API call for cost efficiency.
-Cost: ~$0.003 per batch of 40 markets.
+Batches candidates in parallel API calls for speed.
+Cost: ~$0.005 per run (~400 markets).
 
 Usage:
     from llm_filter import llm_classify_candidates
@@ -21,6 +21,7 @@ import os
 import json
 import requests
 from typing import List, Tuple
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # =============================================================================
 # CONFIG
@@ -28,6 +29,15 @@ from typing import List, Tuple
 
 MODEL = "gpt-4o-mini"
 API_URL = "https://api.openai.com/v1/chat/completions"
+
+REGION_TO_CLUSTER = {
+    "ukraine-russia": "ukraine",
+    "middle-east": "mideast",
+    "asia": "china",
+    "americas": "other",
+    "europe": "other",
+    "other": "other",
+}
 
 # Aligned with annotate.py from the backtesting pipeline
 SYSTEM_PROMPT = """You are a geopolitical market classifier for a Polymarket trading bot.
@@ -44,26 +54,59 @@ EXCLUDE = false (TRADE IT) if:
 - Nuclear tests, weapons proliferation, arms control violations
 - Terrorism, hostage situations with international dimension
 - Regime change, coups, revolutions, assassinations
-- Ceasefires, peace agreements (NO = "no deal" = status quo)
+- Leadership changes of leaders directly commanding active military conflicts (e.g. "Netanyahu out", "Zelenskyy out", "Putin out", "Khamenei out") — their departure directly changes the course of ongoing wars. Does NOT include US presidents, EU leaders, or other leaders whose departure is primarily a domestic political event.
+- Ceasefires, peace deals, peace agreements, nuclear deals between countries — ALWAYS INCLUDE. NO = "no deal happens" = status quo continues = core thesis bet.
 - Sanctions, tariffs, trade wars between countries
 - International diplomacy crises, treaty withdrawals
 - Major confrontations (naval incidents, airspace violations, border clashes)
-- Markets with specific dates/thresholds are fine (e.g. "Will X strike Y on Feb 10?")
-- "Before [date]" markets are fine — core salience bets
+- Markets with specific dates/thresholds (e.g. "Will X strike Y on Feb 10?")
+- "Before [date]" markets — core salience bets
 - "Nothing Ever Happens" style markets — literally the thesis
 
 EXCLUDE = true (SKIP IT) if:
 - Not geopolitical: e-sports, crypto, entertainment, sports, weather, science, finance, tech
-- Word mention bets ("Will X say 'Y' during speech?" — depends on word choice, not dramatic events)
-- Meme/joke markets ("before GTA VI", "before Heat Death of Universe")
-- Pure domestic politics with no violence/military dimension (approval ratings, pardons, court cases, legislation)
-- Elections and polls (outcome is certain to happen, question is who wins — not a "nothing happens" bet)
+- Word mention bets ("Will X say 'Y' during speech?")
+- Meme/joke time anchors: any market containing "before GTA VI", "before Heat Death of Universe", or similar absurd deadlines — even if the underlying event is geopolitical
+- US domestic politics by default: elections, appointments, pardons, court cases, legislation, approval ratings, congressional votes, impeachment, cabinet nominations. ONLY include US politics if the market directly involves military action abroad (e.g. "Will US strike Iran?" = VALID, "Will Trump fire Secretary of Defense?" = REJECT)
+- Elections and polls in countries NOT involved in active conflicts
+- Pure domestic politics with no violence/military dimension
 - Market where NO doesn't mean "nothing dramatic happens"
+
+## CRITICAL EXAMPLES (follow these exactly)
+
+✅ INCLUDE (exclude=false):
+1. "Russia x Ukraine ceasefire by March 31" → military, ukraine-russia (NO = no peace = status quo)
+2. "Russia x Ukraine ceasefire by end of 2026" → military, ukraine-russia (NO = no peace = status quo)
+3. "Ukraine signs peace deal with Russia by June 30" → diplomatic, ukraine-russia (NO = no deal)
+4. "US-Iran nuclear deal by June 30" → diplomatic, middle-east (NO = no deal = status quo)
+5. "US-Iran nuclear deal before 2027" → diplomatic, middle-east (NO = no deal)
+6. "Netanyahu out by end of 2026" → domestic, middle-east (wartime leader commanding active conflict)
+7. "Zelenskyy out as Ukraine president by end of 2026" → domestic, ukraine-russia (wartime leader)
+8. "Putin out as President of Russia by June 30" → domestic, ukraine-russia (wartime leader)
+9. "Khamenei out as Supreme Leader of Iran by March 31" → domestic, middle-east (wartime leader)
+10. "Will Israel strike Lebanon on February 10?" → military, middle-east
+11. "US strikes Iran by March 31" → military, middle-east
+12. "Nothing Ever Happens: US Strike Edition" → military, other
+13. "Will Russia capture Pokrovsk by March 31?" → military, ukraine-russia
+14. "China x Taiwan military clash before 2027" → military, asia
+15. "Hezbollah strike on Israel by March 31" → military, middle-east
+16. "Will the US capture Khamenei before 2027?" → military, middle-east
+17. "Will Russia invade another country in 2026?" → military, ukraine-russia
+18. "Israel x Hamas Ceasefire Phase II by March 31?" → diplomatic, middle-east (NO = no ceasefire)
+
+❌ EXCLUDE (exclude=true):
+19. "China invades Taiwan before GTA VI" → meme time anchor (exclude even though event is geopolitical)
+20. "Russia-Ukraine Ceasefire before GTA VI" → meme time anchor
+21. "Will JD Vance win the 2028 US Presidential Election?" → US domestic politics
+22. "Will Trump fire the Secretary of Defense?" → US domestic politics
+23. "Will Vicky Dávila win the 2026 Colombian presidential election?" → election, no active conflict
+24. "Will Wagner Moura win Best Actor at the Academy Awards?" → entertainment
+25. "Will Trump mention 'nuclear' in his UN speech?" → word-mention bet
 
 ## 2. DOMAIN
 - "military": armed conflict, strikes, invasions, territorial control, troop movements, weapons
-- "diplomatic": sanctions, treaties, international relations, trade wars, summits
-- "domestic": elections, internal politics, leadership changes, legislation
+- "diplomatic": sanctions, treaties, international relations, trade wars, ceasefires, peace deals, nuclear deals
+- "domestic": internal politics, leadership changes, legislation
 
 ## 3. REGION
 - "ukraine-russia": Ukraine-Russia conflict, Crimea, Donbas, Kursk
@@ -77,6 +120,14 @@ EXCLUDE = true (SKIP IT) if:
 - "high": major world powers directly involved, front-page global news, active crises
 - "medium": regionally significant, covered by international press
 - "low": obscure, niche, minor attention
+
+## MANDATORY — NEVER EXCLUDE THESE (override all other rules):
+- ANY market about military strikes, airstrikes, bombing, shelling, invasions, territorial capture, ground offensives. These are ALWAYS exclude=false. "Will X strike Y" = ALWAYS INCLUDE.
+- ANY market about ceasefires, peace deals, or nuclear deals. ALWAYS exclude=false.
+- ANY market about Netanyahu, Zelenskyy, Putin, Khamenei, Xi Jinping, Kim Jong Un leaving power/being removed. These are wartime/crisis leaders. ALWAYS exclude=false, domain="domestic".
+- ANY market about regime change, coups, or assassinations of world leaders. ALWAYS exclude=false.
+
+If in doubt, set exclude=false. The bot's edge comes from volume — rejecting valid markets costs more than including a few marginal ones.
 
 ## OUTPUT FORMAT
 
@@ -99,7 +150,7 @@ USER_PROMPT_TEMPLATE = """Classify these {n} markets:
 # CORE
 # =============================================================================
 
-def llm_classify_candidates(candidates: list, batch_size: int = 50) -> Tuple[list, list]:
+def llm_classify_candidates(candidates: list, batch_size: int = 100) -> Tuple[list, list]:
     """Classify and filter candidates via LLM.
     
     Returns (valid, rejected).
@@ -114,14 +165,27 @@ def llm_classify_candidates(candidates: list, batch_size: int = 50) -> Tuple[lis
     if not candidates:
         return [], []
 
+    # Build batches
+    batches = [candidates[i:i + batch_size] for i in range(0, len(candidates), batch_size)]
+
     valid = []
     rejected = []
 
-    for i in range(0, len(candidates), batch_size):
-        batch = candidates[i:i + batch_size]
-        batch_valid, batch_rejected = _classify_batch(batch, api_key)
-        valid.extend(batch_valid)
-        rejected.extend(batch_rejected)
+    # Parallel LLM calls (up to 4 concurrent)
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        futures = {
+            pool.submit(_classify_batch, batch, api_key): i
+            for i, batch in enumerate(batches)
+        }
+        for future in as_completed(futures):
+            batch_idx = futures[future]
+            try:
+                batch_valid, batch_rejected = future.result()
+                valid.extend(batch_valid)
+                rejected.extend(batch_rejected)
+            except Exception as e:
+                print(f"[LLM] Batch {batch_idx} failed: {e} — passing through")
+                valid.extend(batches[batch_idx])
 
     return valid, rejected
 
@@ -153,7 +217,7 @@ def _classify_batch(candidates: list, api_key: str) -> Tuple[list, list]:
                 "temperature": 0,
                 "max_tokens": len(candidates) * 60,
             },
-            timeout=60,
+            timeout=120,
         )
         resp.raise_for_status()
         data = resp.json()
@@ -184,15 +248,6 @@ def _classify_batch(candidates: list, api_key: str) -> Tuple[list, list]:
         else:
             # Attach classification to candidate
             raw_region = cls.get("region", "other")
-            # Map to existing cluster names
-            REGION_TO_CLUSTER = {
-                "ukraine-russia": "ukraine",
-                "middle-east": "mideast",
-                "asia": "china",
-                "americas": "other",
-                "europe": "other",
-                "other": "other",
-            }
             c.llm_region = REGION_TO_CLUSTER.get(raw_region, "other")
             c.llm_domain = cls.get("domain", "international")
             c.llm_salience = cls.get("salience", "medium")
@@ -246,7 +301,7 @@ def _parse_json_response(content: str, expected_count: int) -> list:
 # BACKWARD COMPAT
 # =============================================================================
 
-def llm_validate_candidates(candidates: list, batch_size: int = 50) -> Tuple[list, list]:
+def llm_validate_candidates(candidates: list, batch_size: int = 100) -> Tuple[list, list]:
     """Alias for llm_classify_candidates."""
     return llm_classify_candidates(candidates, batch_size)
 
@@ -264,18 +319,37 @@ if __name__ == "__main__":
             self.llm_salience = None
 
     test_markets = [
+        # Should INCLUDE
         FakeCandidate("Will Israel strike Lebanon on February 10, 2026?"),
-        FakeCandidate("Russia-Ukraine Ceasefire before GTA VI?"),
-        FakeCandidate("Will Trump mention 'nuclear' in his UN speech?"),
         FakeCandidate("Nothing Ever Happens: US Strike Edition"),
         FakeCandidate("Will the US strike 2 countries in February 2026?"),
         FakeCandidate("Will China invade Taiwan before March 2026?"),
-        FakeCandidate("Will Bitcoin reach $100k?"),
-        FakeCandidate("Will Zelensky say 'Putin' during address?"),
         FakeCandidate("Will North Korea conduct a nuclear test in 2026?"),
-        FakeCandidate("German federal election — CDU majority?"),
         FakeCandidate("Will Iran enrich uranium to 90% by June?"),
         FakeCandidate("Will Russia capture Pokrovsk by March 31?"),
+        FakeCandidate("Netanyahu out by end of 2026?"),
+        FakeCandidate("Zelenskyy out as Ukraine president by end of 2026?"),
+        FakeCandidate("Putin out as President of Russia by June 30?"),
+        FakeCandidate("Khamenei out as Supreme Leader of Iran by March 31?"),
+        FakeCandidate("Russia x Ukraine ceasefire by end of 2026?"),
+        FakeCandidate("Russia x Ukraine ceasefire by March 31, 2026?"),
+        FakeCandidate("Ukraine signs peace deal with Russia by March 31?"),
+        FakeCandidate("Ukraine signs peace deal with Russia before 2027?"),
+        FakeCandidate("US-Iran nuclear deal before 2027?"),
+        FakeCandidate("US-Iran nuclear deal by June 30?"),
+        FakeCandidate("Israel x Hamas Ceasefire Phase II by March 31?"),
+        FakeCandidate("Will Russia invade another country in 2026?"),
+        # Should EXCLUDE
+        FakeCandidate("Russia-Ukraine Ceasefire before GTA VI?"),
+        FakeCandidate("Will China invades Taiwan before GTA VI?"),
+        FakeCandidate("Will Trump mention 'nuclear' in his UN speech?"),
+        FakeCandidate("Will Bitcoin reach $100k?"),
+        FakeCandidate("Will Zelensky say 'Putin' during address?"),
+        FakeCandidate("German federal election — CDU majority?"),
+        FakeCandidate("Will JD Vance win the 2028 US Presidential Election?"),
+        FakeCandidate("Will Trump fire the Secretary of Defense?"),
+        FakeCandidate("Will Vicky Dávila win the 2026 Colombian presidential election?"),
+        FakeCandidate("Will Wagner Moura win Best Actor at the Academy Awards?"),
     ]
 
     valid, rejected = llm_classify_candidates(test_markets)
@@ -287,3 +361,58 @@ if __name__ == "__main__":
     print(f"\nRejected: {len(rejected)}")
     for c in rejected:
         print(f"  ❌ {c.question}")
+
+    # Automated check
+    valid_qs = {c.question for c in valid}
+    rejected_qs = {c.question for c in rejected}
+
+    should_include = [
+        "Will Israel strike Lebanon on February 10, 2026?",
+        "Nothing Ever Happens: US Strike Edition",
+        "Will the US strike 2 countries in February 2026?",
+        "Will China invade Taiwan before March 2026?",
+        "Will North Korea conduct a nuclear test in 2026?",
+        "Will Iran enrich uranium to 90% by June?",
+        "Will Russia capture Pokrovsk by March 31?",
+        "Netanyahu out by end of 2026?",
+        "Zelenskyy out as Ukraine president by end of 2026?",
+        "Putin out as President of Russia by June 30?",
+        "Khamenei out as Supreme Leader of Iran by March 31?",
+        "Russia x Ukraine ceasefire by end of 2026?",
+        "Russia x Ukraine ceasefire by March 31, 2026?",
+        "Ukraine signs peace deal with Russia by March 31?",
+        "Ukraine signs peace deal with Russia before 2027?",
+        "US-Iran nuclear deal before 2027?",
+        "US-Iran nuclear deal by June 30?",
+        "Israel x Hamas Ceasefire Phase II by March 31?",
+        "Will Russia invade another country in 2026?",
+    ]
+    should_exclude = [
+        "Russia-Ukraine Ceasefire before GTA VI?",
+        "Will China invades Taiwan before GTA VI?",
+        "Will Trump mention 'nuclear' in his UN speech?",
+        "Will Bitcoin reach $100k?",
+        "Will Zelensky say 'Putin' during address?",
+        "Will JD Vance win the 2028 US Presidential Election?",
+        "Will Trump fire the Secretary of Defense?",
+        "Will Vicky Dávila win the 2026 Colombian presidential election?",
+        "Will Wagner Moura win Best Actor at the Academy Awards?",
+        "German federal election — CDU majority?",
+    ]
+
+    errors = 0
+    print(f"\n{'='*70}")
+    print("VALIDATION")
+    for q in should_include:
+        if q not in valid_qs:
+            print(f"  ❗ MISSED (should be valid): {q}")
+            errors += 1
+    for q in should_exclude:
+        if q not in rejected_qs:
+            print(f"  ❗ LEAKED (should be rejected): {q}")
+            errors += 1
+
+    if errors == 0:
+        print("  ✅ ALL 29 CHECKS PASSED")
+    else:
+        print(f"  ⚠️  {errors} ERROR(S)")

@@ -15,11 +15,9 @@ POLYMARKET_SECRET = os.getenv("POLYMARKET_SECRET", "")
 POLYMARKET_PASSPHRASE = os.getenv("POLYMARKET_PASSPHRASE", "")
 
 # Wallet (for signing transactions)
-PRIVATE_KEY = os.getenv("PRIVATE_KEY", "")
 
 # Polymarket proxy address (for browser wallet / signature_type=2)
 # Find it: polymarket.com → Deposit → Deposit Address
-POLYMARKET_PROXY_ADDRESS = os.getenv("POLYMARKET_PROXY_ADDRESS", "")
 
 # Telegram notifications (optional)
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")

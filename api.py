@@ -11,6 +11,7 @@ import hashlib
 import base64
 from typing import Dict, List, Optional, Any
 from datetime import datetime
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import config
 
@@ -18,8 +19,20 @@ import config
 # GAMMA API (Market data)
 # =============================================================================
 
+
+def _fetch_page(url: str, params: dict) -> List[Dict]:
+    """Fetch a single page from Gamma API."""
+    try:
+        resp = requests.get(url, params=params, timeout=30)
+        resp.raise_for_status()
+        return resp.json()
+    except Exception as e:
+        print(f"[ERROR] _fetch_page: {e}")
+        return []
+
+
 def fetch_open_markets(limit: int = 500) -> List[Dict]:
-    """Fetch open markets from Gamma API."""
+    """Fetch open markets from Gamma API (all markets, paginated)."""
     all_markets = []
     offset = 0
     
@@ -50,6 +63,40 @@ def fetch_open_markets(limit: int = 500) -> List[Dict]:
         except Exception as e:
             print(f"[ERROR] fetch_open_markets: {e}")
             break
+    
+    return all_markets
+
+
+def fetch_geo_markets_fast(max_workers: int = 5) -> List[Dict]:
+    """Fetch all open markets with parallel pagination.
+    
+    ~10x faster than fetch_open_markets by parallelizing page requests.
+    """
+    url = f"{config.GAMMA_API_URL}/markets"
+    
+    # First page to confirm API is up
+    first_page = _fetch_page(url, {"closed": "false", "limit": 100, "offset": 0})
+    if not first_page:
+        return []
+    
+    all_markets = list(first_page)
+    
+    if len(first_page) < 100:
+        return all_markets
+    
+    # Generate all offsets (estimate ~28000 markets)
+    offsets = list(range(100, 30000, 100))
+    
+    with ThreadPoolExecutor(max_workers=max_workers) as pool:
+        futures = {
+            pool.submit(_fetch_page, url, {"closed": "false", "limit": 100, "offset": o}): o
+            for o in offsets
+        }
+        
+        for future in as_completed(futures):
+            page = future.result()
+            if page:
+                all_markets.extend(page)
     
     return all_markets
 
