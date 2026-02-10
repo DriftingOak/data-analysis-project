@@ -36,8 +36,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.44499999999999995,
-      "price_yes_current": 0.555
+      "current_price": 0.495,
+      "price_yes_current": 0.505
     },
     {
       "market_id": "1277912",
@@ -54,8 +54,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.5349999999999999,
-      "price_yes_current": 0.465
+      "current_price": 0.475,
+      "price_yes_current": 0.525
     },
     {
       "market_id": "1277913",
@@ -72,8 +72,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.475,
-      "price_yes_current": 0.525
+      "current_price": 0.47,
+      "price_yes_current": 0.53
     },
     {
       "market_id": "1144881",
@@ -90,8 +90,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.625,
-      "price_yes_current": 0.375
+      "current_price": 0.63,
+      "price_yes_current": 0.37
     },
     {
       "market_id": "1336154",
@@ -108,8 +108,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.475,
-      "price_yes_current": 0.525
+      "current_price": 0.485,
+      "price_yes_current": 0.515
     },
     {
       "market_id": "1301486",
@@ -144,8 +144,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.495,
-      "price_yes_current": 0.505
+      "current_price": 0.5,
+      "price_yes_current": 0.5
     },
     {
       "market_id": "1117207",
@@ -162,13 +162,13 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.43999999999999995,
-      "price_yes_current": 0.56
+      "current_price": 0.42000000000000004,
+      "price_yes_current": 0.58
     }
   ],
   "closed_trades": [],
   "created_at": "2026-02-08T22:16:55.329114",
-  "last_updated": "2026-02-10T05:28:27.844473",
+  "last_updated": "2026-02-10T08:09:14.229314",
   "total_trades": 9,
   "wins": 0,
   "losses": 0,
