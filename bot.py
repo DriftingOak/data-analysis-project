@@ -26,13 +26,6 @@ from dataclasses import dataclass, asdict
 import config
 import api
 
-# Live trading integration
-try:
-    import live_trading as lt
-    HAS_LIVE_TRADING = True
-except ImportError:
-    HAS_LIVE_TRADING = False
-
 # Import geopolitical filters
 try:
     from trade_filter import is_geopolitical, get_cluster, classify
@@ -405,6 +398,15 @@ def run_paper_trading(strategy_name: str = None):
     all_candidates = precompute_candidates(markets, current_ts)
     log(f"Pre-computed {len(all_candidates)} geopolitical candidates in {(datetime.now()-t0).total_seconds():.1f}s")
     
+    # ── LLM validation ───────────────────────────────────────────────────
+    try:
+        from llm_filter import llm_validate_candidates
+        all_candidates, rejected = llm_validate_candidates(all_candidates)
+        if rejected:
+            log(f"LLM rejected {len(rejected)} markets, {len(all_candidates)} remaining")
+    except Exception as e:
+        log(f"LLM filter skipped: {e}", "WARN")
+    
     # ── Step 3: Collect ALL open position market IDs (for batch resolution) ──
     all_open_mids: Set[str] = set()
     portfolios = {}
@@ -432,18 +434,6 @@ def run_paper_trading(strategy_name: str = None):
         closed_data = batch_fetch_closed_markets(missing_mids, market_lookup)
         market_lookup.update(closed_data)
         log(f"Fetched {len(closed_data)} closed markets in {(datetime.now()-t0).total_seconds():.1f}s")
-    
-    # ── Step 4b: Check live position resolutions (automatic) ────────────
-    if HAS_LIVE_TRADING:
-        try:
-            resolved_live = lt.check_live_resolutions(market_lookup)
-            if resolved_live > 0:
-                log(f"🔔 {resolved_live} live positions resolved")
-            expired = lt.cleanup_expired_proposals()
-            if expired > 0:
-                log(f"🧹 Cleaned up {expired} expired proposals")
-        except Exception as e:
-            log(f"Live resolution check: {e}", "WARN")
     
     # ── Step 5: Process each strategy ────────────────────────────────────
     summary_lines = [
@@ -519,10 +509,7 @@ def run_paper_trading(strategy_name: str = None):
             bankroll=portfolio.bankroll_current,
         )
         
-        # ── 5f. Execute trades (paper or live propose) ────────────────────
-        strategy_mode = strat_params.get("mode", "paper")
-        live_proposals = []
-        
+        # ── 5f. Execute paper trades ──────────────────────────────────────
         for candidate, bet_size in selected:
             bet_side = strat_params.get("bet_side", "NO")
             if bet_side == "NO":
@@ -534,7 +521,6 @@ def run_paper_trading(strategy_name: str = None):
             
             expected_close = datetime.fromtimestamp(candidate.end_ts).strftime("%Y-%m-%d")
             
-            # Always record as paper trade (for comparison tracking)
             pt.paper_buy(
                 portfolio=portfolio,
                 market_id=candidate.market_id,
@@ -546,38 +532,16 @@ def run_paper_trading(strategy_name: str = None):
                 cluster=candidate.cluster,
                 expected_close=expected_close,
             )
-            
-            # If live mode: also propose for real execution
-            if strategy_mode == "live" and HAS_LIVE_TRADING:
-                try:
-                    proposal = lt.propose_trade(
-                        strategy=strat_name,
-                        market_id=candidate.market_id,
-                        question=candidate.question,
-                        token_id=token_id,
-                        bet_side=bet_side,
-                        proposed_price=entry_price,
-                        size_usd=bet_size,
-                        cluster=candidate.cluster,
-                        expected_close=expected_close,
-                    )
-                    lt.send_proposal_notification(proposal)
-                    live_proposals.append(proposal)
-                    log(f"  🔔 PROPOSED: {bet_side} @ {entry_price:.1%} | [{candidate.cluster}] {candidate.question[:40]}...")
-                except Exception as e:
-                    log(f"  ❌ Failed to propose live trade: {e}", "ERROR")
         
         # ── 5g. Save portfolio ───────────────────────────────────────────
         pt.save_portfolio(portfolio, portfolio_file)
         
         # ── 5h. Summary line ─────────────────────────────────────────────
         open_count = len([p for p in portfolio.positions if p.status == "open"])
-        mode_tag = " 💰" if strategy_mode == "live" else ""
-        live_tag = f" | 🔔{len(live_proposals)} proposed" if live_proposals else ""
         summary_lines.append(
-            f"<b>{strat_name}</b>{mode_tag}: ${portfolio.total_pnl:+.2f} "
+            f"<b>{strat_name}</b>: ${portfolio.total_pnl:+.2f} "
             f"({portfolio.wins}W/{portfolio.losses}L) | "
-            f"{open_count} open | +{len(selected)} new | {resolved_count} resolved{live_tag}"
+            f"{open_count} open | +{len(selected)} new | {resolved_count} resolved"
         )
     
     # ── Step 6: Notifications ────────────────────────────────────────────
@@ -651,13 +615,6 @@ def main():
     if "--strategies" in args:
         import strategies as strat_config
         strat_config.print_strategies()
-        return
-    
-    if "--live-status" in args:
-        if HAS_LIVE_TRADING:
-            lt.print_live_status()
-        else:
-            print("live_trading module not available")
         return
     
     if "--sell" in args:

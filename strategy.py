@@ -102,6 +102,21 @@ def is_valid_market(
     if not is_geopolitical(question):
         return False, "not_geopolitical"
     
+    # ── NEW: Must be binary (Yes/No) market ──
+    import json as _json
+    outcomes_raw = market.get("outcomes", [])
+    if isinstance(outcomes_raw, str):
+        try:
+            outcomes = _json.loads(outcomes_raw) if outcomes_raw else []
+        except:
+            outcomes = []
+    else:
+        outcomes = outcomes_raw or []
+    outcome_labels = {str(o).lower() for o in outcomes}
+    if outcome_labels != {"yes", "no"}:
+        return False, "not_binary"
+    # ── END NEW ──
+    
     # Check timestamps
     start_ts = timestamps.get("start_ts")
     end_ts = timestamps.get("end_ts")
@@ -203,10 +218,7 @@ def evaluate_market(
             if isinstance(outcome, str) and outcome.lower() == "yes" and i < len(prices):
                 price_yes = float(prices[i])
                 break
-        
-        # If no "Yes" found and it's a binary market, use first price
-        if price_yes is None and len(outcomes) == 2 and len(prices) >= 1:
-            price_yes = float(prices[0])
+                
         
         if price_yes is None:
             return None
