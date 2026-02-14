@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 900,
+  "bankroll_current": 952.5773195876288,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -50,12 +50,12 @@
       "shares": 102.57731958762886,
       "cluster": "mideast",
       "expected_close": "2026-02-28",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9925,
-      "price_yes_current": 0.0075
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-02-14 05:00",
+      "pnl": 52.577319587628864,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1277913",
@@ -90,8 +90,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.61,
-      "price_yes_current": 0.39
+      "current_price": 0.5900000000000001,
+      "price_yes_current": 0.41
     },
     {
       "market_id": "1277915",
@@ -108,8 +108,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.7050000000000001,
-      "price_yes_current": 0.295
+      "current_price": 0.61,
+      "price_yes_current": 0.39
     },
     {
       "market_id": "1277914",
@@ -126,8 +126,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.91,
-      "price_yes_current": 0.09
+      "current_price": 0.86,
+      "price_yes_current": 0.14
     },
     {
       "market_id": "1333270",
@@ -144,8 +144,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.71,
-      "price_yes_current": 0.29
+      "current_price": 0.7150000000000001,
+      "price_yes_current": 0.285
     },
     {
       "market_id": "1277639",
@@ -162,8 +162,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.645,
-      "price_yes_current": 0.355
+      "current_price": 0.65,
+      "price_yes_current": 0.35
     },
     {
       "market_id": "1336154",
@@ -180,8 +180,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.625,
-      "price_yes_current": 0.375
+      "current_price": 0.63,
+      "price_yes_current": 0.37
     },
     {
       "market_id": "1301486",
@@ -198,8 +198,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.42000000000000004,
-      "price_yes_current": 0.58
+      "current_price": 0.42500000000000004,
+      "price_yes_current": 0.575
     },
     {
       "market_id": "1301487",
@@ -216,8 +216,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.7050000000000001,
-      "price_yes_current": 0.295
+      "current_price": 0.6699999999999999,
+      "price_yes_current": 0.33
     },
     {
       "market_id": "1280182",
@@ -234,8 +234,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.815,
-      "price_yes_current": 0.185
+      "current_price": 0.81,
+      "price_yes_current": 0.19
     },
     {
       "market_id": "1336700",
@@ -252,8 +252,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.77,
-      "price_yes_current": 0.23
+      "current_price": 0.905,
+      "price_yes_current": 0.095
     },
     {
       "market_id": "1333272",
@@ -288,8 +288,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.69,
-      "price_yes_current": 0.31
+      "current_price": 0.7150000000000001,
+      "price_yes_current": 0.285
     },
     {
       "market_id": "1117207",
@@ -324,8 +324,44 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.675,
-      "price_yes_current": 0.325
+      "current_price": 0.6799999999999999,
+      "price_yes_current": 0.32
+    },
+    {
+      "market_id": "1277643",
+      "question": "Will Israel strike Lebanon on February 18, 2026?",
+      "token_id": "31278502768650635381931921043722654190815824654594625513833685737305344563377",
+      "bet_side": "NO",
+      "entry_date": "2026-02-14 05:00",
+      "entry_price": 0.65,
+      "size_usd": 50,
+      "shares": 76.53846153846153,
+      "cluster": "mideast",
+      "expected_close": "2026-02-28",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1367172",
+      "question": "North Korea missile launch by February 28?",
+      "token_id": "71969175042480374233406642263086376934793576865961994005297432031065043557451",
+      "bet_side": "NO",
+      "entry_date": "2026-02-14 05:00",
+      "entry_price": 0.635,
+      "size_usd": 50,
+      "shares": 78.34645669291338,
+      "cluster": "other",
+      "expected_close": "2026-02-28",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
     }
   ],
   "closed_trades": [
@@ -364,12 +400,30 @@
       "pnl": -50,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1277912",
+      "question": "Will Israel strike Gaza on February 11, 2026?",
+      "token_id": "20642596478019844096138692872143494003174534289600458022325551038811586612585",
+      "bet_side": "NO",
+      "entry_date": "2026-02-08 22:16",
+      "entry_price": 0.485,
+      "size_usd": 50,
+      "shares": 102.57731958762886,
+      "cluster": "mideast",
+      "expected_close": "2026-02-28",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-02-14 05:00",
+      "pnl": 52.577319587628864,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329192",
-  "last_updated": "2026-02-13T19:55:58.133226",
-  "total_trades": 18,
-  "wins": 0,
+  "last_updated": "2026-02-14T05:00:09.842682",
+  "total_trades": 20,
+  "wins": 1,
   "losses": 2,
-  "total_pnl": -100
+  "total_pnl": -47.422680412371136
 }

@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 500,
-  "bankroll_current": 400,
+  "bankroll_current": 452.57731958762884,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -50,12 +50,12 @@
       "shares": 102.57731958762886,
       "cluster": "mideast",
       "expected_close": "2026-02-28",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9925,
-      "price_yes_current": 0.0075
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-02-14 05:00",
+      "pnl": 52.577319587628864,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1277913",
@@ -90,8 +90,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.61,
-      "price_yes_current": 0.39
+      "current_price": 0.5900000000000001,
+      "price_yes_current": 0.41
     },
     {
       "market_id": "1336154",
@@ -108,8 +108,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.625,
-      "price_yes_current": 0.375
+      "current_price": 0.63,
+      "price_yes_current": 0.37
     },
     {
       "market_id": "1301486",
@@ -126,8 +126,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.42000000000000004,
-      "price_yes_current": 0.58
+      "current_price": 0.42500000000000004,
+      "price_yes_current": 0.575
     },
     {
       "market_id": "1333272",
@@ -164,6 +164,42 @@
       "pnl": null,
       "current_price": 0.32499999999999996,
       "price_yes_current": 0.675
+    },
+    {
+      "market_id": "1277644",
+      "question": "Will Israel strike Lebanon on February 19, 2026?",
+      "token_id": "85606899519511676842897251208872349168189914973671763670111978139872459972728",
+      "bet_side": "NO",
+      "entry_date": "2026-02-14 05:00",
+      "entry_price": 0.6,
+      "size_usd": 50,
+      "shares": 82.91666666666667,
+      "cluster": "mideast",
+      "expected_close": "2026-02-28",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1280181",
+      "question": "Will there be between 10 and 13 US strikes on Somalia in February 2026?",
+      "token_id": "67962144252605414936454321215696009863692074476937050017452528834844396396309",
+      "bet_side": "NO",
+      "entry_date": "2026-02-14 05:00",
+      "entry_price": 0.5549999999999999,
+      "size_usd": 50,
+      "shares": 89.63963963963965,
+      "cluster": "africa",
+      "expected_close": "2026-03-04",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
     }
   ],
   "closed_trades": [
@@ -202,12 +238,30 @@
       "pnl": -50,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1277912",
+      "question": "Will Israel strike Gaza on February 11, 2026?",
+      "token_id": "20642596478019844096138692872143494003174534289600458022325551038811586612585",
+      "bet_side": "NO",
+      "entry_date": "2026-02-08 22:16",
+      "entry_price": 0.485,
+      "size_usd": 50,
+      "shares": 102.57731958762886,
+      "cluster": "mideast",
+      "expected_close": "2026-02-28",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-02-14 05:00",
+      "pnl": 52.577319587628864,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329114",
-  "last_updated": "2026-02-13T19:55:58.120901",
-  "total_trades": 9,
-  "wins": 0,
+  "last_updated": "2026-02-14T05:00:09.822683",
+  "total_trades": 11,
+  "wins": 1,
   "losses": 2,
-  "total_pnl": -100
+  "total_pnl": -47.422680412371136
 }
