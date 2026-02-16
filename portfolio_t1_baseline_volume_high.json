@@ -18,8 +18,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.14,
-      "price_yes_current": 0.86
+      "current_price": 0.17500000000000004,
+      "price_yes_current": 0.825
     },
     {
       "market_id": "1105742",
@@ -54,8 +54,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.405,
-      "price_yes_current": 0.595
+      "current_price": 0.41500000000000004,
+      "price_yes_current": 0.585
     },
     {
       "market_id": "565065",
@@ -108,8 +108,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.5349999999999999,
-      "price_yes_current": 0.465
+      "current_price": 0.515,
+      "price_yes_current": 0.485
     },
     {
       "market_id": "791703",
@@ -128,12 +128,48 @@
       "pnl": null,
       "current_price": 0.515,
       "price_yes_current": 0.485
+    },
+    {
+      "market_id": "1198592",
+      "question": "Will US or Israel strike Iran by December 31, 2026?",
+      "token_id": "39026865808627218960755273625860135118958858712873688785555474777825140512933",
+      "bet_side": "NO",
+      "entry_date": "2026-02-16 19:47",
+      "entry_price": 0.385,
+      "size_usd": 25,
+      "shares": 64.6103896103896,
+      "cluster": "mideast",
+      "expected_close": "2026-12-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1323373",
+      "question": "Will US or Israel strike Iran by June 30, 2026?",
+      "token_id": "108025213636271237940278589466447097343595294837034966811247268568555837505626",
+      "bet_side": "NO",
+      "entry_date": "2026-02-16 19:47",
+      "entry_price": 0.475,
+      "size_usd": 25,
+      "shares": 52.36842105263158,
+      "cluster": "mideast",
+      "expected_close": "2026-12-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
     }
   ],
   "closed_trades": [],
   "created_at": "2026-02-08T22:16:55.328996",
-  "last_updated": "2026-02-16T14:32:27.486675",
-  "total_trades": 7,
+  "last_updated": "2026-02-16T19:47:19.271845",
+  "total_trades": 9,
   "wins": 0,
   "losses": 0,
   "total_pnl": 0.0
