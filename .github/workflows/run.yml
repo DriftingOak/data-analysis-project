@@ -26,9 +26,12 @@ on:
           - phase4
           - quick
           - deployable
+          - live
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 jobs:
   paper-trading:
@@ -56,8 +59,12 @@ jobs:
           POLYMARKET_API_KEY: ${{ secrets.POLYMARKET_API_KEY }}
           POLYMARKET_SECRET: ${{ secrets.POLYMARKET_SECRET }}
           POLYMARKET_PASSPHRASE: ${{ secrets.POLYMARKET_PASSPHRASE }}
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+          POLYMARKET_PROXY_ADDRESS: ${{ secrets.POLYMARKET_PROXY_ADDRESS }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          LIVE_TRADING_ENABLED: ${{ secrets.LIVE_TRADING_ENABLED }}
+          LIVE_SHADOW_MODE: ${{ secrets.LIVE_SHADOW_MODE }}
         run: |
           STRATEGY="${{ inputs.strategy }}"
           if [ -z "$STRATEGY" ]; then
@@ -88,6 +95,8 @@ jobs:
           # Add portfolio files + dashboard
           git add portfolio_*.json || true
           git add pnl_history.json || true
+          git add pending_trades.json || true
+          git add live_portfolio.json || true
           git add site/ || true
           
           echo "=== Staged changes ==="
@@ -101,6 +110,11 @@ jobs:
             git push origin main
           fi
 
+      - name: Upload dashboard artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
       - name: Upload logs
         uses: actions/upload-artifact@v4
         if: always()
@@ -110,3 +124,17 @@ jobs:
             bot_history.json
             portfolio_*.json
           retention-days: 30
+
+  deploy-pages:
+    needs: paper-trading
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
