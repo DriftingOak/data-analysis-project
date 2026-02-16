@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 500,
-  "bankroll_current": 452.57731958762884,
+  "bankroll_current": 505.1546391752577,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -36,8 +36,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.76,
-      "price_yes_current": 0.24
+      "current_price": 0.7150000000000001,
+      "price_yes_current": 0.285
     },
     {
       "market_id": "1301486",
@@ -54,8 +54,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.365,
-      "price_yes_current": 0.635
+      "current_price": 0.355,
+      "price_yes_current": 0.645
     },
     {
       "market_id": "1277913",
@@ -104,12 +104,12 @@
       "shares": 102.57731958762886,
       "cluster": "mideast",
       "expected_close": "2026-02-28",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9965,
-      "price_yes_current": 0.0035
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-02-16 05:22",
+      "pnl": 52.577319587628864,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1333272",
@@ -126,8 +126,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.6599999999999999,
-      "price_yes_current": 0.34
+      "current_price": 0.6950000000000001,
+      "price_yes_current": 0.305
     },
     {
       "market_id": "1336363",
@@ -144,8 +144,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.72,
-      "price_yes_current": 0.28
+      "current_price": 0.795,
+      "price_yes_current": 0.205
     },
     {
       "market_id": "1117207",
@@ -162,8 +162,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.32499999999999996,
-      "price_yes_current": 0.675
+      "current_price": 0.33499999999999996,
+      "price_yes_current": 0.665
     },
     {
       "market_id": "1277922",
@@ -180,8 +180,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.55,
-      "price_yes_current": 0.45
+      "current_price": 0.565,
+      "price_yes_current": 0.435
     },
     {
       "market_id": "1280181",
@@ -198,8 +198,44 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.43500000000000005,
-      "price_yes_current": 0.565
+      "current_price": 0.45499999999999996,
+      "price_yes_current": 0.545
+    },
+    {
+      "market_id": "1373310",
+      "question": "Will Leavitt say \"Nuclear\" or \"Iran\" during the next White House Press Briefing?",
+      "token_id": "40007176505871052443724274186190854309599738241515939266140288424384347891442",
+      "bet_side": "NO",
+      "entry_date": "2026-02-16 05:22",
+      "entry_price": 0.5549999999999999,
+      "size_usd": 50,
+      "shares": 89.63963963963965,
+      "cluster": "mideast",
+      "expected_close": "2026-02-20",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1277923",
+      "question": "Will Israel strike Gaza on February 22, 2026?",
+      "token_id": "91343148290587643252883734939134204091834798094880968563735184286329368756238",
+      "bet_side": "NO",
+      "entry_date": "2026-02-16 05:22",
+      "entry_price": 0.51,
+      "size_usd": 50,
+      "shares": 97.54901960784314,
+      "cluster": "mideast",
+      "expected_close": "2026-02-28",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
     }
   ],
   "closed_trades": [
@@ -256,12 +292,30 @@
       "pnl": 52.577319587628864,
       "current_price": 1.0,
       "price_yes_current": 0.0
+    },
+    {
+      "market_id": "1277914",
+      "question": "Will Israel strike Gaza on February 13, 2026?",
+      "token_id": "3932927613133111214639944271839690938833343815377072037042479310093315055344",
+      "bet_side": "NO",
+      "entry_date": "2026-02-08 22:16",
+      "entry_price": 0.485,
+      "size_usd": 50,
+      "shares": 102.57731958762886,
+      "cluster": "mideast",
+      "expected_close": "2026-02-28",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-02-16 05:22",
+      "pnl": 52.577319587628864,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329124",
-  "last_updated": "2026-02-15T19:06:26.316938",
-  "total_trades": 11,
-  "wins": 1,
+  "last_updated": "2026-02-16T05:22:45.149026",
+  "total_trades": 13,
+  "wins": 2,
   "losses": 2,
-  "total_pnl": -47.422680412371136
+  "total_pnl": 5.154639175257728
 }
