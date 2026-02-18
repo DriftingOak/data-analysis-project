@@ -54,8 +54,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.81,
-      "price_yes_current": 0.19
+      "current_price": 0.785,
+      "price_yes_current": 0.215
     },
     {
       "market_id": "1117207",
@@ -72,8 +72,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.44499999999999995,
-      "price_yes_current": 0.555
+      "current_price": 0.45499999999999996,
+      "price_yes_current": 0.545
     },
     {
       "market_id": "1178277",
@@ -126,8 +126,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.44999999999999996,
-      "price_yes_current": 0.55
+      "current_price": 0.45499999999999996,
+      "price_yes_current": 0.545
     },
     {
       "market_id": "661700",
@@ -252,8 +252,26 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.5900000000000001,
-      "price_yes_current": 0.41
+      "current_price": 0.615,
+      "price_yes_current": 0.385
+    },
+    {
+      "market_id": "791705",
+      "question": "Israel strikes Iran by March 31, 2026?",
+      "token_id": "55201180171382344648128505031675400629485078801250545752063029078975592767599",
+      "bet_side": "NO",
+      "entry_date": "2026-02-18 06:52",
+      "entry_price": 0.5900000000000001,
+      "size_usd": 25.0,
+      "shares": 42.16101694915254,
+      "cluster": "mideast",
+      "expected_close": "2026-03-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
     }
   ],
   "closed_trades": [
@@ -295,8 +313,8 @@
     }
   ],
   "created_at": "2026-02-08T22:16:55.329048",
-  "last_updated": "2026-02-18T05:16:37.202784",
-  "total_trades": 14,
+  "last_updated": "2026-02-18T06:52:18.598311",
+  "total_trades": 15,
   "wins": 0,
   "losses": 2,
   "total_pnl": -15.0
