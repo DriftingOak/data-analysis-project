@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 500,
-  "bankroll_current": 452.57731958762884,
+  "bankroll_current": 402.57731958762884,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -18,8 +18,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.515,
-      "price_yes_current": 0.485
+      "current_price": 0.52,
+      "price_yes_current": 0.48
     },
     {
       "market_id": "1345278",
@@ -108,8 +108,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.78,
-      "price_yes_current": 0.22
+      "current_price": 0.69,
+      "price_yes_current": 0.31
     },
     {
       "market_id": "1171825",
@@ -144,8 +144,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.42000000000000004,
-      "price_yes_current": 0.58
+      "current_price": 0.475,
+      "price_yes_current": 0.525
     },
     {
       "market_id": "1336154",
@@ -162,8 +162,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.6,
-      "price_yes_current": 0.4
+      "current_price": 0.62,
+      "price_yes_current": 0.38
     },
     {
       "market_id": "1277644",
@@ -176,12 +176,12 @@
       "shares": 82.91666666666667,
       "cluster": "mideast",
       "expected_close": "2026-02-28",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.0004999999999999449,
-      "price_yes_current": 0.9995
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-02-19 06:50",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "1367016",
@@ -198,8 +198,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.645,
-      "price_yes_current": 0.355
+      "current_price": 0.0004999999999999449,
+      "price_yes_current": 0.9995
     }
   ],
   "closed_trades": [
@@ -256,12 +256,30 @@
       "pnl": 52.577319587628864,
       "current_price": 1.0,
       "price_yes_current": 0.0
+    },
+    {
+      "market_id": "1277644",
+      "question": "Will Israel strike Lebanon on February 19, 2026?",
+      "token_id": "85606899519511676842897251208872349168189914973671763670111978139872459972728",
+      "bet_side": "NO",
+      "entry_date": "2026-02-14 05:00",
+      "entry_price": 0.6,
+      "size_usd": 50,
+      "shares": 82.91666666666667,
+      "cluster": "mideast",
+      "expected_close": "2026-02-28",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-02-19 06:50",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329103",
-  "last_updated": "2026-02-19T01:18:32.055632",
+  "last_updated": "2026-02-19T06:50:54.314669",
   "total_trades": 11,
   "wins": 1,
-  "losses": 2,
-  "total_pnl": -47.422680412371136
+  "losses": 3,
+  "total_pnl": -97.42268041237114
 }
