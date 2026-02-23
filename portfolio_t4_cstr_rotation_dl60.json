@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 500,
-  "bankroll_current": 455.1546391752577,
+  "bankroll_current": 405.1546391752577,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -32,12 +32,12 @@
       "shares": 100.5050505050505,
       "cluster": "ukraine",
       "expected_close": "2026-02-22",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.010000000000000009,
-      "price_yes_current": 0.99
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-02-23 01:16",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "1301486",
@@ -54,8 +54,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.28,
-      "price_yes_current": 0.72
+      "current_price": 0.30500000000000005,
+      "price_yes_current": 0.695
     },
     {
       "market_id": "1277913",
@@ -144,8 +144,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.85,
-      "price_yes_current": 0.15
+      "current_price": 0.86,
+      "price_yes_current": 0.14
     },
     {
       "market_id": "1117207",
@@ -162,8 +162,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.575,
-      "price_yes_current": 0.425
+      "current_price": 0.585,
+      "price_yes_current": 0.415
     },
     {
       "market_id": "1277922",
@@ -180,8 +180,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.971,
-      "price_yes_current": 0.029
+      "current_price": 0.988,
+      "price_yes_current": 0.012
     },
     {
       "market_id": "1280181",
@@ -198,8 +198,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.63,
-      "price_yes_current": 0.37
+      "current_price": 0.6950000000000001,
+      "price_yes_current": 0.305
     },
     {
       "market_id": "1373310",
@@ -234,8 +234,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.61,
-      "price_yes_current": 0.39
+      "current_price": 0.84,
+      "price_yes_current": 0.16
     }
   ],
   "closed_trades": [
@@ -328,12 +328,30 @@
       "pnl": -50,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1144881",
+      "question": "Will \"Mr Nobody Against Putin\" win Best Documentary at the 2026 BAFTA Awards?",
+      "token_id": "29974723369638683887474081799628114932606895011662227430233264292903980138118",
+      "bet_side": "NO",
+      "entry_date": "2026-02-08 22:16",
+      "entry_price": 0.495,
+      "size_usd": 50,
+      "shares": 100.5050505050505,
+      "cluster": "ukraine",
+      "expected_close": "2026-02-22",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-02-23 01:16",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329124",
-  "last_updated": "2026-02-22T18:23:01.489675",
+  "last_updated": "2026-02-23T01:16:49.932265",
   "total_trades": 13,
   "wins": 2,
-  "losses": 3,
-  "total_pnl": -44.84536082474227
+  "losses": 4,
+  "total_pnl": -94.84536082474227
 }
