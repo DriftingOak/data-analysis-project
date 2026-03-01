@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 964.9921860670681,
+  "bankroll_current": 1004.6318257067078,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -144,8 +144,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.625,
-      "price_yes_current": 0.375
+      "current_price": 0.615,
+      "price_yes_current": 0.385
     },
     {
       "market_id": "1277639",
@@ -180,8 +180,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.6,
-      "price_yes_current": 0.4
+      "current_price": 0.595,
+      "price_yes_current": 0.405
     },
     {
       "market_id": "1301486",
@@ -216,8 +216,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.245,
-      "price_yes_current": 0.755
+      "current_price": 0.21999999999999997,
+      "price_yes_current": 0.78
     },
     {
       "market_id": "1280182",
@@ -234,8 +234,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.765,
-      "price_yes_current": 0.235
+      "current_price": 0.89,
+      "price_yes_current": 0.11
     },
     {
       "market_id": "1336700",
@@ -252,8 +252,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9515,
-      "price_yes_current": 0.0485
+      "current_price": 0.7115,
+      "price_yes_current": 0.2885
     },
     {
       "market_id": "1333272",
@@ -270,8 +270,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.675,
-      "price_yes_current": 0.325
+      "current_price": 0.605,
+      "price_yes_current": 0.395
     },
     {
       "market_id": "1336363",
@@ -288,8 +288,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.946,
-      "price_yes_current": 0.054
+      "current_price": 0.9895,
+      "price_yes_current": 0.0105
     },
     {
       "market_id": "1117207",
@@ -324,8 +324,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.63,
-      "price_yes_current": 0.37
+      "current_price": 0.65,
+      "price_yes_current": 0.35
     },
     {
       "market_id": "1277643",
@@ -360,8 +360,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.895,
-      "price_yes_current": 0.105
+      "current_price": 0.9625,
+      "price_yes_current": 0.0375
     },
     {
       "market_id": "1373310",
@@ -428,12 +428,12 @@
       "shares": 89.63963963963965,
       "cluster": "mideast",
       "expected_close": "2026-02-28",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9975,
-      "price_yes_current": 0.0025
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-03-01 01:22",
+      "pnl": 39.639639639639654,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1394342",
@@ -450,8 +450,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.51,
-      "price_yes_current": 0.49
+      "current_price": 0.495,
+      "price_yes_current": 0.505
     },
     {
       "market_id": "1427956",
@@ -468,8 +468,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.45499999999999996,
-      "price_yes_current": 0.545
+      "current_price": 0.515,
+      "price_yes_current": 0.485
     },
     {
       "market_id": "1428639",
@@ -486,8 +486,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.655,
-      "price_yes_current": 0.345
+      "current_price": 0.8,
+      "price_yes_current": 0.2
     },
     {
       "market_id": "1403723",
@@ -504,8 +504,80 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.41500000000000004,
-      "price_yes_current": 0.585
+      "current_price": 0.43500000000000005,
+      "price_yes_current": 0.565
+    },
+    {
+      "market_id": "1437245",
+      "question": "Will Israel strike Lebanon on March 8, 2026?",
+      "token_id": "110525236262485873669003628037594291386388587209201712936578907408641506700576",
+      "bet_side": "NO",
+      "entry_date": "2026-03-01 01:22",
+      "entry_price": 0.45499999999999996,
+      "size_usd": 50,
+      "shares": 109.34065934065936,
+      "cluster": "mideast",
+      "expected_close": "2026-03-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1437246",
+      "question": "Will Israel strike Lebanon on March 9, 2026?",
+      "token_id": "74082305451243779541143264495803115772049233002963462186379130015333864482467",
+      "bet_side": "NO",
+      "entry_date": "2026-03-01 01:22",
+      "entry_price": 0.45499999999999996,
+      "size_usd": 50,
+      "shares": 109.34065934065936,
+      "cluster": "mideast",
+      "expected_close": "2026-03-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1439533",
+      "question": "Will there be between 14 and 17 US strikes on Somalia in March 2026?",
+      "token_id": "75105144622749338475171575857194569904374030292328688557430718885543333641388",
+      "bet_side": "NO",
+      "entry_date": "2026-03-01 01:22",
+      "entry_price": 0.685,
+      "size_usd": 50,
+      "shares": 72.62773722627736,
+      "cluster": "africa",
+      "expected_close": "2026-04-04",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1439534",
+      "question": "Will there be between 18 and 21 US strikes on Somalia in March 2026?",
+      "token_id": "97431299716197891190819618721394288936872091414424642695045493636064674518975",
+      "bet_side": "NO",
+      "entry_date": "2026-03-01 01:22",
+      "entry_price": 0.62,
+      "size_usd": 50,
+      "shares": 80.24193548387098,
+      "cluster": "africa",
+      "expected_close": "2026-04-04",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
     }
   ],
   "closed_trades": [
@@ -742,12 +814,30 @@
       "pnl": 65.69767441860463,
       "current_price": 1.0,
       "price_yes_current": 0.0
+    },
+    {
+      "market_id": "1277926",
+      "question": "Will Israel strike Gaza on February 25, 2026?",
+      "token_id": "42023076366724861472704921959694791963037175322631455199576486181555308293939",
+      "bet_side": "NO",
+      "entry_date": "2026-02-23 01:16",
+      "entry_price": 0.5549999999999999,
+      "size_usd": 50,
+      "shares": 89.63963963963965,
+      "cluster": "mideast",
+      "expected_close": "2026-02-28",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-03-01 01:22",
+      "pnl": 39.639639639639654,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329192",
-  "last_updated": "2026-02-28T18:21:25.422809",
-  "total_trades": 28,
-  "wins": 6,
+  "last_updated": "2026-03-01T01:22:52.142064",
+  "total_trades": 32,
+  "wins": 7,
   "losses": 7,
-  "total_pnl": -35.00781393293184
+  "total_pnl": 4.631825706707815
 }
