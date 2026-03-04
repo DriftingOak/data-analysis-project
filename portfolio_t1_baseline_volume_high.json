@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 810.5555555555555,
+  "bankroll_current": 785.5555555555555,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -36,8 +36,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.4,
-      "price_yes_current": 0.6
+      "current_price": 0.485,
+      "price_yes_current": 0.515
     },
     {
       "market_id": "540816",
@@ -54,8 +54,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.42500000000000004,
-      "price_yes_current": 0.575
+      "current_price": 0.42000000000000004,
+      "price_yes_current": 0.58
     },
     {
       "market_id": "565065",
@@ -288,8 +288,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.21999999999999997,
-      "price_yes_current": 0.78
+      "current_price": 0.22999999999999998,
+      "price_yes_current": 0.77
     },
     {
       "market_id": "661699",
@@ -320,12 +320,12 @@
       "shares": 115.69767441860466,
       "cluster": "mideast",
       "expected_close": "2026-03-31",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.0004999999999999449,
-      "price_yes_current": 0.9995
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-03-04 01:13",
+      "pnl": -25,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "665325",
@@ -342,8 +342,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.56,
-      "price_yes_current": 0.44
+      "current_price": 0.515,
+      "price_yes_current": 0.485
     },
     {
       "market_id": "677397",
@@ -360,8 +360,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.22499999999999998,
-      "price_yes_current": 0.775
+      "current_price": 0.255,
+      "price_yes_current": 0.745
     },
     {
       "market_id": "1472026",
@@ -378,8 +378,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.22499999999999998,
-      "price_yes_current": 0.775
+      "current_price": 0.265,
+      "price_yes_current": 0.735
     },
     {
       "market_id": "1466766",
@@ -392,6 +392,24 @@
       "shares": 59.93975903614457,
       "cluster": "mideast",
       "expected_close": "2026-03-07",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": 0.43500000000000005,
+      "price_yes_current": 0.565
+    },
+    {
+      "market_id": "1469362",
+      "question": "Will Mojtaba Khamenei be the next Supreme Leader of Iran?",
+      "token_id": "19989240863049597337960576660198270636196697641854098266361649756675772105465",
+      "bet_side": "NO",
+      "entry_date": "2026-03-04 01:13",
+      "entry_price": 0.3045,
+      "size_usd": 25,
+      "shares": 81.69129720853859,
+      "cluster": "mideast",
+      "expected_close": "2026-12-31",
       "status": "open",
       "resolution": null,
       "close_date": null,
@@ -616,12 +634,30 @@
       "pnl": -25,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "916732",
+      "question": "Khamenei out as Supreme Leader of Iran by March 31?",
+      "token_id": "46746822541461330721074821991383617225657173789584499857683753079229786702095",
+      "bet_side": "NO",
+      "entry_date": "2026-02-28 18:21",
+      "entry_price": 0.21499999999999997,
+      "size_usd": 25,
+      "shares": 115.69767441860466,
+      "cluster": "mideast",
+      "expected_close": "2026-03-31",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-03-04 01:13",
+      "pnl": -25,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.328996",
-  "last_updated": "2026-03-03T18:37:11.733972",
-  "total_trades": 22,
+  "last_updated": "2026-03-04T01:13:48.334000",
+  "total_trades": 23,
   "wins": 1,
-  "losses": 11,
-  "total_pnl": -189.44444444444443
+  "losses": 12,
+  "total_pnl": -214.44444444444443
 }
