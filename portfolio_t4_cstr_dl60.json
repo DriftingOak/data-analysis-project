@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 500,
-  "bankroll_current": 441.114500179073,
+  "bankroll_current": 391.114500179073,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -36,8 +36,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.6699999999999999,
-      "price_yes_current": 0.33
+      "current_price": 0.6799999999999999,
+      "price_yes_current": 0.32
     },
     {
       "market_id": "1277912",
@@ -108,8 +108,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.575,
-      "price_yes_current": 0.425
+      "current_price": 0.5800000000000001,
+      "price_yes_current": 0.42
     },
     {
       "market_id": "1301486",
@@ -144,8 +144,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.585,
-      "price_yes_current": 0.415
+      "current_price": 0.605,
+      "price_yes_current": 0.395
     },
     {
       "market_id": "1117207",
@@ -216,8 +216,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.525,
-      "price_yes_current": 0.475
+      "current_price": 0.53,
+      "price_yes_current": 0.47
     },
     {
       "market_id": "1403723",
@@ -252,8 +252,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.935,
-      "price_yes_current": 0.065
+      "current_price": 0.87,
+      "price_yes_current": 0.13
     },
     {
       "market_id": "1438350",
@@ -266,12 +266,30 @@
       "shares": 119.87951807228914,
       "cluster": "other",
       "expected_close": "2026-03-15",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-03-05 06:39",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1403724",
+      "question": "Will the U.S. tariff rate on China be between 15% and 25% on March 31?",
+      "token_id": "76690516818876423928055345724521671502681306650146557516202900518656043276889",
+      "bet_side": "NO",
+      "entry_date": "2026-03-05 06:39",
+      "entry_price": 0.42000000000000004,
+      "size_usd": 50,
+      "shares": 118.45238095238093,
+      "cluster": "china",
+      "expected_close": "2026-03-31",
       "status": "open",
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.0040000000000000036,
-      "price_yes_current": 0.996
+      "current_price": null,
+      "price_yes_current": null
     }
   ],
   "closed_trades": [
@@ -418,12 +436,30 @@
       "pnl": -50,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1438350",
+      "question": "North Korea missile launch by March 15?",
+      "token_id": "21338796714939396678595409712494722804630225168870774465431896140722551777615",
+      "bet_side": "NO",
+      "entry_date": "2026-03-01 01:22",
+      "entry_price": 0.41500000000000004,
+      "size_usd": 50,
+      "shares": 119.87951807228914,
+      "cluster": "other",
+      "expected_close": "2026-03-15",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-03-05 06:39",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329114",
-  "last_updated": "2026-03-05T01:16:05.856685",
-  "total_trades": 15,
+  "last_updated": "2026-03-05T06:39:38.626325",
+  "total_trades": 16,
   "wins": 3,
-  "losses": 5,
-  "total_pnl": -58.88549982092701
+  "losses": 6,
+  "total_pnl": -108.88549982092701
 }
