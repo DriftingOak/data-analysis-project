@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 500,
-  "bankroll_current": 625.7835744172801,
+  "bankroll_current": 575.7835744172801,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -126,8 +126,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.605,
-      "price_yes_current": 0.395
+      "current_price": 0.585,
+      "price_yes_current": 0.415
     },
     {
       "market_id": "1336363",
@@ -194,12 +194,12 @@
       "shares": 89.63963963963965,
       "cluster": "africa",
       "expected_close": "2026-03-04",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.0044999999999999485,
-      "price_yes_current": 0.9955
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-03-05 01:16",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "1373310",
@@ -252,8 +252,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.45999999999999996,
-      "price_yes_current": 0.54
+      "current_price": 0.44499999999999995,
+      "price_yes_current": 0.555
     },
     {
       "market_id": "1280182",
@@ -270,8 +270,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9965,
-      "price_yes_current": 0.0035
+      "current_price": 0.9995,
+      "price_yes_current": 0.0005
     },
     {
       "market_id": "1397271",
@@ -288,8 +288,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.07499999999999996,
-      "price_yes_current": 0.925
+      "current_price": 0.06999999999999995,
+      "price_yes_current": 0.93
     },
     {
       "market_id": "1170221",
@@ -324,8 +324,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.86,
-      "price_yes_current": 0.14
+      "current_price": 0.885,
+      "price_yes_current": 0.115
     },
     {
       "market_id": "1323083",
@@ -342,8 +342,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.585,
-      "price_yes_current": 0.415
+      "current_price": 0.6699999999999999,
+      "price_yes_current": 0.33
     },
     {
       "market_id": "1403723",
@@ -360,8 +360,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.6799999999999999,
-      "price_yes_current": 0.32
+      "current_price": 0.745,
+      "price_yes_current": 0.255
     },
     {
       "market_id": "1438350",
@@ -378,8 +378,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.63,
-      "price_yes_current": 0.37
+      "current_price": 0.0040000000000000036,
+      "price_yes_current": 0.996
     },
     {
       "market_id": "1428641",
@@ -396,8 +396,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.585,
-      "price_yes_current": 0.415
+      "current_price": 0.49,
+      "price_yes_current": 0.51
     },
     {
       "market_id": "1397312",
@@ -414,8 +414,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.20499999999999996,
-      "price_yes_current": 0.795
+      "current_price": 0.20999999999999996,
+      "price_yes_current": 0.79
     }
   ],
   "closed_trades": [
@@ -634,12 +634,30 @@
       "pnl": -50,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1280181",
+      "question": "Will there be between 10 and 13 US strikes on Somalia in February 2026?",
+      "token_id": "67962144252605414936454321215696009863692074476937050017452528834844396396309",
+      "bet_side": "NO",
+      "entry_date": "2026-02-14 05:00",
+      "entry_price": 0.5549999999999999,
+      "size_usd": 50,
+      "shares": 89.63963963963965,
+      "cluster": "africa",
+      "expected_close": "2026-03-04",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-03-05 01:16",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329124",
-  "last_updated": "2026-03-04T18:36:35.830638",
+  "last_updated": "2026-03-05T01:16:05.858546",
   "total_trades": 23,
   "wins": 7,
-  "losses": 5,
-  "total_pnl": 125.78357441728002
+  "losses": 6,
+  "total_pnl": 75.78357441728002
 }

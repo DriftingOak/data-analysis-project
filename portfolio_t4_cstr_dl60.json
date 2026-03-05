@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 500,
-  "bankroll_current": 491.114500179073,
+  "bankroll_current": 441.114500179073,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -36,8 +36,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.585,
-      "price_yes_current": 0.415
+      "current_price": 0.6699999999999999,
+      "price_yes_current": 0.33
     },
     {
       "market_id": "1277912",
@@ -108,8 +108,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.485,
-      "price_yes_current": 0.515
+      "current_price": 0.575,
+      "price_yes_current": 0.425
     },
     {
       "market_id": "1301486",
@@ -144,8 +144,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.605,
-      "price_yes_current": 0.395
+      "current_price": 0.585,
+      "price_yes_current": 0.415
     },
     {
       "market_id": "1117207",
@@ -194,12 +194,12 @@
       "shares": 89.63963963963965,
       "cluster": "africa",
       "expected_close": "2026-03-04",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.0044999999999999485,
-      "price_yes_current": 0.9955
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-03-05 01:16",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "1394342",
@@ -216,8 +216,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.53,
-      "price_yes_current": 0.47
+      "current_price": 0.525,
+      "price_yes_current": 0.475
     },
     {
       "market_id": "1403723",
@@ -234,8 +234,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.6799999999999999,
-      "price_yes_current": 0.32
+      "current_price": 0.745,
+      "price_yes_current": 0.255
     },
     {
       "market_id": "1439530",
@@ -270,8 +270,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.63,
-      "price_yes_current": 0.37
+      "current_price": 0.0040000000000000036,
+      "price_yes_current": 0.996
     }
   ],
   "closed_trades": [
@@ -400,12 +400,30 @@
       "pnl": 65.69767441860463,
       "current_price": 1.0,
       "price_yes_current": 0.0
+    },
+    {
+      "market_id": "1280181",
+      "question": "Will there be between 10 and 13 US strikes on Somalia in February 2026?",
+      "token_id": "67962144252605414936454321215696009863692074476937050017452528834844396396309",
+      "bet_side": "NO",
+      "entry_date": "2026-02-14 05:00",
+      "entry_price": 0.5549999999999999,
+      "size_usd": 50,
+      "shares": 89.63963963963965,
+      "cluster": "africa",
+      "expected_close": "2026-03-04",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-03-05 01:16",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329114",
-  "last_updated": "2026-03-04T18:36:35.829647",
+  "last_updated": "2026-03-05T01:16:05.856685",
   "total_trades": 15,
   "wins": 3,
-  "losses": 4,
-  "total_pnl": -8.88549982092701
+  "losses": 5,
+  "total_pnl": -58.88549982092701
 }
