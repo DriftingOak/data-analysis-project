@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 920.9003978461907,
+  "bankroll_current": 915.9003978461907,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -252,8 +252,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.5549999999999999,
-      "price_yes_current": 0.445
+      "current_price": 0.5700000000000001,
+      "price_yes_current": 0.43
     },
     {
       "market_id": "791705",
@@ -306,8 +306,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.6950000000000001,
-      "price_yes_current": 0.305
+      "current_price": 0.71,
+      "price_yes_current": 0.29
     },
     {
       "market_id": "1397296",
@@ -342,8 +342,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.78,
-      "price_yes_current": 0.22
+      "current_price": 0.775,
+      "price_yes_current": 0.225
     },
     {
       "market_id": "1394342",
@@ -378,8 +378,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.975,
-      "price_yes_current": 0.025
+      "current_price": 0.9885,
+      "price_yes_current": 0.0115
     },
     {
       "market_id": "1123479",
@@ -396,8 +396,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.6799999999999999,
-      "price_yes_current": 0.32
+      "current_price": 0.675,
+      "price_yes_current": 0.325
     },
     {
       "market_id": "661699",
@@ -468,8 +468,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.47,
-      "price_yes_current": 0.53
+      "current_price": 0.505,
+      "price_yes_current": 0.495
     },
     {
       "market_id": "1115288",
@@ -504,8 +504,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.675,
-      "price_yes_current": 0.325
+      "current_price": 0.685,
+      "price_yes_current": 0.315
     },
     {
       "market_id": "1439093",
@@ -522,8 +522,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.52,
-      "price_yes_current": 0.48
+      "current_price": 0.54,
+      "price_yes_current": 0.46
     },
     {
       "market_id": "677397",
@@ -540,8 +540,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.365,
-      "price_yes_current": 0.635
+      "current_price": 0.48,
+      "price_yes_current": 0.52
     },
     {
       "market_id": "1471457",
@@ -558,8 +558,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.49,
-      "price_yes_current": 0.51
+      "current_price": 0.525,
+      "price_yes_current": 0.475
     },
     {
       "market_id": "1466766",
@@ -576,8 +576,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9705,
-      "price_yes_current": 0.0295
+      "current_price": 0.9895,
+      "price_yes_current": 0.0105
     },
     {
       "market_id": "1476122",
@@ -590,12 +590,12 @@
       "shares": 9.754901960784313,
       "cluster": "latam",
       "expected_close": "2026-03-07",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9995,
-      "price_yes_current": 0.0005
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-03-08 06:32",
+      "pnl": -5.0,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1116062",
@@ -630,8 +630,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.6,
-      "price_yes_current": 0.4
+      "current_price": 0.62,
+      "price_yes_current": 0.38
     }
   ],
   "closed_trades": [
@@ -886,12 +886,30 @@
       "pnl": -5.0,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1476122",
+      "question": "New Mexico State Aggies vs. Sam Houston Bearkats (W)",
+      "token_id": "88720390913472559115593054967106690704904789384614296465348938850288333741449",
+      "bet_side": "NO",
+      "entry_date": "2026-03-03 18:37",
+      "entry_price": 0.51,
+      "size_usd": 5.0,
+      "shares": 9.754901960784313,
+      "cluster": "latam",
+      "expected_close": "2026-03-07",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-03-08 06:32",
+      "pnl": -5.0,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329048",
-  "last_updated": "2026-03-08T01:16:20.121135",
+  "last_updated": "2026-03-08T06:32:50.243335",
   "total_trades": 35,
   "wins": 5,
-  "losses": 9,
-  "total_pnl": -79.09960215380929
+  "losses": 10,
+  "total_pnl": -84.09960215380929
 }
