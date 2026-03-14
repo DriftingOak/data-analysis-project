@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 859.2542201385113,
+  "bankroll_current": 883.5079514817949,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -36,8 +36,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.625,
-      "price_yes_current": 0.375
+      "current_price": 0.655,
+      "price_yes_current": 0.345
     },
     {
       "market_id": "1277912",
@@ -144,8 +144,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.785,
-      "price_yes_current": 0.215
+      "current_price": 0.79,
+      "price_yes_current": 0.21
     },
     {
       "market_id": "1277639",
@@ -180,8 +180,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.645,
-      "price_yes_current": 0.355
+      "current_price": 0.6599999999999999,
+      "price_yes_current": 0.34
     },
     {
       "market_id": "1301486",
@@ -486,8 +486,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.943,
-      "price_yes_current": 0.057
+      "current_price": 0.9390000000000001,
+      "price_yes_current": 0.061
     },
     {
       "market_id": "1403723",
@@ -558,8 +558,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.91,
-      "price_yes_current": 0.09
+      "current_price": 0.905,
+      "price_yes_current": 0.095
     },
     {
       "market_id": "1439534",
@@ -576,8 +576,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9875,
-      "price_yes_current": 0.0125
+      "current_price": 0.9885,
+      "price_yes_current": 0.0115
     },
     {
       "market_id": "1437630",
@@ -594,8 +594,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.85,
-      "price_yes_current": 0.15
+      "current_price": 0.39,
+      "price_yes_current": 0.61
     },
     {
       "market_id": "1439530",
@@ -612,8 +612,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.8200000000000001,
-      "price_yes_current": 0.18
+      "current_price": 0.8049999999999999,
+      "price_yes_current": 0.195
     },
     {
       "market_id": "1418686",
@@ -666,8 +666,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.495,
-      "price_yes_current": 0.505
+      "current_price": 0.505,
+      "price_yes_current": 0.495
     },
     {
       "market_id": "1439532",
@@ -684,8 +684,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.8049999999999999,
-      "price_yes_current": 0.195
+      "current_price": 0.785,
+      "price_yes_current": 0.215
     },
     {
       "market_id": "825457",
@@ -716,12 +716,30 @@
       "shares": 74.25373134328359,
       "cluster": "mideast",
       "expected_close": "2026-03-18",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-03-14 18:25",
+      "pnl": 24.25373134328359,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
+    },
+    {
+      "market_id": "1567761",
+      "question": "Will Russia capture Bilytske by April 30, 2026?",
+      "token_id": "97596933500788998897605616379824070488652502245167756501618221365135727199801",
+      "bet_side": "NO",
+      "entry_date": "2026-03-14 18:25",
+      "entry_price": 0.645,
+      "size_usd": 50,
+      "shares": 77.13178294573643,
+      "cluster": "ukraine",
+      "expected_close": "2026-04-30",
       "status": "open",
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.6435,
-      "price_yes_current": 0.3565
+      "current_price": null,
+      "price_yes_current": null
     }
   ],
   "closed_trades": [
@@ -1174,12 +1192,30 @@
       "pnl": -50,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1437281",
+      "question": "Will Javier Assad strike out the most batters while pitching at the 2026 World Baseball Classic?",
+      "token_id": "28415057192921774267008530348689353608841026127405226636801370421961570690965",
+      "bet_side": "NO",
+      "entry_date": "2026-03-08 18:22",
+      "entry_price": 0.6699999999999999,
+      "size_usd": 50,
+      "shares": 74.25373134328359,
+      "cluster": "mideast",
+      "expected_close": "2026-03-18",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-03-14 18:25",
+      "pnl": 24.25373134328359,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329192",
-  "last_updated": "2026-03-14T12:31:02.528632",
-  "total_trades": 40,
-  "wins": 12,
+  "last_updated": "2026-03-14T18:25:51.260012",
+  "total_trades": 41,
+  "wins": 13,
   "losses": 13,
-  "total_pnl": -140.74577986148867
+  "total_pnl": -116.49204851820508
 }
