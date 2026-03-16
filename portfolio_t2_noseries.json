@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 923.9161693721924,
+  "bankroll_current": 918.9161693721924,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -108,8 +108,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.5800000000000001,
-      "price_yes_current": 0.42
+      "current_price": 0.575,
+      "price_yes_current": 0.425
     },
     {
       "market_id": "791703",
@@ -306,8 +306,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.795,
-      "price_yes_current": 0.205
+      "current_price": 0.8049999999999999,
+      "price_yes_current": 0.195
     },
     {
       "market_id": "1397296",
@@ -338,12 +338,12 @@
       "shares": 14.014084507042254,
       "cluster": "ukraine",
       "expected_close": "2026-03-31",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.845,
-      "price_yes_current": 0.155
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-03-16 18:50",
+      "pnl": -5.0,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "1394342",
@@ -360,8 +360,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.7150000000000001,
-      "price_yes_current": 0.285
+      "current_price": 0.725,
+      "price_yes_current": 0.275
     },
     {
       "market_id": "1427956",
@@ -396,8 +396,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.765,
-      "price_yes_current": 0.235
+      "current_price": 0.78,
+      "price_yes_current": 0.22
     },
     {
       "market_id": "661699",
@@ -468,8 +468,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.46499999999999997,
-      "price_yes_current": 0.535
+      "current_price": 0.45999999999999996,
+      "price_yes_current": 0.54
     },
     {
       "market_id": "1115288",
@@ -504,8 +504,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.8,
-      "price_yes_current": 0.2
+      "current_price": 0.855,
+      "price_yes_current": 0.145
     },
     {
       "market_id": "1439093",
@@ -522,8 +522,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.64,
-      "price_yes_current": 0.36
+      "current_price": 0.645,
+      "price_yes_current": 0.355
     },
     {
       "market_id": "677397",
@@ -540,8 +540,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.20499999999999996,
-      "price_yes_current": 0.795
+      "current_price": 0.19999999999999996,
+      "price_yes_current": 0.8
     },
     {
       "market_id": "1471457",
@@ -558,8 +558,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.765,
-      "price_yes_current": 0.235
+      "current_price": 0.815,
+      "price_yes_current": 0.185
     },
     {
       "market_id": "1466766",
@@ -630,8 +630,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.725,
-      "price_yes_current": 0.275
+      "current_price": 0.73,
+      "price_yes_current": 0.27
     },
     {
       "market_id": "1553380",
@@ -666,8 +666,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.515,
-      "price_yes_current": 0.485
+      "current_price": 0.54,
+      "price_yes_current": 0.46
     },
     {
       "market_id": "1577370",
@@ -684,8 +684,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.495,
-      "price_yes_current": 0.505
+      "current_price": 0.49,
+      "price_yes_current": 0.51
     }
   ],
   "closed_trades": [
@@ -1030,12 +1030,30 @@
       "pnl": -10.0,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1428641",
+      "question": "More EU sanctions on Russia by March 31?",
+      "token_id": "35841851198323532706296707791704332196432166502808028243586741804652610243757",
+      "bet_side": "NO",
+      "entry_date": "2026-02-27 01:12",
+      "entry_price": 0.355,
+      "size_usd": 5.0,
+      "shares": 14.014084507042254,
+      "cluster": "ukraine",
+      "expected_close": "2026-03-31",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-03-16 18:50",
+      "pnl": -5.0,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329048",
-  "last_updated": "2026-03-16T12:49:56.719632",
+  "last_updated": "2026-03-16T18:50:42.022208",
   "total_trades": 38,
   "wins": 7,
-  "losses": 12,
-  "total_pnl": -76.08383062780757
+  "losses": 13,
+  "total_pnl": -81.08383062780757
 }
