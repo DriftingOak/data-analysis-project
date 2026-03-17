@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 500,
-  "bankroll_current": 528.0694361303863,
+  "bankroll_current": 560.986102797053,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -126,8 +126,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.69,
-      "price_yes_current": 0.31
+      "current_price": 0.735,
+      "price_yes_current": 0.265
     },
     {
       "market_id": "1336363",
@@ -252,8 +252,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.785,
-      "price_yes_current": 0.215
+      "current_price": 0.78,
+      "price_yes_current": 0.22
     },
     {
       "market_id": "1280182",
@@ -342,8 +342,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.64,
-      "price_yes_current": 0.36
+      "current_price": 0.62,
+      "price_yes_current": 0.38
     },
     {
       "market_id": "1403723",
@@ -360,8 +360,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.265,
-      "price_yes_current": 0.735
+      "current_price": 0.275,
+      "price_yes_current": 0.725
     },
     {
       "market_id": "1438350",
@@ -414,8 +414,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.42000000000000004,
-      "price_yes_current": 0.58
+      "current_price": 0.41500000000000004,
+      "price_yes_current": 0.585
     },
     {
       "market_id": "1466802",
@@ -432,8 +432,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.6699999999999999,
-      "price_yes_current": 0.33
+      "current_price": 0.725,
+      "price_yes_current": 0.275
     },
     {
       "market_id": "1439531",
@@ -450,8 +450,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.575,
-      "price_yes_current": 0.425
+      "current_price": 0.5900000000000001,
+      "price_yes_current": 0.41
     },
     {
       "market_id": "1466801",
@@ -464,12 +464,12 @@
       "shares": 82.91666666666667,
       "cluster": "mideast",
       "expected_close": "2026-03-31",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.997,
-      "price_yes_current": 0.003
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-03-17 06:54",
+      "pnl": 32.91666666666667,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1450241",
@@ -486,8 +486,44 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.89,
-      "price_yes_current": 0.11
+      "current_price": 0.88,
+      "price_yes_current": 0.12
+    },
+    {
+      "market_id": "1397260",
+      "question": "Will Russia capture Kostyantynivka by June 30?",
+      "token_id": "43321630833125241017427912676100747595457556487829359498141771278458547970943",
+      "bet_side": "NO",
+      "entry_date": "2026-03-17 06:54",
+      "entry_price": 0.32499999999999996,
+      "size_usd": 50,
+      "shares": 153.0769230769231,
+      "cluster": "ukraine",
+      "expected_close": "2026-03-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1559953",
+      "question": "US x Iran ceasefire before Trump visits China?",
+      "token_id": "29209709491728499198612165041170193629165652157992423246798176106491795244719",
+      "bet_side": "NO",
+      "entry_date": "2026-03-17 06:54",
+      "entry_price": 0.585,
+      "size_usd": 50,
+      "shares": 85.04273504273505,
+      "cluster": "mideast",
+      "expected_close": "2026-03-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
     }
   ],
   "closed_trades": [
@@ -814,12 +850,30 @@
       "pnl": -50,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1466801",
+      "question": "US/Israel strike Yemen by March 14?",
+      "token_id": "56425257909923328913612277093703533601847431562038967832411120021108417626982",
+      "bet_side": "NO",
+      "entry_date": "2026-03-08 18:22",
+      "entry_price": 0.6,
+      "size_usd": 50,
+      "shares": 82.91666666666667,
+      "cluster": "mideast",
+      "expected_close": "2026-03-31",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-03-17 06:54",
+      "pnl": 32.91666666666667,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329124",
-  "last_updated": "2026-03-17T01:16:32.751712",
-  "total_trades": 27,
-  "wins": 9,
+  "last_updated": "2026-03-17T06:54:22.567183",
+  "total_trades": 29,
+  "wins": 10,
   "losses": 9,
-  "total_pnl": 28.06943613038635
+  "total_pnl": 60.98610279705302
 }
