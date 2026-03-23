@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 500,
-  "bankroll_current": 302.57731958762884,
+  "bankroll_current": 252.57731958762886,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -18,8 +18,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.575,
-      "price_yes_current": 0.425
+      "current_price": 0.5900000000000001,
+      "price_yes_current": 0.41
     },
     {
       "market_id": "1345278",
@@ -54,8 +54,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.7150000000000001,
-      "price_yes_current": 0.285
+      "current_price": 0.69,
+      "price_yes_current": 0.31
     },
     {
       "market_id": "1277912",
@@ -126,8 +126,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.595,
-      "price_yes_current": 0.405
+      "current_price": 0.5900000000000001,
+      "price_yes_current": 0.41
     },
     {
       "market_id": "569343",
@@ -144,8 +144,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.30500000000000005,
-      "price_yes_current": 0.695
+      "current_price": 0.31499999999999995,
+      "price_yes_current": 0.685
     },
     {
       "market_id": "1336154",
@@ -158,12 +158,12 @@
       "shares": 92.99065420560748,
       "cluster": "ukraine",
       "expected_close": "2026-03-31",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.04500000000000004,
-      "price_yes_current": 0.955
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-03-23 01:20",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "1277644",
@@ -310,12 +310,30 @@
       "pnl": -50,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1336154",
+      "question": "Will Russia capture all of Rodynske by March 31?",
+      "token_id": "96133656106740574277446214020777398233402435827467200775938917873268339749851",
+      "bet_side": "NO",
+      "entry_date": "2026-02-08 22:16",
+      "entry_price": 0.5349999999999999,
+      "size_usd": 50,
+      "shares": 92.99065420560748,
+      "cluster": "ukraine",
+      "expected_close": "2026-03-31",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-03-23 01:20",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329103",
-  "last_updated": "2026-03-22T18:24:49.807181",
+  "last_updated": "2026-03-23T01:20:29.331297",
   "total_trades": 11,
   "wins": 1,
-  "losses": 5,
-  "total_pnl": -197.42268041237114
+  "losses": 6,
+  "total_pnl": -247.42268041237114
 }

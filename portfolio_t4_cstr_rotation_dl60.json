@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 500,
-  "bankroll_current": 560.986102797053,
+  "bankroll_current": 510.98610279705304,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -126,8 +126,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.8049999999999999,
-      "price_yes_current": 0.195
+      "current_price": 0.855,
+      "price_yes_current": 0.145
     },
     {
       "market_id": "1336363",
@@ -252,8 +252,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.91,
-      "price_yes_current": 0.09
+      "current_price": 0.925,
+      "price_yes_current": 0.075
     },
     {
       "market_id": "1280182",
@@ -342,8 +342,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.7150000000000001,
-      "price_yes_current": 0.285
+      "current_price": 0.69,
+      "price_yes_current": 0.31
     },
     {
       "market_id": "1403723",
@@ -360,8 +360,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.14,
-      "price_yes_current": 0.86
+      "current_price": 0.10499999999999998,
+      "price_yes_current": 0.895
     },
     {
       "market_id": "1438350",
@@ -410,12 +410,12 @@
       "shares": 165.83333333333331,
       "cluster": "ukraine",
       "expected_close": "2026-03-31",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.027000000000000024,
-      "price_yes_current": 0.973
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-03-23 01:20",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "1466802",
@@ -432,8 +432,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.755,
-      "price_yes_current": 0.245
+      "current_price": 0.785,
+      "price_yes_current": 0.215
     },
     {
       "market_id": "1439531",
@@ -450,8 +450,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.32499999999999996,
-      "price_yes_current": 0.675
+      "current_price": 0.31999999999999995,
+      "price_yes_current": 0.68
     },
     {
       "market_id": "1466801",
@@ -486,8 +486,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.89,
-      "price_yes_current": 0.11
+      "current_price": 0.88,
+      "price_yes_current": 0.12
     },
     {
       "market_id": "1397260",
@@ -504,8 +504,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.33999999999999997,
-      "price_yes_current": 0.66
+      "current_price": 0.355,
+      "price_yes_current": 0.645
     },
     {
       "market_id": "1559953",
@@ -522,8 +522,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.5549999999999999,
-      "price_yes_current": 0.445
+      "current_price": 0.575,
+      "price_yes_current": 0.425
     }
   ],
   "closed_trades": [
@@ -868,12 +868,30 @@
       "pnl": 32.91666666666667,
       "current_price": 1.0,
       "price_yes_current": 0.0
+    },
+    {
+      "market_id": "1397312",
+      "question": "Will Russia capture all of Rodynske by April 30?",
+      "token_id": "75063306507838059717460462049167368566471727407296316807261225864590941156207",
+      "bet_side": "NO",
+      "entry_date": "2026-03-01 12:29",
+      "entry_price": 0.30000000000000004,
+      "size_usd": 50,
+      "shares": 165.83333333333331,
+      "cluster": "ukraine",
+      "expected_close": "2026-03-31",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-03-23 01:20",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329124",
-  "last_updated": "2026-03-22T18:24:49.809027",
+  "last_updated": "2026-03-23T01:20:29.333343",
   "total_trades": 29,
   "wins": 10,
-  "losses": 9,
-  "total_pnl": 60.98610279705302
+  "losses": 10,
+  "total_pnl": 10.986102797053022
 }
