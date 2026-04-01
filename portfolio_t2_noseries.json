@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 903.0238980247581,
+  "bankroll_current": 941.5988235249708,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -36,8 +36,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.54,
-      "price_yes_current": 0.46
+      "current_price": 0.5549999999999999,
+      "price_yes_current": 0.445
     },
     {
       "market_id": "1336363",
@@ -108,8 +108,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.595,
-      "price_yes_current": 0.405
+      "current_price": 0.605,
+      "price_yes_current": 0.395
     },
     {
       "market_id": "791703",
@@ -252,8 +252,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.725,
-      "price_yes_current": 0.275
+      "current_price": 0.735,
+      "price_yes_current": 0.265
     },
     {
       "market_id": "791705",
@@ -306,8 +306,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.7150000000000001,
-      "price_yes_current": 0.285
+      "current_price": 0.69,
+      "price_yes_current": 0.31
     },
     {
       "market_id": "1397296",
@@ -356,12 +356,12 @@
       "shares": 9.754901960784313,
       "cluster": "mideast",
       "expected_close": "2026-03-31",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.65,
-      "price_yes_current": 0.35
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-01 12:57",
+      "pnl": -5.0,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "1427956",
@@ -396,8 +396,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.855,
-      "price_yes_current": 0.145
+      "current_price": 0.875,
+      "price_yes_current": 0.125
     },
     {
       "market_id": "661699",
@@ -468,8 +468,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.635,
-      "price_yes_current": 0.365
+      "current_price": 0.615,
+      "price_yes_current": 0.385
     },
     {
       "market_id": "1115288",
@@ -486,8 +486,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.855,
-      "price_yes_current": 0.145
+      "current_price": 0.865,
+      "price_yes_current": 0.135
     },
     {
       "market_id": "1450241",
@@ -500,12 +500,12 @@
       "shares": 17.1551724137931,
       "cluster": "other",
       "expected_close": "2026-03-31",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.992,
-      "price_yes_current": 0.008
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-04-01 12:57",
+      "pnl": 7.1551724137931,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1439093",
@@ -522,8 +522,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.5800000000000001,
-      "price_yes_current": 0.42
+      "current_price": 0.595,
+      "price_yes_current": 0.405
     },
     {
       "market_id": "677397",
@@ -554,12 +554,12 @@
       "shares": 61.419753086419746,
       "cluster": "mideast",
       "expected_close": "2026-03-31",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9995,
-      "price_yes_current": 0.0005
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-04-01 12:57",
+      "pnl": 36.419753086419746,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1466766",
@@ -630,8 +630,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.745,
-      "price_yes_current": 0.255
+      "current_price": 0.75,
+      "price_yes_current": 0.25
     },
     {
       "market_id": "1553380",
@@ -666,8 +666,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.485,
-      "price_yes_current": 0.515
+      "current_price": 0.5549999999999999,
+      "price_yes_current": 0.445
     },
     {
       "market_id": "1577370",
@@ -684,8 +684,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.775,
-      "price_yes_current": 0.225
+      "current_price": 0.77,
+      "price_yes_current": 0.23
     },
     {
       "market_id": "1559953",
@@ -702,8 +702,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.43500000000000005,
-      "price_yes_current": 0.565
+      "current_price": 0.42500000000000004,
+      "price_yes_current": 0.575
     },
     {
       "market_id": "1107878",
@@ -720,8 +720,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.765,
-      "price_yes_current": 0.235
+      "current_price": 0.785,
+      "price_yes_current": 0.215
     },
     {
       "market_id": "1609452",
@@ -810,8 +810,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.44499999999999995,
-      "price_yes_current": 0.555
+      "current_price": 0.49,
+      "price_yes_current": 0.51
     },
     {
       "market_id": "1717615",
@@ -882,8 +882,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.5900000000000001,
-      "price_yes_current": 0.41
+      "current_price": 0.585,
+      "price_yes_current": 0.415
     }
   ],
   "closed_trades": [
@@ -1354,12 +1354,66 @@
       "pnl": 7.927927927927929,
       "current_price": 1.0,
       "price_yes_current": 0.0
+    },
+    {
+      "market_id": "1394342",
+      "question": "Iran strike on US military by March 31?",
+      "token_id": "40078385094204141078684767868174654019389620354653137546560691010827336444112",
+      "bet_side": "NO",
+      "entry_date": "2026-02-28 12:27",
+      "entry_price": 0.51,
+      "size_usd": 5.0,
+      "shares": 9.754901960784313,
+      "cluster": "mideast",
+      "expected_close": "2026-03-31",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-01 12:57",
+      "pnl": -5.0,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1450241",
+      "question": "Pakistan x Afghanistan ceasefire by March 31?",
+      "token_id": "105702356801644974498800375957702416013982074303180625848259976283247314710461",
+      "bet_side": "NO",
+      "entry_date": "2026-03-01 06:35",
+      "entry_price": 0.5800000000000001,
+      "size_usd": 10.0,
+      "shares": 17.1551724137931,
+      "cluster": "other",
+      "expected_close": "2026-03-31",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-04-01 12:57",
+      "pnl": 7.1551724137931,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
+    },
+    {
+      "market_id": "1471457",
+      "question": "US/Israel strike on Fordow nuclear facility by March 31?",
+      "token_id": "15383684067596502149123204844216805492228844396215325931845777976929865529565",
+      "bet_side": "NO",
+      "entry_date": "2026-03-03 01:17",
+      "entry_price": 0.405,
+      "size_usd": 25.0,
+      "shares": 61.419753086419746,
+      "cluster": "mideast",
+      "expected_close": "2026-03-31",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-04-01 12:57",
+      "pnl": 36.419753086419746,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329048",
-  "last_updated": "2026-04-01T07:10:08.118616",
+  "last_updated": "2026-04-01T12:57:56.769663",
   "total_trades": 49,
-  "wins": 10,
-  "losses": 16,
-  "total_pnl": -96.97610197524197
+  "wins": 12,
+  "losses": 17,
+  "total_pnl": -58.40117647502913
 }

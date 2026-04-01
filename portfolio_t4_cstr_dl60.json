@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 500,
-  "bankroll_current": 440.9983992832691,
+  "bankroll_current": 340.9983992832691,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -36,8 +36,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.6950000000000001,
-      "price_yes_current": 0.305
+      "current_price": 0.77,
+      "price_yes_current": 0.23
     },
     {
       "market_id": "1277912",
@@ -212,12 +212,12 @@
       "shares": 97.54901960784314,
       "cluster": "mideast",
       "expected_close": "2026-03-31",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.65,
-      "price_yes_current": 0.35
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-01 12:57",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "1403723",
@@ -320,12 +320,12 @@
       "shares": 114.36781609195401,
       "cluster": "ukraine",
       "expected_close": "2026-04-15",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.04500000000000004,
-      "price_yes_current": 0.955
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-01 12:57",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "1746839",
@@ -342,8 +342,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.265,
-      "price_yes_current": 0.735
+      "current_price": 0.43999999999999995,
+      "price_yes_current": 0.56
     },
     {
       "market_id": "1567769",
@@ -355,6 +355,24 @@
       "size_usd": 50,
       "shares": 216.30434782608697,
       "cluster": "ukraine",
+      "expected_close": "2026-04-30",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": 0.10999999999999999,
+      "price_yes_current": 0.89
+    },
+    {
+      "market_id": "1706305",
+      "question": "Will Iran strike Lebanon by April 30, 2026?",
+      "token_id": "91971970325243496323343949212577761916665591164201319275089382844730331210004",
+      "bet_side": "NO",
+      "entry_date": "2026-04-01 12:57",
+      "entry_price": 0.525,
+      "size_usd": 50,
+      "shares": 94.76190476190476,
+      "cluster": "mideast",
       "expected_close": "2026-04-30",
       "status": "open",
       "resolution": null,
@@ -616,12 +634,48 @@
       "pnl": 48.51485148514851,
       "current_price": 1.0,
       "price_yes_current": 0.0
+    },
+    {
+      "market_id": "1394342",
+      "question": "Iran strike on US military by March 31?",
+      "token_id": "40078385094204141078684767868174654019389620354653137546560691010827336444112",
+      "bet_side": "NO",
+      "entry_date": "2026-02-28 12:27",
+      "entry_price": 0.51,
+      "size_usd": 50,
+      "shares": 97.54901960784314,
+      "cluster": "mideast",
+      "expected_close": "2026-03-31",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-01 12:57",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1704688",
+      "question": "Ukraine strikes another tanker in Black Sea by April 15, 2026?",
+      "token_id": "52839242201514242524414973054379742447385909637011934049165941111771015309701",
+      "bet_side": "NO",
+      "entry_date": "2026-04-01 01:46",
+      "entry_price": 0.43500000000000005,
+      "size_usd": 50,
+      "shares": 114.36781609195401,
+      "cluster": "ukraine",
+      "expected_close": "2026-04-15",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-01 12:57",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329114",
-  "last_updated": "2026-04-01T07:10:08.166431",
-  "total_trades": 20,
+  "last_updated": "2026-04-01T12:57:56.816831",
+  "total_trades": 21,
   "wins": 6,
-  "losses": 8,
-  "total_pnl": -59.00160071673088
+  "losses": 10,
+  "total_pnl": -159.00160071673088
 }
