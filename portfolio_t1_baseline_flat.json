@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 830.1945607317327,
+  "bankroll_current": 940.3913238781965,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -72,8 +72,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.61,
-      "price_yes_current": 0.39
+      "current_price": 0.615,
+      "price_yes_current": 0.385
     },
     {
       "market_id": "569343",
@@ -90,8 +90,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.245,
-      "price_yes_current": 0.755
+      "current_price": 0.235,
+      "price_yes_current": 0.765
     },
     {
       "market_id": "994859",
@@ -162,8 +162,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.43500000000000005,
-      "price_yes_current": 0.565
+      "current_price": 0.43000000000000005,
+      "price_yes_current": 0.57
     },
     {
       "market_id": "1301486",
@@ -252,8 +252,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.5349999999999999,
-      "price_yes_current": 0.465
+      "current_price": 0.53,
+      "price_yes_current": 0.47
     },
     {
       "market_id": "1277913",
@@ -378,8 +378,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.675,
-      "price_yes_current": 0.325
+      "current_price": 0.6950000000000001,
+      "price_yes_current": 0.305
     },
     {
       "market_id": "1345278",
@@ -464,12 +464,12 @@
       "shares": 49.257425742574256,
       "cluster": "ukraine",
       "expected_close": "2026-02-28",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9935,
-      "price_yes_current": 0.0065
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-04-01 07:10",
+      "pnl": 24.257425742574256,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1336154",
@@ -500,12 +500,12 @@
       "shares": 45.22727272727273,
       "cluster": "ukraine",
       "expected_close": "2026-03-31",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9895,
-      "price_yes_current": 0.0105
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-04-01 07:10",
+      "pnl": 20.227272727272727,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "565064",
@@ -576,8 +576,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.625,
-      "price_yes_current": 0.375
+      "current_price": 0.61,
+      "price_yes_current": 0.39
     },
     {
       "market_id": "569368",
@@ -608,12 +608,12 @@
       "shares": 41.458333333333336,
       "cluster": "ukraine",
       "expected_close": "2026-03-31",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9805,
-      "price_yes_current": 0.0195
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-04-01 07:10",
+      "pnl": 16.458333333333336,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1336700",
@@ -824,12 +824,12 @@
       "shares": 74.25373134328359,
       "cluster": "ukraine",
       "expected_close": "2026-03-31",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9945,
-      "price_yes_current": 0.0055
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-04-01 07:10",
+      "pnl": 49.25373134328359,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1123479",
@@ -846,8 +846,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.8049999999999999,
-      "price_yes_current": 0.195
+      "current_price": 0.855,
+      "price_yes_current": 0.145
     },
     {
       "market_id": "661699",
@@ -990,8 +990,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.31499999999999995,
-      "price_yes_current": 0.685
+      "current_price": 0.32999999999999996,
+      "price_yes_current": 0.67
     },
     {
       "market_id": "1090489",
@@ -1008,8 +1008,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.71,
-      "price_yes_current": 0.29
+      "current_price": 0.76,
+      "price_yes_current": 0.24
     },
     {
       "market_id": "1455627",
@@ -1026,8 +1026,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.245,
-      "price_yes_current": 0.755
+      "current_price": 0.24,
+      "price_yes_current": 0.76
     },
     {
       "market_id": "1437245",
@@ -1116,8 +1116,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": null,
-      "price_yes_current": null
+      "current_price": 0.22999999999999998,
+      "price_yes_current": 0.77
     },
     {
       "market_id": "1641497",
@@ -1130,6 +1130,150 @@
       "shares": 81.55737704918032,
       "cluster": "mideast",
       "expected_close": "2026-04-30",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": 0.28500000000000003,
+      "price_yes_current": 0.715
+    },
+    {
+      "market_id": "1746822",
+      "question": "Will Big AI be out as #1 Free App in the US Apple Store by April 15?",
+      "token_id": "108001441680945496591705108448255343937182665957370146311734753045982994684030",
+      "bet_side": "NO",
+      "entry_date": "2026-04-01 07:10",
+      "entry_price": 0.20199999999999996,
+      "size_usd": 25,
+      "shares": 123.14356435643568,
+      "cluster": "other",
+      "expected_close": "2026-04-15",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1641496",
+      "question": "Israel strike on Yemen by May 31, 2026?",
+      "token_id": "61453030273841888621327345744473090785643569034428475451335517717525467483113",
+      "bet_side": "NO",
+      "entry_date": "2026-04-01 07:10",
+      "entry_price": 0.20999999999999996,
+      "size_usd": 25,
+      "shares": 118.45238095238098,
+      "cluster": "mideast",
+      "expected_close": "2026-05-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1746839",
+      "question": "Will ChatGPT be out as the #1 Free App in the US Apple Store by April 7?",
+      "token_id": "49073345647607999614589228726242854855156818955439805246726264296146795227521",
+      "bet_side": "NO",
+      "entry_date": "2026-04-01 07:10",
+      "entry_price": 0.265,
+      "size_usd": 25,
+      "shares": 93.86792452830188,
+      "cluster": "other",
+      "expected_close": "2026-04-14",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1706299",
+      "question": "Will Iran strike Iraq by April 30, 2026?",
+      "token_id": "66460795347859666410868463972730459751676418383303025822420990211445692242831",
+      "bet_side": "NO",
+      "entry_date": "2026-04-01 07:10",
+      "entry_price": 0.32499999999999996,
+      "size_usd": 25,
+      "shares": 76.53846153846155,
+      "cluster": "mideast",
+      "expected_close": "2026-04-30",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1484895",
+      "question": "US x Iran ceasefire by June 30?",
+      "token_id": "11578806222441353507719115176638735578970248989819859302635595162497755626384",
+      "bet_side": "NO",
+      "entry_date": "2026-04-01 07:10",
+      "entry_price": 0.345,
+      "size_usd": 25,
+      "shares": 72.10144927536233,
+      "cluster": "mideast",
+      "expected_close": "2026-06-30",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1696313",
+      "question": "North Korea missile test/launch by April 15?",
+      "token_id": "68935255161055185145377187627947708753851784362533423419508415735704200149892",
+      "bet_side": "NO",
+      "entry_date": "2026-04-01 07:10",
+      "entry_price": 0.44499999999999995,
+      "size_usd": 25,
+      "shares": 55.89887640449439,
+      "cluster": "other",
+      "expected_close": "2026-04-15",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1397281",
+      "question": "Will Russia capture all of Kostyantynivka by December 31, 2026?",
+      "token_id": "27268469296551325903795702814143674261813860116479691379823831476321987124803",
+      "bet_side": "NO",
+      "entry_date": "2026-04-01 07:10",
+      "entry_price": 0.525,
+      "size_usd": 25,
+      "shares": 47.38095238095238,
+      "cluster": "ukraine",
+      "expected_close": "2026-12-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1746821",
+      "question": "Will Big AI be out as #1 Free App in the US Apple Store by April 7?",
+      "token_id": "85057672580450763252068319361315591988966516459472447823571676503243781851420",
+      "bet_side": "NO",
+      "entry_date": "2026-04-01 07:10",
+      "entry_price": 0.53,
+      "size_usd": 25,
+      "shares": 46.93396226415094,
+      "cluster": "other",
+      "expected_close": "2026-04-15",
       "status": "open",
       "resolution": null,
       "close_date": null,
@@ -1750,12 +1894,84 @@
       "pnl": -25,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1333272",
+      "question": "Will Russia capture Sofiivka by March 31?",
+      "token_id": "70758554212168780491195268246080738597113472411563496587659773690484569273333",
+      "bet_side": "NO",
+      "entry_date": "2026-02-08 22:16",
+      "entry_price": 0.505,
+      "size_usd": 25,
+      "shares": 49.257425742574256,
+      "cluster": "ukraine",
+      "expected_close": "2026-02-28",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-04-01 07:10",
+      "pnl": 24.257425742574256,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
+    },
+    {
+      "market_id": "677361",
+      "question": "Will Russia capture Kostyantynivka by March 31?",
+      "token_id": "63761293627321054794056701530662561252253979399794304476663814039986928052742",
+      "bet_side": "NO",
+      "entry_date": "2026-02-08 22:16",
+      "entry_price": 0.55,
+      "size_usd": 25,
+      "shares": 45.22727272727273,
+      "cluster": "ukraine",
+      "expected_close": "2026-03-31",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-04-01 07:10",
+      "pnl": 20.227272727272727,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
+    },
+    {
+      "market_id": "1333270",
+      "question": "Will Russia capture Toretske by March 31, 2026?",
+      "token_id": "43421958307449721647059425840567504352004753118032821157855035393935581214602",
+      "bet_side": "NO",
+      "entry_date": "2026-02-09 05:34",
+      "entry_price": 0.6,
+      "size_usd": 25,
+      "shares": 41.458333333333336,
+      "cluster": "ukraine",
+      "expected_close": "2026-03-31",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-04-01 07:10",
+      "pnl": 16.458333333333336,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
+    },
+    {
+      "market_id": "1418674",
+      "question": "Will Russia capture all of Huliaipole by March 31?",
+      "token_id": "26098225037340041048875421528557714394003390275790634199273048858740605149037",
+      "bet_side": "NO",
+      "entry_date": "2026-02-28 12:27",
+      "entry_price": 0.33499999999999996,
+      "size_usd": 25,
+      "shares": 74.25373134328359,
+      "cluster": "ukraine",
+      "expected_close": "2026-03-31",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-04-01 07:10",
+      "pnl": 49.25373134328359,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.328959",
-  "last_updated": "2026-04-01T01:46:09.788784",
-  "total_trades": 63,
-  "wins": 11,
+  "last_updated": "2026-04-01T07:10:08.077332",
+  "total_trades": 71,
+  "wins": 15,
   "losses": 23,
-  "total_pnl": -169.80543926826732
+  "total_pnl": -59.60867612180343
 }
