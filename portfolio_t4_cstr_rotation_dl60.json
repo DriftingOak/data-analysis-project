@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 500,
-  "bankroll_current": 510.98610279705304,
+  "bankroll_current": 571.469973764795,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -126,8 +126,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9785,
-      "price_yes_current": 0.0215
+      "current_price": 0.9935,
+      "price_yes_current": 0.0065
     },
     {
       "market_id": "1336363",
@@ -248,12 +248,12 @@
       "shares": 160.48387096774192,
       "cluster": "china",
       "expected_close": "2026-03-31",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9995,
-      "price_yes_current": 0.0005
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-04-01 01:46",
+      "pnl": 110.48387096774192,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1280182",
@@ -356,12 +356,12 @@
       "shares": 119.87951807228914,
       "cluster": "china",
       "expected_close": "2026-03-31",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.0004999999999999449,
-      "price_yes_current": 0.9995
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-01 01:46",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "1438350",
@@ -432,8 +432,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9645,
-      "price_yes_current": 0.0355
+      "current_price": 0.979,
+      "price_yes_current": 0.021
     },
     {
       "market_id": "1439531",
@@ -486,8 +486,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.983,
-      "price_yes_current": 0.017
+      "current_price": 0.985,
+      "price_yes_current": 0.015
     },
     {
       "market_id": "1397260",
@@ -504,8 +504,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.4,
-      "price_yes_current": 0.6
+      "current_price": 0.405,
+      "price_yes_current": 0.595
     },
     {
       "market_id": "1559953",
@@ -522,8 +522,62 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.47,
-      "price_yes_current": 0.53
+      "current_price": 0.44499999999999995,
+      "price_yes_current": 0.555
+    },
+    {
+      "market_id": "1746839",
+      "question": "Will ChatGPT be out as the #1 Free App in the US Apple Store by April 7?",
+      "token_id": "49073345647607999614589228726242854855156818955439805246726264296146795227521",
+      "bet_side": "NO",
+      "entry_date": "2026-04-01 01:46",
+      "entry_price": 0.375,
+      "size_usd": 50,
+      "shares": 132.66666666666666,
+      "cluster": "other",
+      "expected_close": "2026-04-14",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1704688",
+      "question": "Ukraine strikes another tanker in Black Sea by April 15, 2026?",
+      "token_id": "52839242201514242524414973054379742447385909637011934049165941111771015309701",
+      "bet_side": "NO",
+      "entry_date": "2026-04-01 01:46",
+      "entry_price": 0.43500000000000005,
+      "size_usd": 50,
+      "shares": 114.36781609195401,
+      "cluster": "ukraine",
+      "expected_close": "2026-04-15",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1696313",
+      "question": "North Korea missile test/launch by April 15?",
+      "token_id": "68935255161055185145377187627947708753851784362533423419508415735704200149892",
+      "bet_side": "NO",
+      "entry_date": "2026-04-01 01:46",
+      "entry_price": 0.43500000000000005,
+      "size_usd": 50,
+      "shares": 114.36781609195401,
+      "cluster": "other",
+      "expected_close": "2026-04-15",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
     }
   ],
   "closed_trades": [
@@ -886,12 +940,48 @@
       "pnl": -50,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1403724",
+      "question": "Will the U.S. tariff rate on China be between 15% and 25% on March 31?",
+      "token_id": "76690516818876423928055345724521671502681306650146557516202900518656043276889",
+      "bet_side": "NO",
+      "entry_date": "2026-02-25 01:20",
+      "entry_price": 0.31000000000000005,
+      "size_usd": 50,
+      "shares": 160.48387096774192,
+      "cluster": "china",
+      "expected_close": "2026-03-31",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-04-01 01:46",
+      "pnl": 110.48387096774192,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
+    },
+    {
+      "market_id": "1403723",
+      "question": "Will the U.S. tariff rate on China be between 5% and 15% on March 31?",
+      "token_id": "66530703086990648822503606036535177730602586203102306133108525202954559034463",
+      "bet_side": "NO",
+      "entry_date": "2026-02-28 18:21",
+      "entry_price": 0.41500000000000004,
+      "size_usd": 50,
+      "shares": 119.87951807228914,
+      "cluster": "china",
+      "expected_close": "2026-03-31",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-01 01:46",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329124",
-  "last_updated": "2026-03-31T18:50:00.052795",
-  "total_trades": 29,
-  "wins": 10,
-  "losses": 10,
-  "total_pnl": 10.986102797053022
+  "last_updated": "2026-04-01T01:46:09.873929",
+  "total_trades": 32,
+  "wins": 11,
+  "losses": 11,
+  "total_pnl": 71.46997376479494
 }
