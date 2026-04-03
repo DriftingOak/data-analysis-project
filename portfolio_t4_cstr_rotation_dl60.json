@@ -342,8 +342,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.7050000000000001,
-      "price_yes_current": 0.295
+      "current_price": 0.765,
+      "price_yes_current": 0.235
     },
     {
       "market_id": "1403723",
@@ -450,8 +450,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.0040000000000000036,
-      "price_yes_current": 0.996
+      "current_price": 0.0020000000000000018,
+      "price_yes_current": 0.998
     },
     {
       "market_id": "1466801",
@@ -504,8 +504,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.515,
-      "price_yes_current": 0.485
+      "current_price": 0.53,
+      "price_yes_current": 0.47
     },
     {
       "market_id": "1559953",
@@ -522,8 +522,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.5549999999999999,
-      "price_yes_current": 0.445
+      "current_price": 0.615,
+      "price_yes_current": 0.385
     },
     {
       "market_id": "1746839",
@@ -594,8 +594,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.21999999999999997,
-      "price_yes_current": 0.78
+      "current_price": 0.235,
+      "price_yes_current": 0.765
     },
     {
       "market_id": "1746821",
@@ -612,8 +612,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.77,
-      "price_yes_current": 0.23
+      "current_price": 0.8,
+      "price_yes_current": 0.2
     },
     {
       "market_id": "1706220",
@@ -630,8 +630,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": null,
-      "price_yes_current": null
+      "current_price": 0.53,
+      "price_yes_current": 0.47
     },
     {
       "market_id": "1641497",
@@ -644,6 +644,24 @@
       "shares": 117.05882352941175,
       "cluster": "mideast",
       "expected_close": "2026-04-30",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": 0.30500000000000005,
+      "price_yes_current": 0.695
+    },
+    {
+      "market_id": "1746822",
+      "question": "Will Big AI be out as #1 Free App in the US Apple Store by April 15?",
+      "token_id": "108001441680945496591705108448255343937182665957370146311734753045982994684030",
+      "bet_side": "NO",
+      "entry_date": "2026-04-03 12:42",
+      "entry_price": 0.2005,
+      "size_usd": 50,
+      "shares": 248.1296758104738,
+      "cluster": "other",
+      "expected_close": "2026-04-15",
       "status": "open",
       "resolution": null,
       "close_date": null,
@@ -1123,8 +1141,8 @@
     }
   ],
   "created_at": "2026-02-08T22:16:55.329124",
-  "last_updated": "2026-04-03T06:59:37.047415",
-  "total_trades": 36,
+  "last_updated": "2026-04-03T12:42:23.331437",
+  "total_trades": 37,
   "wins": 14,
   "losses": 12,
   "total_pnl": 195.74112777095186
