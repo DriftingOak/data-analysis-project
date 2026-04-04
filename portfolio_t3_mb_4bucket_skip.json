@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 968.679329735949,
+  "bankroll_current": 963.679329735949,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -54,8 +54,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.685,
-      "price_yes_current": 0.315
+      "current_price": 0.6699999999999999,
+      "price_yes_current": 0.33
     },
     {
       "market_id": "1277912",
@@ -162,8 +162,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.63,
-      "price_yes_current": 0.37
+      "current_price": 0.635,
+      "price_yes_current": 0.365
     },
     {
       "market_id": "994858",
@@ -504,8 +504,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.46499999999999997,
-      "price_yes_current": 0.535
+      "current_price": 0.485,
+      "price_yes_current": 0.515
     },
     {
       "market_id": "1277634",
@@ -630,8 +630,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.345,
-      "price_yes_current": 0.655
+      "current_price": 0.33499999999999996,
+      "price_yes_current": 0.665
     },
     {
       "market_id": "540843",
@@ -648,8 +648,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.515,
-      "price_yes_current": 0.485
+      "current_price": 0.505,
+      "price_yes_current": 0.495
     },
     {
       "market_id": "540816",
@@ -666,8 +666,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.48,
-      "price_yes_current": 0.52
+      "current_price": 0.46499999999999997,
+      "price_yes_current": 0.535
     },
     {
       "market_id": "984442",
@@ -720,8 +720,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.735,
-      "price_yes_current": 0.265
+      "current_price": 0.725,
+      "price_yes_current": 0.275
     },
     {
       "market_id": "791703",
@@ -972,8 +972,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.89,
-      "price_yes_current": 0.11
+      "current_price": 0.885,
+      "price_yes_current": 0.115
     },
     {
       "market_id": "1280181",
@@ -1314,8 +1314,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.77,
-      "price_yes_current": 0.23
+      "current_price": 0.735,
+      "price_yes_current": 0.265
     },
     {
       "market_id": "1277642",
@@ -1476,8 +1476,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.894,
-      "price_yes_current": 0.106
+      "current_price": 0.8945,
+      "price_yes_current": 0.1055
     },
     {
       "market_id": "1385681",
@@ -1620,8 +1620,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.88,
-      "price_yes_current": 0.12
+      "current_price": 0.885,
+      "price_yes_current": 0.115
     },
     {
       "market_id": "1277955",
@@ -1656,8 +1656,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.575,
-      "price_yes_current": 0.425
+      "current_price": 0.5800000000000001,
+      "price_yes_current": 0.42
     },
     {
       "market_id": "1397290",
@@ -1674,8 +1674,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.835,
-      "price_yes_current": 0.165
+      "current_price": 0.88,
+      "price_yes_current": 0.12
     },
     {
       "market_id": "1397291",
@@ -1692,8 +1692,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.4,
-      "price_yes_current": 0.6
+      "current_price": 0.43999999999999995,
+      "price_yes_current": 0.56
     },
     {
       "market_id": "1397296",
@@ -1890,8 +1890,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.49,
-      "price_yes_current": 0.51
+      "current_price": 0.505,
+      "price_yes_current": 0.495
     },
     {
       "market_id": "1121887",
@@ -1908,8 +1908,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.235,
-      "price_yes_current": 0.765
+      "current_price": 0.20499999999999996,
+      "price_yes_current": 0.795
     },
     {
       "market_id": "1427956",
@@ -2448,8 +2448,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.725,
-      "price_yes_current": 0.275
+      "current_price": 0.72,
+      "price_yes_current": 0.28
     },
     {
       "market_id": "1437335",
@@ -2610,8 +2610,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.006000000000000005,
-      "price_yes_current": 0.994
+      "current_price": 0.0050000000000000044,
+      "price_yes_current": 0.995
     },
     {
       "market_id": "1466799",
@@ -2718,8 +2718,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.7845,
-      "price_yes_current": 0.2155
+      "current_price": 0.8029999999999999,
+      "price_yes_current": 0.197
     },
     {
       "market_id": "1467378",
@@ -2754,8 +2754,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.79,
-      "price_yes_current": 0.21
+      "current_price": 0.815,
+      "price_yes_current": 0.185
     },
     {
       "market_id": "1116062",
@@ -2790,8 +2790,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.997,
-      "price_yes_current": 0.003
+      "current_price": 0.9975,
+      "price_yes_current": 0.0025
     },
     {
       "market_id": "1466801",
@@ -2862,8 +2862,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.895,
-      "price_yes_current": 0.105
+      "current_price": 0.8,
+      "price_yes_current": 0.2
     },
     {
       "market_id": "1090496",
@@ -2898,8 +2898,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.5700000000000001,
-      "price_yes_current": 0.43
+      "current_price": 0.565,
+      "price_yes_current": 0.435
     },
     {
       "market_id": "1107582",
@@ -3132,8 +3132,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.969,
-      "price_yes_current": 0.031
+      "current_price": 0.9745,
+      "price_yes_current": 0.0255
     },
     {
       "market_id": "1567769",
@@ -3150,8 +3150,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.31499999999999995,
-      "price_yes_current": 0.685
+      "current_price": 0.33499999999999996,
+      "price_yes_current": 0.665
     },
     {
       "market_id": "1542472",
@@ -3186,8 +3186,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.86,
-      "price_yes_current": 0.14
+      "current_price": 0.875,
+      "price_yes_current": 0.125
     },
     {
       "market_id": "1571259",
@@ -3222,8 +3222,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.84,
-      "price_yes_current": 0.16
+      "current_price": 0.86,
+      "price_yes_current": 0.14
     },
     {
       "market_id": "1609452",
@@ -3276,8 +3276,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.41500000000000004,
-      "price_yes_current": 0.585
+      "current_price": 0.355,
+      "price_yes_current": 0.645
     },
     {
       "market_id": "1673130",
@@ -3416,12 +3416,12 @@
       "shares": 9.476190476190474,
       "cluster": "other",
       "expected_close": "2026-04-15",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.0004999999999999449,
-      "price_yes_current": 0.9995
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-04 18:30",
+      "pnl": -5.0,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "1696313",
@@ -3438,8 +3438,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.685,
-      "price_yes_current": 0.315
+      "current_price": 0.655,
+      "price_yes_current": 0.345
     },
     {
       "market_id": "1706305",
@@ -3456,8 +3456,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.825,
-      "price_yes_current": 0.175
+      "current_price": 0.785,
+      "price_yes_current": 0.215
     },
     {
       "market_id": "1692997",
@@ -3528,8 +3528,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.92,
-      "price_yes_current": 0.08
+      "current_price": 0.915,
+      "price_yes_current": 0.085
     },
     {
       "market_id": "1796268",
@@ -3564,8 +3564,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.615,
-      "price_yes_current": 0.385
+      "current_price": 0.5900000000000001,
+      "price_yes_current": 0.41
     },
     {
       "market_id": "1706303",
@@ -3582,8 +3582,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.675,
-      "price_yes_current": 0.325
+      "current_price": 0.5349999999999999,
+      "price_yes_current": 0.465
     },
     {
       "market_id": "1693003",
@@ -3600,8 +3600,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.73,
-      "price_yes_current": 0.27
+      "current_price": 0.725,
+      "price_yes_current": 0.275
     },
     {
       "market_id": "1812086",
@@ -3618,8 +3618,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.615,
-      "price_yes_current": 0.385
+      "current_price": 0.625,
+      "price_yes_current": 0.375
     },
     {
       "market_id": "1812085",
@@ -3654,8 +3654,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": null,
-      "price_yes_current": null
+      "current_price": 0.675,
+      "price_yes_current": 0.325
     },
     {
       "market_id": "1693002",
@@ -3672,8 +3672,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": null,
-      "price_yes_current": null
+      "current_price": 0.675,
+      "price_yes_current": 0.325
     },
     {
       "market_id": "1641496",
@@ -3686,6 +3686,240 @@
       "shares": 29.264705882352942,
       "cluster": "mideast",
       "expected_close": "2026-05-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": 0.31499999999999995,
+      "price_yes_current": 0.685
+    },
+    {
+      "market_id": "1831658",
+      "question": "Pakistan Super League: Karachi Kings vs Peshawar Zalmi",
+      "token_id": "75813304992052159685709491011360258045404447101870057007272891113457147640331",
+      "bet_side": "NO",
+      "entry_date": "2026-04-04 18:30",
+      "entry_price": 0.495,
+      "size_usd": 5.0,
+      "shares": 10.05050505050505,
+      "cluster": "other",
+      "expected_close": "2026-04-16",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1831660",
+      "question": "Pakistan Super League: Karachi Kings vs Peshawar Zalmi - Completed match?",
+      "token_id": "103158419317236918837281260817728992599037846262543717328341527303465029390209",
+      "bet_side": "NO",
+      "entry_date": "2026-04-04 18:30",
+      "entry_price": 0.5,
+      "size_usd": 5.0,
+      "shares": 9.95,
+      "cluster": "other",
+      "expected_close": "2026-04-16",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1831661",
+      "question": "Pakistan Super League: Karachi Kings vs Peshawar Zalmi - Toss Match Double Karachi Kings Winner",
+      "token_id": "75175467308913111118750958792709117193626567586411972217553108640984433158544",
+      "bet_side": "NO",
+      "entry_date": "2026-04-04 18:30",
+      "entry_price": 0.51,
+      "size_usd": 5.0,
+      "shares": 9.754901960784313,
+      "cluster": "other",
+      "expected_close": "2026-04-16",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1831662",
+      "question": "Pakistan Super League: Karachi Kings vs Peshawar Zalmi - Toss Match Double Draw",
+      "token_id": "97807737085829109087513851569086474922954378230779057149927864798309103844105",
+      "bet_side": "NO",
+      "entry_date": "2026-04-04 18:30",
+      "entry_price": 0.52,
+      "size_usd": 5.0,
+      "shares": 9.567307692307692,
+      "cluster": "other",
+      "expected_close": "2026-04-16",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1831663",
+      "question": "Pakistan Super League: Karachi Kings vs Peshawar Zalmi - Toss Match Double Peshawar Zalmi Winner",
+      "token_id": "90727954243864191259811401627934240638482605416555276566202540247625478389424",
+      "bet_side": "NO",
+      "entry_date": "2026-04-04 18:30",
+      "entry_price": 0.515,
+      "size_usd": 5.0,
+      "shares": 9.660194174757281,
+      "cluster": "other",
+      "expected_close": "2026-04-16",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1831664",
+      "question": "Pakistan Super League: Karachi Kings vs Peshawar Zalmi - Most Sixes Karachi Kings Winner",
+      "token_id": "72255590359529202805615901670146927439399519698365164842745704196919840773393",
+      "bet_side": "NO",
+      "entry_date": "2026-04-04 18:30",
+      "entry_price": 0.485,
+      "size_usd": 5.0,
+      "shares": 10.257731958762886,
+      "cluster": "other",
+      "expected_close": "2026-04-16",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1831665",
+      "question": "Pakistan Super League: Karachi Kings vs Peshawar Zalmi - Most Sixes Draw",
+      "token_id": "8008372952264363682146103987987870264111890562033973836251688173243014830794",
+      "bet_side": "NO",
+      "entry_date": "2026-04-04 18:30",
+      "entry_price": 0.51,
+      "size_usd": 5.0,
+      "shares": 9.754901960784313,
+      "cluster": "other",
+      "expected_close": "2026-04-16",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1831666",
+      "question": "Pakistan Super League: Karachi Kings vs Peshawar Zalmi - Most Sixes Peshawar Zalmi Winner",
+      "token_id": "33445333292883042731646546803291103727038640054709617218487136754257553327368",
+      "bet_side": "NO",
+      "entry_date": "2026-04-04 18:30",
+      "entry_price": 0.53,
+      "size_usd": 5.0,
+      "shares": 9.386792452830187,
+      "cluster": "other",
+      "expected_close": "2026-04-16",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1831667",
+      "question": "Pakistan Super League: Karachi Kings vs Peshawar Zalmi - Team Top Batter Karachi Kings Winner",
+      "token_id": "75331600799241330775336866217536494541495443879605547302811507921425980941282",
+      "bet_side": "NO",
+      "entry_date": "2026-04-04 18:30",
+      "entry_price": 0.49,
+      "size_usd": 5.0,
+      "shares": 10.153061224489795,
+      "cluster": "other",
+      "expected_close": "2026-04-16",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1831668",
+      "question": "Pakistan Super League: Karachi Kings vs Peshawar Zalmi - Team Top Batter Draw",
+      "token_id": "31341611757164591449558257048825872582094020574430354811589931663822663104276",
+      "bet_side": "NO",
+      "entry_date": "2026-04-04 18:30",
+      "entry_price": 0.505,
+      "size_usd": 5.0,
+      "shares": 9.85148514851485,
+      "cluster": "other",
+      "expected_close": "2026-04-16",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1831669",
+      "question": "Pakistan Super League: Karachi Kings vs Peshawar Zalmi - Team Top Batter Peshawar Zalmi Winner",
+      "token_id": "65230606570491764079401024970191680588781393895176016997562737487248828518452",
+      "bet_side": "NO",
+      "entry_date": "2026-04-04 18:30",
+      "entry_price": 0.49,
+      "size_usd": 5.0,
+      "shares": 10.153061224489795,
+      "cluster": "other",
+      "expected_close": "2026-04-16",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1831659",
+      "question": "Pakistan Super League: Karachi Kings vs Peshawar Zalmi - Who wins the toss?",
+      "token_id": "6536314257051639814745273685738135637329489165519222706917926392966145789040",
+      "bet_side": "NO",
+      "entry_date": "2026-04-04 18:30",
+      "entry_price": 0.5,
+      "size_usd": 5.0,
+      "shares": 9.95,
+      "cluster": "other",
+      "expected_close": "2026-04-16",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1692995",
+      "question": "Will Iran strike Abqaiq oil processing facility by April 30?",
+      "token_id": "86911913200702666698427027762693196854279455110847177385669372545236833572384",
+      "bet_side": "NO",
+      "entry_date": "2026-04-04 18:30",
+      "entry_price": 0.6950000000000001,
+      "size_usd": 10.0,
+      "shares": 14.316546762589926,
+      "cluster": "mideast",
+      "expected_close": "2026-04-30",
       "status": "open",
       "resolution": null,
       "close_date": null,
@@ -6160,12 +6394,30 @@
       "pnl": -5.0,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1746821",
+      "question": "Will Big AI be out as #1 Free App in the US Apple Store by April 7?",
+      "token_id": "85057672580450763252068319361315591988966516459472447823571676503243781851420",
+      "bet_side": "NO",
+      "entry_date": "2026-04-01 01:46",
+      "entry_price": 0.525,
+      "size_usd": 5.0,
+      "shares": 9.476190476190474,
+      "cluster": "other",
+      "expected_close": "2026-04-15",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-04 18:30",
+      "pnl": -5.0,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329081",
-  "last_updated": "2026-04-04T12:35:09.098321",
-  "total_trades": 205,
+  "last_updated": "2026-04-04T18:30:50.390156",
+  "total_trades": 218,
   "wins": 70,
-  "losses": 67,
-  "total_pnl": -31.320670264051003
+  "losses": 68,
+  "total_pnl": -36.320670264051
 }

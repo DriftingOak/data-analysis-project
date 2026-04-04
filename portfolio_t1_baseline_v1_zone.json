@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 842.3038697872288,
+  "bankroll_current": 817.3038697872288,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -54,8 +54,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.48,
-      "price_yes_current": 0.52
+      "current_price": 0.46499999999999997,
+      "price_yes_current": 0.535
     },
     {
       "market_id": "1117222",
@@ -72,8 +72,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.46499999999999997,
-      "price_yes_current": 0.535
+      "current_price": 0.485,
+      "price_yes_current": 0.515
     },
     {
       "market_id": "1301486",
@@ -198,8 +198,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.515,
-      "price_yes_current": 0.485
+      "current_price": 0.505,
+      "price_yes_current": 0.495
     },
     {
       "market_id": "984442",
@@ -234,8 +234,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.235,
-      "price_yes_current": 0.765
+      "current_price": 0.20499999999999996,
+      "price_yes_current": 0.795
     },
     {
       "market_id": "1277912",
@@ -288,8 +288,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.685,
-      "price_yes_current": 0.315
+      "current_price": 0.6699999999999999,
+      "price_yes_current": 0.33
     },
     {
       "market_id": "1345278",
@@ -360,8 +360,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.63,
-      "price_yes_current": 0.37
+      "current_price": 0.635,
+      "price_yes_current": 0.365
     },
     {
       "market_id": "958427",
@@ -522,8 +522,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.735,
-      "price_yes_current": 0.265
+      "current_price": 0.725,
+      "price_yes_current": 0.275
     },
     {
       "market_id": "825457",
@@ -594,8 +594,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.725,
-      "price_yes_current": 0.275
+      "current_price": 0.72,
+      "price_yes_current": 0.28
     },
     {
       "market_id": "665224",
@@ -810,8 +810,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.575,
-      "price_yes_current": 0.425
+      "current_price": 0.5800000000000001,
+      "price_yes_current": 0.42
     },
     {
       "market_id": "1397296",
@@ -936,8 +936,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.135,
-      "price_yes_current": 0.865
+      "current_price": 0.13,
+      "price_yes_current": 0.87
     },
     {
       "market_id": "1696313",
@@ -954,8 +954,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.685,
-      "price_yes_current": 0.315
+      "current_price": 0.655,
+      "price_yes_current": 0.345
     },
     {
       "market_id": "1704688",
@@ -1008,8 +1008,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.895,
-      "price_yes_current": 0.105
+      "current_price": 0.8,
+      "price_yes_current": 0.2
     },
     {
       "market_id": "1746821",
@@ -1022,12 +1022,12 @@
       "shares": 46.93396226415094,
       "cluster": "other",
       "expected_close": "2026-04-15",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.0004999999999999449,
-      "price_yes_current": 0.9995
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-04 18:30",
+      "pnl": -25,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "1439093",
@@ -1062,8 +1062,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.608,
-      "price_yes_current": 0.392
+      "current_price": 0.609,
+      "price_yes_current": 0.391
     }
   ],
   "closed_trades": [
@@ -1588,12 +1588,30 @@
       "pnl": -25,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1746821",
+      "question": "Will Big AI be out as #1 Free App in the US Apple Store by April 7?",
+      "token_id": "85057672580450763252068319361315591988966516459472447823571676503243781851420",
+      "bet_side": "NO",
+      "entry_date": "2026-04-01 07:10",
+      "entry_price": 0.53,
+      "size_usd": 25,
+      "shares": 46.93396226415094,
+      "cluster": "other",
+      "expected_close": "2026-04-15",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-04 18:30",
+      "pnl": -25,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.328980",
-  "last_updated": "2026-04-04T12:35:08.798891",
+  "last_updated": "2026-04-04T18:30:50.327818",
   "total_trades": 59,
   "wins": 11,
-  "losses": 18,
-  "total_pnl": -157.69613021277118
+  "losses": 19,
+  "total_pnl": -182.69613021277118
 }

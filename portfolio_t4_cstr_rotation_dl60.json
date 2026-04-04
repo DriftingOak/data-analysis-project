@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 500,
-  "bankroll_current": 645.7411277709518,
+  "bankroll_current": 545.7411277709518,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -342,8 +342,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.685,
-      "price_yes_current": 0.315
+      "current_price": 0.6699999999999999,
+      "price_yes_current": 0.33
     },
     {
       "market_id": "1403723",
@@ -450,8 +450,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.006000000000000005,
-      "price_yes_current": 0.994
+      "current_price": 0.0050000000000000044,
+      "price_yes_current": 0.995
     },
     {
       "market_id": "1466801",
@@ -504,8 +504,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.49,
-      "price_yes_current": 0.51
+      "current_price": 0.505,
+      "price_yes_current": 0.495
     },
     {
       "market_id": "1559953",
@@ -576,8 +576,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.685,
-      "price_yes_current": 0.315
+      "current_price": 0.655,
+      "price_yes_current": 0.345
     },
     {
       "market_id": "1567769",
@@ -594,8 +594,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.31499999999999995,
-      "price_yes_current": 0.685
+      "current_price": 0.33499999999999996,
+      "price_yes_current": 0.665
     },
     {
       "market_id": "1746821",
@@ -608,12 +608,12 @@
       "shares": 129.2207792207792,
       "cluster": "other",
       "expected_close": "2026-04-15",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.0004999999999999449,
-      "price_yes_current": 0.9995
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-04 18:30",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "1706220",
@@ -648,8 +648,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.41500000000000004,
-      "price_yes_current": 0.585
+      "current_price": 0.355,
+      "price_yes_current": 0.645
     },
     {
       "market_id": "1746822",
@@ -662,12 +662,30 @@
       "shares": 248.1296758104738,
       "cluster": "other",
       "expected_close": "2026-04-15",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-04 18:30",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1831664",
+      "question": "Pakistan Super League: Karachi Kings vs Peshawar Zalmi - Most Sixes Karachi Kings Winner",
+      "token_id": "72255590359529202805615901670146927439399519698365164842745704196919840773393",
+      "bet_side": "NO",
+      "entry_date": "2026-04-04 18:30",
+      "entry_price": 0.485,
+      "size_usd": 50,
+      "shares": 102.57731958762886,
+      "cluster": "other",
+      "expected_close": "2026-04-16",
       "status": "open",
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.0004999999999999449,
-      "price_yes_current": 0.9995
+      "current_price": null,
+      "price_yes_current": null
     }
   ],
   "closed_trades": [
@@ -1156,12 +1174,48 @@
       "pnl": -50,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1746821",
+      "question": "Will Big AI be out as #1 Free App in the US Apple Store by April 7?",
+      "token_id": "85057672580450763252068319361315591988966516459472447823571676503243781851420",
+      "bet_side": "NO",
+      "entry_date": "2026-04-01 12:57",
+      "entry_price": 0.385,
+      "size_usd": 50,
+      "shares": 129.2207792207792,
+      "cluster": "other",
+      "expected_close": "2026-04-15",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-04 18:30",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1746822",
+      "question": "Will Big AI be out as #1 Free App in the US Apple Store by April 15?",
+      "token_id": "108001441680945496591705108448255343937182665957370146311734753045982994684030",
+      "bet_side": "NO",
+      "entry_date": "2026-04-03 12:42",
+      "entry_price": 0.2005,
+      "size_usd": 50,
+      "shares": 248.1296758104738,
+      "cluster": "other",
+      "expected_close": "2026-04-15",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-04 18:30",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329124",
-  "last_updated": "2026-04-04T12:35:09.122861",
-  "total_trades": 37,
+  "last_updated": "2026-04-04T18:30:50.415373",
+  "total_trades": 38,
   "wins": 14,
-  "losses": 13,
-  "total_pnl": 145.74112777095186
+  "losses": 15,
+  "total_pnl": 45.74112777095186
 }
