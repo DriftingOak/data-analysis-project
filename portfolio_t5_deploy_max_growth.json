@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 713.8132516159152,
+  "bankroll_current": 738.7843736014258,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -36,8 +36,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.71,
-      "price_yes_current": 0.29
+      "current_price": 0.69,
+      "price_yes_current": 0.31
     },
     {
       "market_id": "1277912",
@@ -554,12 +554,12 @@
       "shares": 72.62773722627736,
       "cluster": "africa",
       "expected_close": "2026-04-04",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9995,
-      "price_yes_current": 0.0005
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-04-05 12:38",
+      "pnl": 22.62773722627736,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1439534",
@@ -572,12 +572,12 @@
       "shares": 80.24193548387098,
       "cluster": "africa",
       "expected_close": "2026-04-04",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9995,
-      "price_yes_current": 0.0005
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-04-05 12:38",
+      "pnl": 30.241935483870975,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1437630",
@@ -662,12 +662,12 @@
       "shares": 77.734375,
       "cluster": "africa",
       "expected_close": "2026-04-04",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.0004999999999999449,
-      "price_yes_current": 0.9995
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-05 12:38",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "1439532",
@@ -680,12 +680,12 @@
       "shares": 72.10144927536233,
       "cluster": "africa",
       "expected_close": "2026-04-04",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9995,
-      "price_yes_current": 0.0005
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-04-05 12:38",
+      "pnl": 22.101449275362327,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "825457",
@@ -738,8 +738,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.925,
-      "price_yes_current": 0.075
+      "current_price": 0.92,
+      "price_yes_current": 0.08
     },
     {
       "market_id": "1641497",
@@ -756,8 +756,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.275,
-      "price_yes_current": 0.725
+      "current_price": 0.30500000000000005,
+      "price_yes_current": 0.695
     },
     {
       "market_id": "1706301",
@@ -828,8 +828,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.78,
-      "price_yes_current": 0.22
+      "current_price": 0.79,
+      "price_yes_current": 0.21
     },
     {
       "market_id": "1570409",
@@ -846,8 +846,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.88,
-      "price_yes_current": 0.12
+      "current_price": 0.875,
+      "price_yes_current": 0.125
     },
     {
       "market_id": "1746839",
@@ -866,6 +866,60 @@
       "pnl": -50,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1831658",
+      "question": "Pakistan Super League: Karachi Kings vs Peshawar Zalmi",
+      "token_id": "75813304992052159685709491011360258045404447101870057007272891113457147640331",
+      "bet_side": "NO",
+      "entry_date": "2026-04-05 12:38",
+      "entry_price": 0.495,
+      "size_usd": 50,
+      "shares": 100.5050505050505,
+      "cluster": "other",
+      "expected_close": "2026-04-16",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1831660",
+      "question": "Pakistan Super League: Karachi Kings vs Peshawar Zalmi - Completed match?",
+      "token_id": "103158419317236918837281260817728992599037846262543717328341527303465029390209",
+      "bet_side": "NO",
+      "entry_date": "2026-04-05 12:38",
+      "entry_price": 0.5,
+      "size_usd": 50,
+      "shares": 99.5,
+      "cluster": "other",
+      "expected_close": "2026-04-16",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1567769",
+      "question": "Will Russia capture all of Huliaipole by April 30?",
+      "token_id": "59774031698944005679982593084080702502127100005721262350107625870689422251269",
+      "bet_side": "NO",
+      "entry_date": "2026-04-05 12:38",
+      "entry_price": 0.31999999999999995,
+      "size_usd": 50,
+      "shares": 155.46875000000003,
+      "cluster": "ukraine",
+      "expected_close": "2026-04-30",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
     }
   ],
   "closed_trades": [
@@ -1516,12 +1570,84 @@
       "pnl": -50,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1439533",
+      "question": "Will there be between 14 and 17 US strikes on Somalia in March 2026?",
+      "token_id": "75105144622749338475171575857194569904374030292328688557430718885543333641388",
+      "bet_side": "NO",
+      "entry_date": "2026-03-01 01:22",
+      "entry_price": 0.685,
+      "size_usd": 50,
+      "shares": 72.62773722627736,
+      "cluster": "africa",
+      "expected_close": "2026-04-04",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-04-05 12:38",
+      "pnl": 22.62773722627736,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
+    },
+    {
+      "market_id": "1439534",
+      "question": "Will there be between 18 and 21 US strikes on Somalia in March 2026?",
+      "token_id": "97431299716197891190819618721394288936872091414424642695045493636064674518975",
+      "bet_side": "NO",
+      "entry_date": "2026-03-01 01:22",
+      "entry_price": 0.62,
+      "size_usd": 50,
+      "shares": 80.24193548387098,
+      "cluster": "africa",
+      "expected_close": "2026-04-04",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-04-05 12:38",
+      "pnl": 30.241935483870975,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
+    },
+    {
+      "market_id": "1439531",
+      "question": "Will there be between 6 and 9 US strikes on Somalia in March 2026?",
+      "token_id": "51279107919314877735949530824907087840652289154188117876191429611746509949493",
+      "bet_side": "NO",
+      "entry_date": "2026-03-05 06:39",
+      "entry_price": 0.64,
+      "size_usd": 50,
+      "shares": 77.734375,
+      "cluster": "africa",
+      "expected_close": "2026-04-04",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-05 12:38",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1439532",
+      "question": "Will there be between 10 and 13 US strikes on Somalia in March 2026?",
+      "token_id": "3942640373886294957068966654231554313382656021458185713011634692337467217907",
+      "bet_side": "NO",
+      "entry_date": "2026-03-05 06:39",
+      "entry_price": 0.69,
+      "size_usd": 50,
+      "shares": 72.10144927536233,
+      "cluster": "africa",
+      "expected_close": "2026-04-04",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-04-05 12:38",
+      "pnl": 22.101449275362327,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329192",
-  "last_updated": "2026-04-05T06:57:06.658239",
-  "total_trades": 48,
-  "wins": 17,
-  "losses": 19,
-  "total_pnl": -286.1867483840848
+  "last_updated": "2026-04-05T12:38:20.339627",
+  "total_trades": 51,
+  "wins": 20,
+  "losses": 20,
+  "total_pnl": -261.21562639857416
 }
