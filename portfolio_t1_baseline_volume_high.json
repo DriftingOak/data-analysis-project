@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 847.1321746985036,
+  "bankroll_current": 797.1321746985036,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -54,8 +54,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.48,
-      "price_yes_current": 0.52
+      "current_price": 0.475,
+      "price_yes_current": 0.525
     },
     {
       "market_id": "565065",
@@ -288,8 +288,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.645,
-      "price_yes_current": 0.355
+      "current_price": 0.71,
+      "price_yes_current": 0.29
     },
     {
       "market_id": "661699",
@@ -342,8 +342,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.41500000000000004,
-      "price_yes_current": 0.585
+      "current_price": 0.42000000000000004,
+      "price_yes_current": 0.58
     },
     {
       "market_id": "677397",
@@ -432,8 +432,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.565,
-      "price_yes_current": 0.435
+      "current_price": 0.575,
+      "price_yes_current": 0.425
     },
     {
       "market_id": "1467378",
@@ -468,8 +468,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.0040000000000000036,
-      "price_yes_current": 0.996
+      "current_price": 0.0010000000000000009,
+      "price_yes_current": 0.999
     },
     {
       "market_id": "1484895",
@@ -482,12 +482,12 @@
       "shares": 77.73437500000001,
       "cluster": "mideast",
       "expected_close": "2026-05-31",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.0034999999999999476,
-      "price_yes_current": 0.9965
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-08 07:08",
+      "pnl": -25,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "1107582",
@@ -504,8 +504,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.65,
-      "price_yes_current": 0.35
+      "current_price": 0.625,
+      "price_yes_current": 0.375
     },
     {
       "market_id": "1471457",
@@ -540,8 +540,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.6699999999999999,
-      "price_yes_current": 0.33
+      "current_price": 0.675,
+      "price_yes_current": 0.325
     },
     {
       "market_id": "682705",
@@ -558,8 +558,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.5449999999999999,
-      "price_yes_current": 0.455
+      "current_price": 0.5900000000000001,
+      "price_yes_current": 0.41
     },
     {
       "market_id": "1535973",
@@ -576,8 +576,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.565,
-      "price_yes_current": 0.435
+      "current_price": 0.605,
+      "price_yes_current": 0.395
     },
     {
       "market_id": "1107878",
@@ -594,8 +594,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.8049999999999999,
-      "price_yes_current": 0.195
+      "current_price": 0.8,
+      "price_yes_current": 0.2
     },
     {
       "market_id": "1439530",
@@ -626,12 +626,12 @@
       "shares": 88.83928571428571,
       "cluster": "mideast",
       "expected_close": "2026-12-31",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.0034999999999999476,
-      "price_yes_current": 0.9965
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-08 07:08",
+      "pnl": -25,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "665374",
@@ -648,8 +648,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.755,
-      "price_yes_current": 0.245
+      "current_price": 0.745,
+      "price_yes_current": 0.255
     },
     {
       "market_id": "677366",
@@ -666,8 +666,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": null,
-      "price_yes_current": null
+      "current_price": 0.19999999999999996,
+      "price_yes_current": 0.8
     }
   ],
   "closed_trades": [
@@ -1030,12 +1030,48 @@
       "pnl": 26.288659793814432,
       "current_price": 1.0,
       "price_yes_current": 0.0
+    },
+    {
+      "market_id": "1484895",
+      "question": "US x Iran ceasefire by June 30?",
+      "token_id": "11578806222441353507719115176638735578970248989819859302635595162497755626384",
+      "bet_side": "NO",
+      "entry_date": "2026-03-07 18:22",
+      "entry_price": 0.31999999999999995,
+      "size_usd": 25,
+      "shares": 77.73437500000001,
+      "cluster": "mideast",
+      "expected_close": "2026-05-31",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-08 07:08",
+      "pnl": -25,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1571566",
+      "question": "US x Iran ceasefire by December 31?",
+      "token_id": "56747118227334252583511882180251579619525123181561585731533380533045271258105",
+      "bet_side": "NO",
+      "entry_date": "2026-03-30 18:48",
+      "entry_price": 0.28,
+      "size_usd": 25,
+      "shares": 88.83928571428571,
+      "cluster": "mideast",
+      "expected_close": "2026-12-31",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-08 07:08",
+      "pnl": -25,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.328996",
-  "last_updated": "2026-04-08T01:27:26.063295",
+  "last_updated": "2026-04-08T07:08:44.550329",
   "total_trades": 37,
   "wins": 5,
-  "losses": 15,
-  "total_pnl": -152.8678253014964
+  "losses": 17,
+  "total_pnl": -202.8678253014964
 }
