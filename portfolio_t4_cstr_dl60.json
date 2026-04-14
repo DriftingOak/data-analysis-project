@@ -360,8 +360,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.475,
-      "price_yes_current": 0.525
+      "current_price": 0.47,
+      "price_yes_current": 0.53
     },
     {
       "market_id": "1706305",
@@ -709,7 +709,7 @@
     }
   ],
   "created_at": "2026-02-08T22:16:55.329114",
-  "last_updated": "2026-04-13T19:04:34.305039",
+  "last_updated": "2026-04-14T01:46:15.160867",
   "total_trades": 22,
   "wins": 6,
   "losses": 11,

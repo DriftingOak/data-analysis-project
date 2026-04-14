@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 891.4988235249709,
+  "bankroll_current": 889.860168062786,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -36,8 +36,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.41500000000000004,
-      "price_yes_current": 0.585
+      "current_price": 0.405,
+      "price_yes_current": 0.595
     },
     {
       "market_id": "1336363",
@@ -252,8 +252,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.8,
-      "price_yes_current": 0.2
+      "current_price": 0.81,
+      "price_yes_current": 0.19
     },
     {
       "market_id": "791705",
@@ -306,8 +306,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.595,
-      "price_yes_current": 0.405
+      "current_price": 0.5349999999999999,
+      "price_yes_current": 0.465
     },
     {
       "market_id": "1397296",
@@ -666,8 +666,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.675,
-      "price_yes_current": 0.325
+      "current_price": 0.655,
+      "price_yes_current": 0.345
     },
     {
       "market_id": "1577370",
@@ -1026,8 +1026,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.20999999999999996,
-      "price_yes_current": 0.79
+      "current_price": 0.21499999999999997,
+      "price_yes_current": 0.785
     },
     {
       "market_id": "1812086",
@@ -1058,12 +1058,12 @@
       "shares": 8.361344537815127,
       "cluster": "other",
       "expected_close": "2026-04-20",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.0004999999999999449,
-      "price_yes_current": 0.9995
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-04-14 01:46",
+      "pnl": 3.3613445378151265,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "1919538",
@@ -1094,12 +1094,12 @@
       "shares": 10.05050505050505,
       "cluster": "other",
       "expected_close": "2026-04-20",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.0004999999999999449,
-      "price_yes_current": 0.9995
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-14 01:46",
+      "pnl": -5.0,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "1919549",
@@ -1116,8 +1116,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.43000000000000005,
-      "price_yes_current": 0.57
+      "current_price": 0.44499999999999995,
+      "price_yes_current": 0.555
     },
     {
       "market_id": "1919550",
@@ -1134,8 +1134,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.495,
-      "price_yes_current": 0.505
+      "current_price": 0.5,
+      "price_yes_current": 0.5
     },
     {
       "market_id": "1919551",
@@ -1170,8 +1170,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.43000000000000005,
-      "price_yes_current": 0.57
+      "current_price": 0.0020000000000000018,
+      "price_yes_current": 0.998
     },
     {
       "market_id": "1930370",
@@ -1188,8 +1188,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.6950000000000001,
-      "price_yes_current": 0.305
+      "current_price": 0.635,
+      "price_yes_current": 0.365
     }
   ],
   "closed_trades": [
@@ -1912,12 +1912,48 @@
       "pnl": -5.0,
       "current_price": 1.0,
       "price_yes_current": 0.0
+    },
+    {
+      "market_id": "1919537",
+      "question": "Pakistan Super League: Peshawar Zalmi vs Multan Sultans",
+      "token_id": "29162816897239205516463858597668591176113622339553631720735117201981290306941",
+      "bet_side": "NO",
+      "entry_date": "2026-04-10 18:51",
+      "entry_price": 0.595,
+      "size_usd": 5.0,
+      "shares": 8.361344537815127,
+      "cluster": "other",
+      "expected_close": "2026-04-20",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-04-14 01:46",
+      "pnl": 3.3613445378151265,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1919539",
+      "question": "Pakistan Super League: Peshawar Zalmi vs Multan Sultans - Completed match?",
+      "token_id": "33784199571068128440698912595592125817369994616355279063078965851425815421242",
+      "bet_side": "NO",
+      "entry_date": "2026-04-10 18:51",
+      "entry_price": 0.495,
+      "size_usd": 5.0,
+      "shares": 10.05050505050505,
+      "cluster": "other",
+      "expected_close": "2026-04-20",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-14 01:46",
+      "pnl": -5.0,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329048",
-  "last_updated": "2026-04-13T19:04:34.245942",
+  "last_updated": "2026-04-14T01:46:15.097400",
   "total_trades": 66,
-  "wins": 14,
-  "losses": 26,
-  "total_pnl": -108.50117647502913
+  "wins": 15,
+  "losses": 27,
+  "total_pnl": -110.139831937214
 }
