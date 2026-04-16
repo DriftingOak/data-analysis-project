@@ -36,8 +36,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.38,
-      "price_yes_current": 0.62
+      "current_price": 0.675,
+      "price_yes_current": 0.325
     },
     {
       "market_id": "540816",
@@ -342,8 +342,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.30000000000000004,
-      "price_yes_current": 0.7
+      "current_price": 0.29500000000000004,
+      "price_yes_current": 0.705
     },
     {
       "market_id": "677397",
@@ -432,8 +432,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.615,
-      "price_yes_current": 0.385
+      "current_price": 0.625,
+      "price_yes_current": 0.375
     },
     {
       "market_id": "1467378",
@@ -504,8 +504,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.6,
-      "price_yes_current": 0.4
+      "current_price": 0.61,
+      "price_yes_current": 0.39
     },
     {
       "market_id": "1471457",
@@ -540,8 +540,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.69,
-      "price_yes_current": 0.31
+      "current_price": 0.685,
+      "price_yes_current": 0.315
     },
     {
       "market_id": "682705",
@@ -558,8 +558,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.56,
-      "price_yes_current": 0.44
+      "current_price": 0.565,
+      "price_yes_current": 0.435
     },
     {
       "market_id": "1535973",
@@ -576,8 +576,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.685,
-      "price_yes_current": 0.315
+      "current_price": 0.6950000000000001,
+      "price_yes_current": 0.305
     },
     {
       "market_id": "1107878",
@@ -648,8 +648,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.6950000000000001,
-      "price_yes_current": 0.305
+      "current_price": 0.685,
+      "price_yes_current": 0.315
     },
     {
       "market_id": "677366",
@@ -684,8 +684,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.26349999999999996,
-      "price_yes_current": 0.7365
+      "current_price": 0.32099999999999995,
+      "price_yes_current": 0.679
     },
     {
       "market_id": "1918791",
@@ -702,8 +702,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.275,
-      "price_yes_current": 0.725
+      "current_price": 0.29500000000000004,
+      "price_yes_current": 0.705
     },
     {
       "market_id": "957019",
@@ -738,8 +738,26 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.22950000000000004,
-      "price_yes_current": 0.7705
+      "current_price": 0.16649999999999998,
+      "price_yes_current": 0.8335
+    },
+    {
+      "market_id": "1105744",
+      "question": "Will Nicol\u00e1s Maduro be the leader of Venezuela end of 2026?",
+      "token_id": "21527446005162722668702146847806837944786417986794925592709069062391666573103",
+      "bet_side": "NO",
+      "entry_date": "2026-04-16 01:50",
+      "entry_price": 0.4485,
+      "size_usd": 25,
+      "shares": 55.46265328874024,
+      "cluster": "latam",
+      "expected_close": "2026-12-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
     }
   ],
   "closed_trades": [
@@ -1159,8 +1177,8 @@
     }
   ],
   "created_at": "2026-02-08T22:16:55.328996",
-  "last_updated": "2026-04-15T19:03:10.830784",
-  "total_trades": 41,
+  "last_updated": "2026-04-16T01:50:32.189537",
+  "total_trades": 42,
   "wins": 5,
   "losses": 18,
   "total_pnl": -227.8678253014964
