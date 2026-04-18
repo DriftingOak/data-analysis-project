@@ -36,8 +36,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.14500000000000002,
-      "price_yes_current": 0.855
+      "current_price": 0.15500000000000003,
+      "price_yes_current": 0.845
     },
     {
       "market_id": "1336363",
@@ -252,8 +252,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.61,
-      "price_yes_current": 0.39
+      "current_price": 0.62,
+      "price_yes_current": 0.38
     },
     {
       "market_id": "791705",
@@ -306,8 +306,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.255,
-      "price_yes_current": 0.745
+      "current_price": 0.21999999999999997,
+      "price_yes_current": 0.78
     },
     {
       "market_id": "1397296",
@@ -396,8 +396,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.905,
-      "price_yes_current": 0.095
+      "current_price": 0.9,
+      "price_yes_current": 0.1
     },
     {
       "market_id": "661699",
@@ -468,8 +468,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.645,
-      "price_yes_current": 0.355
+      "current_price": 0.6699999999999999,
+      "price_yes_current": 0.33
     },
     {
       "market_id": "1115288",
@@ -522,8 +522,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.55,
-      "price_yes_current": 0.45
+      "current_price": 0.5449999999999999,
+      "price_yes_current": 0.455
     },
     {
       "market_id": "677397",
@@ -900,8 +900,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.475,
-      "price_yes_current": 0.525
+      "current_price": 0.47,
+      "price_yes_current": 0.53
     },
     {
       "market_id": "1831658",
@@ -1026,8 +1026,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.255,
-      "price_yes_current": 0.745
+      "current_price": 0.25,
+      "price_yes_current": 0.75
     },
     {
       "market_id": "1812086",
@@ -1206,8 +1206,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.46499999999999997,
-      "price_yes_current": 0.535
+      "current_price": 0.43500000000000005,
+      "price_yes_current": 0.565
     },
     {
       "market_id": "1959801",
@@ -1260,8 +1260,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.7635000000000001,
-      "price_yes_current": 0.2365
+      "current_price": 0.754,
+      "price_yes_current": 0.246
     },
     {
       "market_id": "1969943",
@@ -1278,8 +1278,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.375,
-      "price_yes_current": 0.625
+      "current_price": 0.35,
+      "price_yes_current": 0.65
     },
     {
       "market_id": "1543487",
@@ -1296,8 +1296,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.376,
-      "price_yes_current": 0.624
+      "current_price": 0.42200000000000004,
+      "price_yes_current": 0.578
     },
     {
       "market_id": "1975749",
@@ -1314,8 +1314,98 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.48,
-      "price_yes_current": 0.52
+      "current_price": 0.46499999999999997,
+      "price_yes_current": 0.535
+    },
+    {
+      "market_id": "1992558",
+      "question": "Pakistan Super League: Karachi Kings vs Peshawar Zalmi - Who wins the toss?",
+      "token_id": "20352248248440180882713257019478029894207270917463843981070589283432355864370",
+      "bet_side": "NO",
+      "entry_date": "2026-04-18 01:25",
+      "entry_price": 0.485,
+      "size_usd": 5.0,
+      "shares": 10.257731958762886,
+      "cluster": "other",
+      "expected_close": "2026-04-29",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1992559",
+      "question": "Pakistan Super League: Karachi Kings vs Peshawar Zalmi - Completed match?",
+      "token_id": "49938836717110920625533809029365204531965112714272802309607280334568656902056",
+      "bet_side": "NO",
+      "entry_date": "2026-04-18 01:25",
+      "entry_price": 0.5,
+      "size_usd": 5.0,
+      "shares": 9.95,
+      "cluster": "other",
+      "expected_close": "2026-04-29",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1992569",
+      "question": "Pakistan Super League: Peshawar Zalmi vs Multan Sultans",
+      "token_id": "34610547318321690772393745532850820321836849722762780456461822641439763726819",
+      "bet_side": "NO",
+      "entry_date": "2026-04-18 01:25",
+      "entry_price": 0.5349999999999999,
+      "size_usd": 5.0,
+      "shares": 9.299065420560748,
+      "cluster": "other",
+      "expected_close": "2026-04-29",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1992571",
+      "question": "Pakistan Super League: Peshawar Zalmi vs Multan Sultans - Completed match?",
+      "token_id": "71424228541019420384032451794229772065272283703204786503207255192696809067620",
+      "bet_side": "NO",
+      "entry_date": "2026-04-18 01:25",
+      "entry_price": 0.49,
+      "size_usd": 5.0,
+      "shares": 10.153061224489795,
+      "cluster": "other",
+      "expected_close": "2026-04-29",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1992570",
+      "question": "Pakistan Super League: Peshawar Zalmi vs Multan Sultans - Who wins the toss?",
+      "token_id": "60317727881826636039744880258356373670443800491829795728531467384924231336306",
+      "bet_side": "NO",
+      "entry_date": "2026-04-18 01:25",
+      "entry_price": 0.5800000000000001,
+      "size_usd": 10.0,
+      "shares": 17.1551724137931,
+      "cluster": "other",
+      "expected_close": "2026-04-29",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
     }
   ],
   "closed_trades": [
@@ -2167,8 +2257,8 @@
     }
   ],
   "created_at": "2026-02-08T22:16:55.329048",
-  "last_updated": "2026-04-17T18:45:51.120710",
-  "total_trades": 73,
+  "last_updated": "2026-04-18T01:25:22.140539",
+  "total_trades": 78,
   "wins": 17,
   "losses": 30,
   "total_pnl": -120.13932688670894
