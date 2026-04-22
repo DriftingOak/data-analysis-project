@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 734.794958468251,
+  "bankroll_current": 786.8306212181994,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -702,8 +702,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.87,
-      "price_yes_current": 0.13
+      "current_price": 0.865,
+      "price_yes_current": 0.135
     },
     {
       "market_id": "1437281",
@@ -756,8 +756,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.903,
-      "price_yes_current": 0.097
+      "current_price": 0.9205,
+      "price_yes_current": 0.0795
     },
     {
       "market_id": "1706301",
@@ -774,8 +774,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9765,
-      "price_yes_current": 0.0235
+      "current_price": 0.986,
+      "price_yes_current": 0.014
     },
     {
       "market_id": "1746821",
@@ -846,8 +846,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.85,
-      "price_yes_current": 0.15
+      "current_price": 0.835,
+      "price_yes_current": 0.165
     },
     {
       "market_id": "1746839",
@@ -918,8 +918,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.795,
-      "price_yes_current": 0.205
+      "current_price": 0.765,
+      "price_yes_current": 0.235
     },
     {
       "market_id": "1455627",
@@ -936,8 +936,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.41500000000000004,
-      "price_yes_current": 0.585
+      "current_price": 0.405,
+      "price_yes_current": 0.595
     },
     {
       "market_id": "1831661",
@@ -1062,8 +1062,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.625,
-      "price_yes_current": 0.375
+      "current_price": 0.605,
+      "price_yes_current": 0.395
     },
     {
       "market_id": "1919550",
@@ -1166,12 +1166,12 @@
       "shares": 101.53061224489797,
       "cluster": "other",
       "expected_close": "2026-04-29",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.51,
-      "price_yes_current": 0.49
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-04-22 19:01",
+      "pnl": 51.530612244897966,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1992566",
@@ -1184,12 +1184,12 @@
       "shares": 100.5050505050505,
       "cluster": "other",
       "expected_close": "2026-04-29",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": null,
-      "price_yes_current": null
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-22 19:01",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "1992567",
@@ -1202,6 +1202,78 @@
       "shares": 100.5050505050505,
       "cluster": "other",
       "expected_close": "2026-04-29",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-04-22 19:01",
+      "pnl": 50.505050505050505,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
+    },
+    {
+      "market_id": "2015268",
+      "question": "Pakistan Super League: Lahore Qalandars vs Peshawar Zalmi",
+      "token_id": "78858691086832641670881565833805098463902880732267313968864214609652476098252",
+      "bet_side": "NO",
+      "entry_date": "2026-04-22 19:01",
+      "entry_price": 0.53,
+      "size_usd": 50,
+      "shares": 93.86792452830188,
+      "cluster": "other",
+      "expected_close": "2026-05-02",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "2015270",
+      "question": "Pakistan Super League: Lahore Qalandars vs Peshawar Zalmi - Completed match?",
+      "token_id": "112561592181748250083539805923640245626717726448479370841837651517187128660667",
+      "bet_side": "NO",
+      "entry_date": "2026-04-22 19:01",
+      "entry_price": 0.5,
+      "size_usd": 50,
+      "shares": 99.5,
+      "cluster": "other",
+      "expected_close": "2026-05-02",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "2015271",
+      "question": "Pakistan Super League: Lahore Qalandars vs Peshawar Zalmi - Toss Match Double Lahore Qalandars Winner",
+      "token_id": "59289262898540651288232983786112924985689636951023605605432402038572938193161",
+      "bet_side": "NO",
+      "entry_date": "2026-04-22 19:01",
+      "entry_price": 0.505,
+      "size_usd": 50,
+      "shares": 98.51485148514851,
+      "cluster": "other",
+      "expected_close": "2026-05-02",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1931455",
+      "question": "Will EDward Gaming win VCT 2026: China League Stage 1?",
+      "token_id": "29590681545697006035717806364535302381125748677118739004477469300250831692873",
+      "bet_side": "NO",
+      "entry_date": "2026-04-22 19:01",
+      "entry_price": 0.49,
+      "size_usd": 50,
+      "shares": 101.53061224489797,
+      "cluster": "china",
+      "expected_close": "2026-05-31",
       "status": "open",
       "resolution": null,
       "close_date": null,
@@ -2182,12 +2254,66 @@
       "pnl": 53.64583333333334,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1992560",
+      "question": "Pakistan Super League: Karachi Kings vs Peshawar Zalmi - Toss Match Double Karachi Kings Winner",
+      "token_id": "4515523925736294572550095720062837526734776655141964891402174144925481867538",
+      "bet_side": "NO",
+      "entry_date": "2026-04-19 18:36",
+      "entry_price": 0.49,
+      "size_usd": 50,
+      "shares": 101.53061224489797,
+      "cluster": "other",
+      "expected_close": "2026-04-29",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-04-22 19:01",
+      "pnl": 51.530612244897966,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
+    },
+    {
+      "market_id": "1992566",
+      "question": "Pakistan Super League: Karachi Kings vs Peshawar Zalmi - Team Top Batter Karachi Kings Winner",
+      "token_id": "10892625857512528745917781147618751756539294709767749624322146023872638987535",
+      "bet_side": "NO",
+      "entry_date": "2026-04-22 13:04",
+      "entry_price": 0.495,
+      "size_usd": 50,
+      "shares": 100.5050505050505,
+      "cluster": "other",
+      "expected_close": "2026-04-29",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-22 19:01",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1992567",
+      "question": "Pakistan Super League: Karachi Kings vs Peshawar Zalmi - Team Top Batter Draw",
+      "token_id": "10371926841337947180590200254621633755756129591992924126647080353373215946362",
+      "bet_side": "NO",
+      "entry_date": "2026-04-22 13:04",
+      "entry_price": 0.495,
+      "size_usd": 50,
+      "shares": 100.5050505050505,
+      "cluster": "other",
+      "expected_close": "2026-04-29",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-04-22 19:01",
+      "pnl": 50.505050505050505,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329192",
-  "last_updated": "2026-04-22T13:04:19.278604",
-  "total_trades": 67,
-  "wins": 27,
-  "losses": 27,
-  "total_pnl": -265.205041531749
+  "last_updated": "2026-04-22T19:01:28.615750",
+  "total_trades": 71,
+  "wins": 29,
+  "losses": 28,
+  "total_pnl": -213.1693787818005
 }

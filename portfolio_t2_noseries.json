@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 880.4245275210335,
+  "bankroll_current": 870.4245275210335,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -36,8 +36,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.32999999999999996,
-      "price_yes_current": 0.67
+      "current_price": 0.31999999999999995,
+      "price_yes_current": 0.68
     },
     {
       "market_id": "1336363",
@@ -252,8 +252,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.64,
-      "price_yes_current": 0.36
+      "current_price": 0.655,
+      "price_yes_current": 0.345
     },
     {
       "market_id": "791705",
@@ -306,8 +306,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.45999999999999996,
-      "price_yes_current": 0.54
+      "current_price": 0.46499999999999997,
+      "price_yes_current": 0.535
     },
     {
       "market_id": "1397296",
@@ -396,8 +396,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.855,
-      "price_yes_current": 0.145
+      "current_price": 0.875,
+      "price_yes_current": 0.125
     },
     {
       "market_id": "661699",
@@ -468,8 +468,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.71,
-      "price_yes_current": 0.29
+      "current_price": 0.7150000000000001,
+      "price_yes_current": 0.285
     },
     {
       "market_id": "1115288",
@@ -522,8 +522,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.595,
-      "price_yes_current": 0.405
+      "current_price": 0.585,
+      "price_yes_current": 0.415
     },
     {
       "market_id": "677397",
@@ -630,8 +630,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.675,
-      "price_yes_current": 0.325
+      "current_price": 0.7150000000000001,
+      "price_yes_current": 0.285
     },
     {
       "market_id": "1553380",
@@ -1026,8 +1026,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.33999999999999997,
-      "price_yes_current": 0.66
+      "current_price": 0.33499999999999996,
+      "price_yes_current": 0.665
     },
     {
       "market_id": "1812086",
@@ -1260,8 +1260,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.5045,
-      "price_yes_current": 0.4955
+      "current_price": 0.529,
+      "price_yes_current": 0.471
     },
     {
       "market_id": "1969943",
@@ -1296,8 +1296,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.8665,
-      "price_yes_current": 0.1335
+      "current_price": 0.8235,
+      "price_yes_current": 0.1765
     },
     {
       "market_id": "1975749",
@@ -1346,12 +1346,12 @@
       "shares": 9.95,
       "cluster": "other",
       "expected_close": "2026-04-29",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.0004999999999999449,
-      "price_yes_current": 0.9995
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-22 19:01",
+      "pnl": -5.0,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "1992569",
@@ -1418,12 +1418,12 @@
       "shares": 8.291666666666666,
       "cluster": "other",
       "expected_close": "2026-04-29",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9995,
-      "price_yes_current": 0.0005
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-22 19:01",
+      "pnl": -5.0,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "2007183",
@@ -1512,8 +1512,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.495,
-      "price_yes_current": 0.505
+      "current_price": 0.49,
+      "price_yes_current": 0.51
     },
     {
       "market_id": "2015270",
@@ -1530,8 +1530,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.505,
-      "price_yes_current": 0.495
+      "current_price": 0.5,
+      "price_yes_current": 0.5
     }
   ],
   "closed_trades": [
@@ -2488,12 +2488,48 @@
       "pnl": 5.257731958762886,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1992559",
+      "question": "Pakistan Super League: Karachi Kings vs Peshawar Zalmi - Completed match?",
+      "token_id": "49938836717110920625533809029365204531965112714272802309607280334568656902056",
+      "bet_side": "NO",
+      "entry_date": "2026-04-18 01:25",
+      "entry_price": 0.5,
+      "size_usd": 5.0,
+      "shares": 9.95,
+      "cluster": "other",
+      "expected_close": "2026-04-29",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-22 19:01",
+      "pnl": -5.0,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1992557",
+      "question": "Pakistan Super League: Karachi Kings vs Peshawar Zalmi",
+      "token_id": "46145269815217160430770284717422315618995462931435433742815609600440854006299",
+      "bet_side": "NO",
+      "entry_date": "2026-04-18 06:58",
+      "entry_price": 0.6,
+      "size_usd": 5.0,
+      "shares": 8.291666666666666,
+      "cluster": "other",
+      "expected_close": "2026-04-29",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-22 19:01",
+      "pnl": -5.0,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329048",
-  "last_updated": "2026-04-22T13:04:19.107095",
+  "last_updated": "2026-04-22T19:01:28.439522",
   "total_trades": 85,
   "wins": 19,
-  "losses": 34,
-  "total_pnl": -119.57547247896646
+  "losses": 36,
+  "total_pnl": -129.57547247896645
 }
