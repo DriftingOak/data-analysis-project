@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 786.8306212181994,
+  "bankroll_current": 730.6985457465014,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -36,8 +36,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.72,
-      "price_yes_current": 0.28
+      "current_price": 0.73,
+      "price_yes_current": 0.27
     },
     {
       "market_id": "1277912",
@@ -756,8 +756,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9455,
-      "price_yes_current": 0.0545
+      "current_price": 0.9485,
+      "price_yes_current": 0.0515
     },
     {
       "market_id": "1706301",
@@ -774,8 +774,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.979,
-      "price_yes_current": 0.021
+      "current_price": 0.981,
+      "price_yes_current": 0.019
     },
     {
       "market_id": "1746821",
@@ -828,8 +828,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9395,
-      "price_yes_current": 0.0605
+      "current_price": 0.947,
+      "price_yes_current": 0.053
     },
     {
       "market_id": "1570409",
@@ -846,8 +846,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.925,
-      "price_yes_current": 0.075
+      "current_price": 0.95,
+      "price_yes_current": 0.05
     },
     {
       "market_id": "1746839",
@@ -918,8 +918,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.825,
-      "price_yes_current": 0.175
+      "current_price": 0.84,
+      "price_yes_current": 0.16
     },
     {
       "market_id": "1455627",
@@ -936,8 +936,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.36,
-      "price_yes_current": 0.64
+      "current_price": 0.41000000000000003,
+      "price_yes_current": 0.59
     },
     {
       "market_id": "1831661",
@@ -1220,12 +1220,12 @@
       "shares": 93.86792452830188,
       "cluster": "other",
       "expected_close": "2026-05-02",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.0004999999999999449,
-      "price_yes_current": 0.9995
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-04-26 01:51",
+      "pnl": 43.867924528301884,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "2015270",
@@ -1238,12 +1238,12 @@
       "shares": 99.5,
       "cluster": "other",
       "expected_close": "2026-05-02",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.41500000000000004,
-      "price_yes_current": 0.585
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-26 01:51",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "2015271",
@@ -1256,12 +1256,12 @@
       "shares": 98.51485148514851,
       "cluster": "other",
       "expected_close": "2026-05-02",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.495,
-      "price_yes_current": 0.505
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-26 01:51",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "1931455",
@@ -1278,8 +1278,44 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.495,
-      "price_yes_current": 0.505
+      "current_price": 0.485,
+      "price_yes_current": 0.515
+    },
+    {
+      "market_id": "2024096",
+      "question": "Pakistan Super League: Rawalpindi Pindiz vs Peshawar Zalmi - Toss Match Double Peshawar Zalmi Winner",
+      "token_id": "70044721722360908586078193375810835583789031633594221393781811852942935591999",
+      "bet_side": "NO",
+      "entry_date": "2026-04-26 01:51",
+      "entry_price": 0.51,
+      "size_usd": 50,
+      "shares": 97.54901960784314,
+      "cluster": "other",
+      "expected_close": "2026-05-03",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "2024097",
+      "question": "Pakistan Super League: Rawalpindi Pindiz vs Peshawar Zalmi - Most Sixes Rawalpindi Pindiz Winner",
+      "token_id": "109887116583716289999909109328108547341549004545088199249314204904929854796738",
+      "bet_side": "NO",
+      "entry_date": "2026-04-26 01:51",
+      "entry_price": 0.485,
+      "size_usd": 50,
+      "shares": 102.57731958762886,
+      "cluster": "other",
+      "expected_close": "2026-05-03",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
     }
   ],
   "closed_trades": [
@@ -2308,12 +2344,66 @@
       "pnl": 50.505050505050505,
       "current_price": 1.0,
       "price_yes_current": 0.0
+    },
+    {
+      "market_id": "2015268",
+      "question": "Pakistan Super League: Lahore Qalandars vs Peshawar Zalmi",
+      "token_id": "78858691086832641670881565833805098463902880732267313968864214609652476098252",
+      "bet_side": "NO",
+      "entry_date": "2026-04-22 19:01",
+      "entry_price": 0.53,
+      "size_usd": 50,
+      "shares": 93.86792452830188,
+      "cluster": "other",
+      "expected_close": "2026-05-02",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-04-26 01:51",
+      "pnl": 43.867924528301884,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
+    },
+    {
+      "market_id": "2015270",
+      "question": "Pakistan Super League: Lahore Qalandars vs Peshawar Zalmi - Completed match?",
+      "token_id": "112561592181748250083539805923640245626717726448479370841837651517187128660667",
+      "bet_side": "NO",
+      "entry_date": "2026-04-22 19:01",
+      "entry_price": 0.5,
+      "size_usd": 50,
+      "shares": 99.5,
+      "cluster": "other",
+      "expected_close": "2026-05-02",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-26 01:51",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
+    },
+    {
+      "market_id": "2015271",
+      "question": "Pakistan Super League: Lahore Qalandars vs Peshawar Zalmi - Toss Match Double Lahore Qalandars Winner",
+      "token_id": "59289262898540651288232983786112924985689636951023605605432402038572938193161",
+      "bet_side": "NO",
+      "entry_date": "2026-04-22 19:01",
+      "entry_price": 0.505,
+      "size_usd": 50,
+      "shares": 98.51485148514851,
+      "cluster": "other",
+      "expected_close": "2026-05-02",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-04-26 01:51",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329192",
-  "last_updated": "2026-04-25T18:38:11.051529",
-  "total_trades": 71,
-  "wins": 29,
-  "losses": 28,
-  "total_pnl": -213.1693787818005
+  "last_updated": "2026-04-26T01:51:26.263269",
+  "total_trades": 73,
+  "wins": 30,
+  "losses": 30,
+  "total_pnl": -269.3014542534986
 }
