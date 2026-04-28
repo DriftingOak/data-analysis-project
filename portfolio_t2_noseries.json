@@ -36,8 +36,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.43500000000000005,
-      "price_yes_current": 0.565
+      "current_price": 0.44499999999999995,
+      "price_yes_current": 0.555
     },
     {
       "market_id": "1336363",
@@ -252,8 +252,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.7150000000000001,
-      "price_yes_current": 0.285
+      "current_price": 0.69,
+      "price_yes_current": 0.31
     },
     {
       "market_id": "791705",
@@ -306,8 +306,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.675,
-      "price_yes_current": 0.325
+      "current_price": 0.655,
+      "price_yes_current": 0.345
     },
     {
       "market_id": "1397296",
@@ -468,8 +468,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.75,
-      "price_yes_current": 0.25
+      "current_price": 0.635,
+      "price_yes_current": 0.365
     },
     {
       "market_id": "1115288",
@@ -522,8 +522,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.5900000000000001,
-      "price_yes_current": 0.41
+      "current_price": 0.575,
+      "price_yes_current": 0.425
     },
     {
       "market_id": "677397",
@@ -612,8 +612,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.83,
-      "price_yes_current": 0.17
+      "current_price": 0.79,
+      "price_yes_current": 0.21
     },
     {
       "market_id": "665224",
@@ -630,8 +630,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.7150000000000001,
-      "price_yes_current": 0.285
+      "current_price": 0.735,
+      "price_yes_current": 0.265
     },
     {
       "market_id": "1553380",
@@ -666,8 +666,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.655,
-      "price_yes_current": 0.345
+      "current_price": 0.665,
+      "price_yes_current": 0.335
     },
     {
       "market_id": "1577370",
@@ -1026,8 +1026,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.365,
-      "price_yes_current": 0.635
+      "current_price": 0.5549999999999999,
+      "price_yes_current": 0.445
     },
     {
       "market_id": "1812086",
@@ -1044,8 +1044,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.585,
-      "price_yes_current": 0.415
+      "current_price": 0.5800000000000001,
+      "price_yes_current": 0.42
     },
     {
       "market_id": "1919537",
@@ -1260,8 +1260,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.6505000000000001,
-      "price_yes_current": 0.3495
+      "current_price": 0.7395,
+      "price_yes_current": 0.2605
     },
     {
       "market_id": "1969943",
@@ -1296,8 +1296,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9895,
-      "price_yes_current": 0.0105
+      "current_price": 0.988,
+      "price_yes_current": 0.012
     },
     {
       "market_id": "1975749",
@@ -1548,8 +1548,116 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.575,
-      "price_yes_current": 0.425
+      "current_price": 0.43999999999999995,
+      "price_yes_current": 0.56
+    },
+    {
+      "market_id": "2035734",
+      "question": "Will Russia capture Riasne by May 31?",
+      "token_id": "39028819020048826298365221957457010545705906234672293845055365836404333827717",
+      "bet_side": "NO",
+      "entry_date": "2026-04-28 13:32",
+      "entry_price": 0.5900000000000001,
+      "size_usd": 5.0,
+      "shares": 8.432203389830507,
+      "cluster": "ukraine",
+      "expected_close": "2026-05-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1986890",
+      "question": "Ben-Gvir out as Israeli Minister of National Security by June 30?",
+      "token_id": "99602421810765620770607488376760658604714769113917437012952854596057578069633",
+      "bet_side": "NO",
+      "entry_date": "2026-04-28 13:32",
+      "entry_price": 0.5549999999999999,
+      "size_usd": 5.0,
+      "shares": 8.963963963963964,
+      "cluster": "mideast",
+      "expected_close": "2026-06-30",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1651336",
+      "question": "Joseph Aoun out as President of Lebanon by December 31?",
+      "token_id": "66312860250622780649363041456562577800036405621679960913528577018337411228893",
+      "bet_side": "NO",
+      "entry_date": "2026-04-28 13:32",
+      "entry_price": 0.54,
+      "size_usd": 10.0,
+      "shares": 18.425925925925924,
+      "cluster": "mideast",
+      "expected_close": "2026-12-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1389013",
+      "question": "Will the next elected US president be a woman?",
+      "token_id": "75474570273267982247702321765844170309479042374729721693771467259663026860872",
+      "bet_side": "NO",
+      "entry_date": "2026-04-28 13:32",
+      "entry_price": 0.5449999999999999,
+      "size_usd": 10.0,
+      "shares": 18.256880733944953,
+      "cluster": "other",
+      "expected_close": "2028-11-07",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1993750",
+      "question": "Sanae Takaichi out as Prime Minister of Japan in 2026?",
+      "token_id": "60059679279805861964505995205597171325525754411989398525103118580983839619505",
+      "bet_side": "NO",
+      "entry_date": "2026-04-28 13:32",
+      "entry_price": 0.495,
+      "size_usd": 10.0,
+      "shares": 20.1010101010101,
+      "cluster": "other",
+      "expected_close": "2026-12-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1122051",
+      "question": "Will US annex any territory in 2026?",
+      "token_id": "33851456277248246791147445710012024578308031857695666074351589067872370882756",
+      "bet_side": "NO",
+      "entry_date": "2026-04-28 13:32",
+      "entry_price": 0.565,
+      "size_usd": 10.0,
+      "shares": 17.61061946902655,
+      "cluster": "other",
+      "expected_close": "2026-12-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
     }
   ],
   "closed_trades": [
@@ -2599,8 +2707,8 @@
     }
   ],
   "created_at": "2026-02-08T22:16:55.329048",
-  "last_updated": "2026-04-28T08:09:43.358256",
-  "total_trades": 86,
+  "last_updated": "2026-04-28T13:32:01.468059",
+  "total_trades": 92,
   "wins": 21,
   "losses": 37,
   "total_pnl": -124.45598718484881
