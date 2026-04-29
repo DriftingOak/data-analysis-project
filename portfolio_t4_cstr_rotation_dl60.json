@@ -342,8 +342,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.795,
-      "price_yes_current": 0.205
+      "current_price": 0.785,
+      "price_yes_current": 0.215
     },
     {
       "market_id": "1403723",
@@ -504,8 +504,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.633,
-      "price_yes_current": 0.367
+      "current_price": 0.6365000000000001,
+      "price_yes_current": 0.3635
     },
     {
       "market_id": "1559953",
@@ -594,8 +594,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.973,
-      "price_yes_current": 0.027
+      "current_price": 0.9665,
+      "price_yes_current": 0.0335
     },
     {
       "market_id": "1746821",
@@ -648,8 +648,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9915,
-      "price_yes_current": 0.0085
+      "current_price": 0.9885,
+      "price_yes_current": 0.0115
     },
     {
       "market_id": "1746822",
@@ -1393,7 +1393,7 @@
     }
   ],
   "created_at": "2026-02-08T22:16:55.329124",
-  "last_updated": "2026-04-29T08:06:05.820895",
+  "last_updated": "2026-04-29T13:26:01.741142",
   "total_trades": 41,
   "wins": 15,
   "losses": 21,
