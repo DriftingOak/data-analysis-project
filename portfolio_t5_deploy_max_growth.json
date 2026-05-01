@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 730.6985457465014,
+  "bankroll_current": 892.2673326604918,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -702,8 +702,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.85,
-      "price_yes_current": 0.15
+      "current_price": 0.86,
+      "price_yes_current": 0.14
     },
     {
       "market_id": "1437281",
@@ -734,12 +734,12 @@
       "shares": 77.13178294573643,
       "cluster": "ukraine",
       "expected_close": "2026-04-30",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.997,
-      "price_yes_current": 0.003
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-05-01 08:03",
+      "pnl": 27.131782945736433,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1641497",
@@ -756,8 +756,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9965,
-      "price_yes_current": 0.0035
+      "current_price": 0.9955,
+      "price_yes_current": 0.0045
     },
     {
       "market_id": "1706301",
@@ -774,8 +774,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9975,
-      "price_yes_current": 0.0025
+      "current_price": 0.9945,
+      "price_yes_current": 0.0055
     },
     {
       "market_id": "1746821",
@@ -842,12 +842,12 @@
       "shares": 78.96825396825396,
       "cluster": "ukraine",
       "expected_close": "2026-04-30",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.997,
-      "price_yes_current": 0.003
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-05-01 08:03",
+      "pnl": 28.96825396825396,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1746839",
@@ -914,12 +914,12 @@
       "shares": 155.46875000000003,
       "cluster": "ukraine",
       "expected_close": "2026-04-30",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9975,
-      "price_yes_current": 0.0025
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-05-01 08:03",
+      "pnl": 105.46875000000003,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1455627",
@@ -936,8 +936,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.43999999999999995,
-      "price_yes_current": 0.56
+      "current_price": 0.44499999999999995,
+      "price_yes_current": 0.555
     },
     {
       "market_id": "1831661",
@@ -1062,8 +1062,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.6599999999999999,
-      "price_yes_current": 0.34
+      "current_price": 0.655,
+      "price_yes_current": 0.345
     },
     {
       "market_id": "1919550",
@@ -1278,8 +1278,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.5,
-      "price_yes_current": 0.5
+      "current_price": 0.505,
+      "price_yes_current": 0.495
     },
     {
       "market_id": "2024096",
@@ -1296,8 +1296,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.51,
-      "price_yes_current": 0.49
+      "current_price": 0.515,
+      "price_yes_current": 0.485
     },
     {
       "market_id": "2024097",
@@ -1314,8 +1314,116 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.51,
-      "price_yes_current": 0.49
+      "current_price": 0.52,
+      "price_yes_current": 0.48
+    },
+    {
+      "market_id": "2039533",
+      "question": "Will voter turnout be 48-51% in the first round of the 2026 Colombian presidential election?",
+      "token_id": "102560387857978748384548978283322193589527827015543147702753449953711286634445",
+      "bet_side": "NO",
+      "entry_date": "2026-05-01 08:03",
+      "entry_price": 0.6950000000000001,
+      "size_usd": 50,
+      "shares": 71.58273381294963,
+      "cluster": "latam",
+      "expected_close": "2026-05-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "2039536",
+      "question": "Will voter turnout be 57-60% in the first round of the 2026 Colombian presidential election?",
+      "token_id": "34846859660880390881524864090570701673049667537334430803889441358354504758899",
+      "bet_side": "NO",
+      "entry_date": "2026-05-01 08:03",
+      "entry_price": 0.7,
+      "size_usd": 50,
+      "shares": 71.07142857142857,
+      "cluster": "latam",
+      "expected_close": "2026-05-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "2109772",
+      "question": "Will Alex Warren have a #1 hit in the US in May?",
+      "token_id": "104279140438014631148610541787655227256142657762511859867720745618343690983861",
+      "bet_side": "NO",
+      "entry_date": "2026-05-01 08:03",
+      "entry_price": 0.585,
+      "size_usd": 50,
+      "shares": 85.04273504273505,
+      "cluster": "other",
+      "expected_close": "2026-05-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "2039535",
+      "question": "Will voter turnout be 54-57% in the first round of the 2026 Colombian presidential election?",
+      "token_id": "90961231938093514912200270669629884315791398955267344410680946648388713758644",
+      "bet_side": "NO",
+      "entry_date": "2026-05-01 08:03",
+      "entry_price": 0.655,
+      "size_usd": 50,
+      "shares": 75.95419847328245,
+      "cluster": "latam",
+      "expected_close": "2026-05-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1835811",
+      "question": "Will Mayumi Tanaka as Monkey D. Luffy (ONE PIECE) win Best Anime Voice Artist Performance (Japanese) at the 2026 Crunchy",
+      "token_id": "77485283291235560096520921781108921866854575859201810039572236167560228695257",
+      "bet_side": "NO",
+      "entry_date": "2026-05-01 08:03",
+      "entry_price": 0.46499999999999997,
+      "size_usd": 50,
+      "shares": 106.98924731182797,
+      "cluster": "other",
+      "expected_close": "2026-05-23",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "2037917",
+      "question": "Will Paloma Valencia place 2nd in the 1st round of the 2026 Colombian presidential election?",
+      "token_id": "40612471379175543257454686269876903661266624554019736329691040922411085126433",
+      "bet_side": "NO",
+      "entry_date": "2026-05-01 08:03",
+      "entry_price": 0.6699999999999999,
+      "size_usd": 50,
+      "shares": 74.25373134328359,
+      "cluster": "latam",
+      "expected_close": "2026-05-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
     }
   ],
   "closed_trades": [
@@ -2398,12 +2506,66 @@
       "pnl": -50,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1567761",
+      "question": "Will Russia capture Bilytske by April 30, 2026?",
+      "token_id": "97596933500788998897605616379824070488652502245167756501618221365135727199801",
+      "bet_side": "NO",
+      "entry_date": "2026-03-14 18:25",
+      "entry_price": 0.645,
+      "size_usd": 50,
+      "shares": 77.13178294573643,
+      "cluster": "ukraine",
+      "expected_close": "2026-04-30",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-05-01 08:03",
+      "pnl": 27.131782945736433,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
+    },
+    {
+      "market_id": "1570409",
+      "question": "Will Russia capture Sofiivka by April 30?",
+      "token_id": "94762430547615891150860687210283621376031723241583580856382321778082567174467",
+      "bet_side": "NO",
+      "entry_date": "2026-04-01 07:10",
+      "entry_price": 0.63,
+      "size_usd": 50,
+      "shares": 78.96825396825396,
+      "cluster": "ukraine",
+      "expected_close": "2026-04-30",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-05-01 08:03",
+      "pnl": 28.96825396825396,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
+    },
+    {
+      "market_id": "1567769",
+      "question": "Will Russia capture all of Huliaipole by April 30?",
+      "token_id": "59774031698944005679982593084080702502127100005721262350107625870689422251269",
+      "bet_side": "NO",
+      "entry_date": "2026-04-05 12:38",
+      "entry_price": 0.31999999999999995,
+      "size_usd": 50,
+      "shares": 155.46875000000003,
+      "cluster": "ukraine",
+      "expected_close": "2026-04-30",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-05-01 08:03",
+      "pnl": 105.46875000000003,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329192",
-  "last_updated": "2026-05-01T02:08:08.859228",
-  "total_trades": 73,
-  "wins": 30,
+  "last_updated": "2026-05-01T08:03:42.681202",
+  "total_trades": 79,
+  "wins": 33,
   "losses": 30,
-  "total_pnl": -269.3014542534986
+  "total_pnl": -107.7326673395082
 }

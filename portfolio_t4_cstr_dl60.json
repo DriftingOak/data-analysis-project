@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 500,
-  "bankroll_current": 290.9983992832691,
+  "bankroll_current": 457.3027471093561,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -356,12 +356,12 @@
       "shares": 216.30434782608697,
       "cluster": "ukraine",
       "expected_close": "2026-04-30",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9975,
-      "price_yes_current": 0.0025
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-05-01 08:03",
+      "pnl": 166.30434782608697,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1706305",
@@ -396,8 +396,80 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.5,
-      "price_yes_current": 0.5
+      "current_price": 0.505,
+      "price_yes_current": 0.495
+    },
+    {
+      "market_id": "2109772",
+      "question": "Will Alex Warren have a #1 hit in the US in May?",
+      "token_id": "104279140438014631148610541787655227256142657762511859867720745618343690983861",
+      "bet_side": "NO",
+      "entry_date": "2026-05-01 08:03",
+      "entry_price": 0.585,
+      "size_usd": 50,
+      "shares": 85.04273504273505,
+      "cluster": "other",
+      "expected_close": "2026-05-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1455627",
+      "question": "UK Cabinet Minister resigns by June 30, 2026?",
+      "token_id": "70542586153092501016827975677910906398166526559749986075137478060888474943624",
+      "bet_side": "NO",
+      "entry_date": "2026-05-01 08:03",
+      "entry_price": 0.44499999999999995,
+      "size_usd": 50,
+      "shares": 111.79775280898878,
+      "cluster": "europe",
+      "expected_close": "2026-06-30",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "2037919",
+      "question": "Will Abelardo de la Espriella place 2nd in the 1st round of the 2026 Colombian presidential election?",
+      "token_id": "102079623168623471273840290882862058479284336255106205460876708374644120043097",
+      "bet_side": "NO",
+      "entry_date": "2026-05-01 08:03",
+      "entry_price": 0.495,
+      "size_usd": 50,
+      "shares": 100.5050505050505,
+      "cluster": "latam",
+      "expected_close": "2026-05-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "2053635",
+      "question": "Will Russia capture all of Hryshyne by May 31?",
+      "token_id": "77186015488808225707625395059290246829253840183141701933201854447967143277424",
+      "bet_side": "NO",
+      "entry_date": "2026-05-01 08:03",
+      "entry_price": 0.5900000000000001,
+      "size_usd": 50,
+      "shares": 84.32203389830508,
+      "cluster": "ukraine",
+      "expected_close": "2026-05-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
     }
   ],
   "closed_trades": [
@@ -706,12 +778,30 @@
       "pnl": -50,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1567769",
+      "question": "Will Russia capture all of Huliaipole by April 30?",
+      "token_id": "59774031698944005679982593084080702502127100005721262350107625870689422251269",
+      "bet_side": "NO",
+      "entry_date": "2026-04-01 07:10",
+      "entry_price": 0.22999999999999998,
+      "size_usd": 50,
+      "shares": 216.30434782608697,
+      "cluster": "ukraine",
+      "expected_close": "2026-04-30",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-05-01 08:03",
+      "pnl": 166.30434782608697,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329114",
-  "last_updated": "2026-05-01T02:08:08.777113",
-  "total_trades": 22,
-  "wins": 6,
+  "last_updated": "2026-05-01T08:03:42.567109",
+  "total_trades": 26,
+  "wins": 7,
   "losses": 11,
-  "total_pnl": -209.00160071673088
+  "total_pnl": -42.69725289064391
 }
