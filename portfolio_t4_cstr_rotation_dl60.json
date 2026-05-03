@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 500,
-  "bankroll_current": 506.75242481429734,
+  "bankroll_current": 573.811248343709,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -342,8 +342,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.78,
-      "price_yes_current": 0.22
+      "current_price": 0.785,
+      "price_yes_current": 0.215
     },
     {
       "market_id": "1403723",
@@ -504,8 +504,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.7295,
-      "price_yes_current": 0.2705
+      "current_price": 0.745,
+      "price_yes_current": 0.255
     },
     {
       "market_id": "1559953",
@@ -644,12 +644,12 @@
       "shares": 117.05882352941175,
       "cluster": "mideast",
       "expected_close": "2026-04-30",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9995,
-      "price_yes_current": 0.0005
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-05-03 01:57",
+      "pnl": 67.05882352941175,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1746822",
@@ -756,8 +756,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.43500000000000005,
-      "price_yes_current": 0.565
+      "current_price": 0.475,
+      "price_yes_current": 0.525
     },
     {
       "market_id": "2097480",
@@ -774,8 +774,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.38,
-      "price_yes_current": 0.62
+      "current_price": 0.44499999999999995,
+      "price_yes_current": 0.555
     },
     {
       "market_id": "2037919",
@@ -792,8 +792,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.45999999999999996,
-      "price_yes_current": 0.54
+      "current_price": 0.45499999999999996,
+      "price_yes_current": 0.545
     },
     {
       "market_id": "1931455",
@@ -810,8 +810,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.505,
-      "price_yes_current": 0.495
+      "current_price": 0.515,
+      "price_yes_current": 0.485
     },
     {
       "market_id": "2109772",
@@ -828,8 +828,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.6174999999999999,
-      "price_yes_current": 0.3825
+      "current_price": 0.615,
+      "price_yes_current": 0.385
     },
     {
       "market_id": "2053635",
@@ -848,6 +848,42 @@
       "pnl": null,
       "current_price": 0.7,
       "price_yes_current": 0.3
+    },
+    {
+      "market_id": "1455627",
+      "question": "UK Cabinet Minister resigns by June 30, 2026?",
+      "token_id": "70542586153092501016827975677910906398166526559749986075137478060888474943624",
+      "bet_side": "NO",
+      "entry_date": "2026-05-03 01:57",
+      "entry_price": 0.375,
+      "size_usd": 50,
+      "shares": 132.66666666666666,
+      "cluster": "europe",
+      "expected_close": "2026-06-30",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "569368",
+      "question": "Will Ivan Cepeda Castro win the 2026 Colombian presidential election?",
+      "token_id": "45225184915026490412090111842887484470550126139644389135401954155408710524398",
+      "bet_side": "NO",
+      "entry_date": "2026-05-03 01:57",
+      "entry_price": 0.585,
+      "size_usd": 50,
+      "shares": 85.04273504273505,
+      "cluster": "latam",
+      "expected_close": "2026-06-21",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
     }
   ],
   "closed_trades": [
@@ -1534,12 +1570,30 @@
       "pnl": 42.12962962962962,
       "current_price": 1.0,
       "price_yes_current": 0.0
+    },
+    {
+      "market_id": "1641497",
+      "question": "Israel strike on Yemen by April 30, 2026?",
+      "token_id": "30561980169268678819735256982225694704116127378508623571936660192492766073388",
+      "bet_side": "NO",
+      "entry_date": "2026-04-03 06:59",
+      "entry_price": 0.42500000000000004,
+      "size_usd": 50,
+      "shares": 117.05882352941175,
+      "cluster": "mideast",
+      "expected_close": "2026-04-30",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-05-03 01:57",
+      "pnl": 67.05882352941175,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329124",
-  "last_updated": "2026-05-02T18:45:23.804569",
-  "total_trades": 47,
-  "wins": 17,
+  "last_updated": "2026-05-03T01:57:45.782191",
+  "total_trades": 49,
+  "wins": 18,
   "losses": 21,
-  "total_pnl": 6.752424814297314
+  "total_pnl": 73.81124834370907
 }

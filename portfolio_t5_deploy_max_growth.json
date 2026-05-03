@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 892.2673326604918,
+  "bankroll_current": 942.7723831655424,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -36,8 +36,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.78,
-      "price_yes_current": 0.22
+      "current_price": 0.785,
+      "price_yes_current": 0.215
     },
     {
       "market_id": "1277912",
@@ -702,8 +702,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.875,
-      "price_yes_current": 0.125
+      "current_price": 0.87,
+      "price_yes_current": 0.13
     },
     {
       "market_id": "1437281",
@@ -752,12 +752,12 @@
       "shares": 100.5050505050505,
       "cluster": "mideast",
       "expected_close": "2026-04-30",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9995,
-      "price_yes_current": 0.0005
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-05-03 01:57",
+      "pnl": 50.505050505050505,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1706301",
@@ -936,8 +936,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.36,
-      "price_yes_current": 0.64
+      "current_price": 0.375,
+      "price_yes_current": 0.625
     },
     {
       "market_id": "1831661",
@@ -1062,8 +1062,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.7050000000000001,
-      "price_yes_current": 0.295
+      "current_price": 0.6599999999999999,
+      "price_yes_current": 0.34
     },
     {
       "market_id": "1919550",
@@ -1278,8 +1278,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.505,
-      "price_yes_current": 0.495
+      "current_price": 0.515,
+      "price_yes_current": 0.485
     },
     {
       "market_id": "2024096",
@@ -1332,8 +1332,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.72,
-      "price_yes_current": 0.28
+      "current_price": 0.73,
+      "price_yes_current": 0.27
     },
     {
       "market_id": "2039536",
@@ -1350,8 +1350,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.7150000000000001,
-      "price_yes_current": 0.285
+      "current_price": 0.765,
+      "price_yes_current": 0.235
     },
     {
       "market_id": "2109772",
@@ -1368,8 +1368,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.6174999999999999,
-      "price_yes_current": 0.3825
+      "current_price": 0.615,
+      "price_yes_current": 0.385
     },
     {
       "market_id": "2039535",
@@ -1386,8 +1386,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.6,
-      "price_yes_current": 0.4
+      "current_price": 0.645,
+      "price_yes_current": 0.355
     },
     {
       "market_id": "1835811",
@@ -1404,8 +1404,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.43500000000000005,
-      "price_yes_current": 0.565
+      "current_price": 0.475,
+      "price_yes_current": 0.525
     },
     {
       "market_id": "2037917",
@@ -1422,8 +1422,26 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.62,
-      "price_yes_current": 0.38
+      "current_price": 0.625,
+      "price_yes_current": 0.375
+    },
+    {
+      "market_id": "2037919",
+      "question": "Will Abelardo de la Espriella place 2nd in the 1st round of the 2026 Colombian presidential election?",
+      "token_id": "102079623168623471273840290882862058479284336255106205460876708374644120043097",
+      "bet_side": "NO",
+      "entry_date": "2026-05-03 01:57",
+      "entry_price": 0.45499999999999996,
+      "size_usd": 50,
+      "shares": 109.34065934065936,
+      "cluster": "latam",
+      "expected_close": "2026-05-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
     }
   ],
   "closed_trades": [
@@ -2560,12 +2578,30 @@
       "pnl": 105.46875000000003,
       "current_price": 1.0,
       "price_yes_current": 0.0
+    },
+    {
+      "market_id": "1641497",
+      "question": "Israel strike on Yemen by April 30, 2026?",
+      "token_id": "30561980169268678819735256982225694704116127378508623571936660192492766073388",
+      "bet_side": "NO",
+      "entry_date": "2026-03-23 01:20",
+      "entry_price": 0.495,
+      "size_usd": 50,
+      "shares": 100.5050505050505,
+      "cluster": "mideast",
+      "expected_close": "2026-04-30",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-05-03 01:57",
+      "pnl": 50.505050505050505,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329192",
-  "last_updated": "2026-05-02T18:45:23.909775",
-  "total_trades": 79,
-  "wins": 33,
+  "last_updated": "2026-05-03T01:57:45.887951",
+  "total_trades": 80,
+  "wins": 34,
   "losses": 30,
-  "total_pnl": -107.7326673395082
+  "total_pnl": -57.22761683445769
 }
