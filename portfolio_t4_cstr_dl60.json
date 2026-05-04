@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 500,
-  "bankroll_current": 457.3027471093561,
+  "bankroll_current": 502.0646518712608,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -374,12 +374,12 @@
       "shares": 94.76190476190476,
       "cluster": "mideast",
       "expected_close": "2026-04-30",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.999,
-      "price_yes_current": 0.001
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-05-04 08:19",
+      "pnl": 44.76190476190476,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1931455",
@@ -414,8 +414,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.5885,
-      "price_yes_current": 0.4115
+      "current_price": 0.5880000000000001,
+      "price_yes_current": 0.412
     },
     {
       "market_id": "1455627",
@@ -432,8 +432,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.37,
-      "price_yes_current": 0.63
+      "current_price": 0.35,
+      "price_yes_current": 0.65
     },
     {
       "market_id": "2037919",
@@ -450,8 +450,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.42000000000000004,
-      "price_yes_current": 0.58
+      "current_price": 0.42500000000000004,
+      "price_yes_current": 0.575
     },
     {
       "market_id": "2053635",
@@ -468,8 +468,44 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.7,
-      "price_yes_current": 0.3
+      "current_price": 0.69,
+      "price_yes_current": 0.31
+    },
+    {
+      "market_id": "1835811",
+      "question": "Will Mayumi Tanaka as Monkey D. Luffy (ONE PIECE) win Best Anime Voice Artist Performance (Japanese) at the 2026 Crunchy",
+      "token_id": "77485283291235560096520921781108921866854575859201810039572236167560228695257",
+      "bet_side": "NO",
+      "entry_date": "2026-05-04 08:19",
+      "entry_price": 0.44499999999999995,
+      "size_usd": 50,
+      "shares": 111.79775280898878,
+      "cluster": "other",
+      "expected_close": "2026-05-23",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "569368",
+      "question": "Will Ivan Cepeda Castro win the 2026 Colombian presidential election?",
+      "token_id": "45225184915026490412090111842887484470550126139644389135401954155408710524398",
+      "bet_side": "NO",
+      "entry_date": "2026-05-04 08:19",
+      "entry_price": 0.595,
+      "size_usd": 50,
+      "shares": 83.61344537815127,
+      "cluster": "latam",
+      "expected_close": "2026-06-21",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
     }
   ],
   "closed_trades": [
@@ -796,12 +832,30 @@
       "pnl": 166.30434782608697,
       "current_price": 1.0,
       "price_yes_current": 0.0
+    },
+    {
+      "market_id": "1706305",
+      "question": "Will Iran strike Lebanon by April 30, 2026?",
+      "token_id": "91971970325243496323343949212577761916665591164201319275089382844730331210004",
+      "bet_side": "NO",
+      "entry_date": "2026-04-01 12:57",
+      "entry_price": 0.525,
+      "size_usd": 50,
+      "shares": 94.76190476190476,
+      "cluster": "mideast",
+      "expected_close": "2026-04-30",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-05-04 08:19",
+      "pnl": 44.76190476190476,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329114",
-  "last_updated": "2026-05-04T01:58:53.367576",
-  "total_trades": 26,
-  "wins": 7,
+  "last_updated": "2026-05-04T08:19:17.948804",
+  "total_trades": 28,
+  "wins": 8,
   "losses": 11,
-  "total_pnl": -42.69725289064391
+  "total_pnl": 2.0646518712608497
 }
