@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 1011.4461937643346,
+  "bankroll_current": 961.4461937643346,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -936,8 +936,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.45499999999999996,
-      "price_yes_current": 0.545
+      "current_price": 0.355,
+      "price_yes_current": 0.645
     },
     {
       "market_id": "1831661",
@@ -1296,8 +1296,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.515,
-      "price_yes_current": 0.485
+      "current_price": 0.52,
+      "price_yes_current": 0.48
     },
     {
       "market_id": "2024097",
@@ -1332,8 +1332,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.76,
-      "price_yes_current": 0.24
+      "current_price": 0.75,
+      "price_yes_current": 0.25
     },
     {
       "market_id": "2039536",
@@ -1368,8 +1368,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.858,
-      "price_yes_current": 0.142
+      "current_price": 0.9795,
+      "price_yes_current": 0.0205
     },
     {
       "market_id": "2039535",
@@ -1386,8 +1386,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.475,
-      "price_yes_current": 0.525
+      "current_price": 0.515,
+      "price_yes_current": 0.485
     },
     {
       "market_id": "1835811",
@@ -1404,8 +1404,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.585,
-      "price_yes_current": 0.415
+      "current_price": 0.63,
+      "price_yes_current": 0.37
     },
     {
       "market_id": "2037917",
@@ -1476,8 +1476,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.7150000000000001,
-      "price_yes_current": 0.285
+      "current_price": 0.72,
+      "price_yes_current": 0.28
     },
     {
       "market_id": "2053635",
@@ -1508,12 +1508,12 @@
       "shares": 109.34065934065936,
       "cluster": "ukraine",
       "expected_close": "2026-07-31",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.4,
-      "price_yes_current": 0.6
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-05-09 07:45",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     }
   ],
   "closed_trades": [
@@ -2704,12 +2704,30 @@
       "pnl": 45.67307692307692,
       "current_price": 1.0,
       "price_yes_current": 0.0
+    },
+    {
+      "market_id": "540816",
+      "question": "Russia-Ukraine Ceasefire before GTA VI?",
+      "token_id": "2527312495175492857904889758552137141356236738032676480522356889996545113869",
+      "bet_side": "NO",
+      "entry_date": "2026-05-04 08:19",
+      "entry_price": 0.45499999999999996,
+      "size_usd": 50,
+      "shares": 109.34065934065936,
+      "cluster": "ukraine",
+      "expected_close": "2026-07-31",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-05-09 07:45",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329192",
-  "last_updated": "2026-05-09T02:01:57.628476",
+  "last_updated": "2026-05-09T07:45:34.441414",
   "total_trades": 84,
   "wins": 36,
-  "losses": 30,
-  "total_pnl": 11.446193764334566
+  "losses": 31,
+  "total_pnl": -38.553806235665434
 }
