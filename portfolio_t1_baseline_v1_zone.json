@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 752.2436288233733,
+  "bankroll_current": 727.2436288233733,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -18,8 +18,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.625,
-      "price_yes_current": 0.375
+      "current_price": 0.655,
+      "price_yes_current": 0.345
     },
     {
       "market_id": "1117207",
@@ -162,8 +162,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.605,
-      "price_yes_current": 0.395
+      "current_price": 0.6,
+      "price_yes_current": 0.4
     },
     {
       "market_id": "1277913",
@@ -288,8 +288,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.885,
-      "price_yes_current": 0.115
+      "current_price": 0.865,
+      "price_yes_current": 0.135
     },
     {
       "market_id": "1345278",
@@ -360,8 +360,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.45499999999999996,
-      "price_yes_current": 0.545
+      "current_price": 0.44999999999999996,
+      "price_yes_current": 0.55
     },
     {
       "market_id": "958427",
@@ -464,12 +464,12 @@
       "shares": 44.81981981981983,
       "cluster": "ukraine",
       "expected_close": "2026-12-31",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.745,
-      "price_yes_current": 0.255
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-05-10 02:01",
+      "pnl": -25,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "1336363",
@@ -504,8 +504,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.585,
-      "price_yes_current": 0.415
+      "current_price": 0.575,
+      "price_yes_current": 0.425
     },
     {
       "market_id": "1106634",
@@ -540,8 +540,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.913,
-      "price_yes_current": 0.087
+      "current_price": 0.9115,
+      "price_yes_current": 0.0885
     },
     {
       "market_id": "569366",
@@ -558,8 +558,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.605,
-      "price_yes_current": 0.395
+      "current_price": 0.585,
+      "price_yes_current": 0.415
     },
     {
       "market_id": "1333270",
@@ -594,8 +594,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.855,
-      "price_yes_current": 0.145
+      "current_price": 0.85,
+      "price_yes_current": 0.15
     },
     {
       "market_id": "665224",
@@ -612,8 +612,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.6,
-      "price_yes_current": 0.4
+      "current_price": 0.625,
+      "price_yes_current": 0.375
     },
     {
       "market_id": "1301487",
@@ -648,8 +648,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.873,
-      "price_yes_current": 0.127
+      "current_price": 0.8705,
+      "price_yes_current": 0.1295
     },
     {
       "market_id": "1198592",
@@ -738,8 +738,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.10999999999999999,
-      "price_yes_current": 0.89
+      "current_price": 0.11499999999999999,
+      "price_yes_current": 0.885
     },
     {
       "market_id": "1117230",
@@ -810,8 +810,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.6,
-      "price_yes_current": 0.4
+      "current_price": 0.625,
+      "price_yes_current": 0.375
     },
     {
       "market_id": "1397296",
@@ -864,8 +864,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.385,
-      "price_yes_current": 0.615
+      "current_price": 0.375,
+      "price_yes_current": 0.625
     },
     {
       "market_id": "1437246",
@@ -1062,8 +1062,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.7965,
-      "price_yes_current": 0.2035
+      "current_price": 0.844,
+      "price_yes_current": 0.156
     },
     {
       "market_id": "2037919",
@@ -1080,8 +1080,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.365,
-      "price_yes_current": 0.635
+      "current_price": 0.33499999999999996,
+      "price_yes_current": 0.665
     },
     {
       "market_id": "1835811",
@@ -1098,8 +1098,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.615,
-      "price_yes_current": 0.385
+      "current_price": 0.63,
+      "price_yes_current": 0.37
     },
     {
       "market_id": "2169833",
@@ -1116,8 +1116,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.42500000000000004,
-      "price_yes_current": 0.575
+      "current_price": 0.43000000000000005,
+      "price_yes_current": 0.57
     }
   ],
   "closed_trades": [
@@ -1750,12 +1750,30 @@
       "pnl": -25,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "567687",
+      "question": "Russia x Ukraine ceasefire by end of 2026?",
+      "token_id": "27911616648163853231017805596118911526202185567944724228908312975649746722206",
+      "bet_side": "NO",
+      "entry_date": "2026-02-08 22:16",
+      "entry_price": 0.5549999999999999,
+      "size_usd": 25,
+      "shares": 44.81981981981983,
+      "cluster": "ukraine",
+      "expected_close": "2026-12-31",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-05-10 02:01",
+      "pnl": -25,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.328980",
-  "last_updated": "2026-05-09T18:46:35.243738",
+  "last_updated": "2026-05-10T02:01:09.364650",
   "total_trades": 62,
   "wins": 12,
-  "losses": 23,
-  "total_pnl": -247.75637117662663
+  "losses": 24,
+  "total_pnl": -272.75637117662666
 }
