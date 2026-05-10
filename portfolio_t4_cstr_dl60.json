@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 500,
-  "bankroll_current": 502.0646518712608,
+  "bankroll_current": 452.0646518712608,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -392,12 +392,12 @@
       "shares": 98.51485148514851,
       "cluster": "china",
       "expected_close": "2026-05-31",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.505,
-      "price_yes_current": 0.495
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-05-10 18:48",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "2109772",
@@ -414,8 +414,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.6275,
-      "price_yes_current": 0.3725
+      "current_price": 0.978,
+      "price_yes_current": 0.022
     },
     {
       "market_id": "1455627",
@@ -432,8 +432,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.375,
-      "price_yes_current": 0.625
+      "current_price": 0.37,
+      "price_yes_current": 0.63
     },
     {
       "market_id": "2037919",
@@ -450,8 +450,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.355,
-      "price_yes_current": 0.645
+      "current_price": 0.345,
+      "price_yes_current": 0.655
     },
     {
       "market_id": "2053635",
@@ -486,8 +486,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.675,
-      "price_yes_current": 0.325
+      "current_price": 0.765,
+      "price_yes_current": 0.235
     },
     {
       "market_id": "569368",
@@ -504,8 +504,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.585,
-      "price_yes_current": 0.415
+      "current_price": 0.615,
+      "price_yes_current": 0.385
     }
   ],
   "closed_trades": [
@@ -850,12 +850,30 @@
       "pnl": 44.76190476190476,
       "current_price": 1.0,
       "price_yes_current": 0.0
+    },
+    {
+      "market_id": "1931455",
+      "question": "Will EDward Gaming win VCT 2026: China League Stage 1?",
+      "token_id": "29590681545697006035717806364535302381125748677118739004477469300250831692873",
+      "bet_side": "NO",
+      "entry_date": "2026-04-12 01:45",
+      "entry_price": 0.505,
+      "size_usd": 50,
+      "shares": 98.51485148514851,
+      "cluster": "china",
+      "expected_close": "2026-05-31",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-05-10 18:48",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329114",
-  "last_updated": "2026-05-10T12:58:44.123834",
+  "last_updated": "2026-05-10T18:48:48.132591",
   "total_trades": 28,
   "wins": 8,
-  "losses": 11,
-  "total_pnl": 2.0646518712608497
+  "losses": 12,
+  "total_pnl": -47.93534812873915
 }
