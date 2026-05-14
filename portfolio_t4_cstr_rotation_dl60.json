@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 500,
-  "bankroll_current": 523.811248343709,
+  "bankroll_current": 473.81124834370905,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -342,8 +342,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.825,
-      "price_yes_current": 0.175
+      "current_price": 0.84,
+      "price_yes_current": 0.16
     },
     {
       "market_id": "1403723",
@@ -504,8 +504,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.645,
-      "price_yes_current": 0.355
+      "current_price": 0.6465000000000001,
+      "price_yes_current": 0.3535
     },
     {
       "market_id": "1559953",
@@ -756,8 +756,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.6,
-      "price_yes_current": 0.4
+      "current_price": 0.9745,
+      "price_yes_current": 0.0255
     },
     {
       "market_id": "2097480",
@@ -774,8 +774,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.74,
-      "price_yes_current": 0.26
+      "current_price": 0.7050000000000001,
+      "price_yes_current": 0.295
     },
     {
       "market_id": "2037919",
@@ -792,8 +792,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.30500000000000005,
-      "price_yes_current": 0.695
+      "current_price": 0.31999999999999995,
+      "price_yes_current": 0.68
     },
     {
       "market_id": "1931455",
@@ -828,8 +828,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.874,
-      "price_yes_current": 0.126
+      "current_price": 0.8805000000000001,
+      "price_yes_current": 0.1195
     },
     {
       "market_id": "2053635",
@@ -860,12 +860,12 @@
       "shares": 132.66666666666666,
       "cluster": "europe",
       "expected_close": "2026-06-30",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.006000000000000005,
-      "price_yes_current": 0.994
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-05-14 19:28",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "569368",
@@ -1606,12 +1606,30 @@
       "pnl": -50,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1455627",
+      "question": "UK Cabinet Minister resigns by June 30, 2026?",
+      "token_id": "70542586153092501016827975677910906398166526559749986075137478060888474943624",
+      "bet_side": "NO",
+      "entry_date": "2026-05-03 01:57",
+      "entry_price": 0.375,
+      "size_usd": 50,
+      "shares": 132.66666666666666,
+      "cluster": "europe",
+      "expected_close": "2026-06-30",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-05-14 19:28",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329124",
-  "last_updated": "2026-05-14T13:46:10.020500",
+  "last_updated": "2026-05-14T19:28:49.344637",
   "total_trades": 49,
   "wins": 18,
-  "losses": 22,
-  "total_pnl": 23.811248343709067
+  "losses": 23,
+  "total_pnl": -26.188751656290933
 }
