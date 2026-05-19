@@ -288,8 +288,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.72,
-      "price_yes_current": 0.28
+      "current_price": 0.675,
+      "price_yes_current": 0.325
     },
     {
       "market_id": "661699",
@@ -342,8 +342,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.355,
-      "price_yes_current": 0.645
+      "current_price": 0.35,
+      "price_yes_current": 0.65
     },
     {
       "market_id": "677397",
@@ -540,8 +540,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.79,
-      "price_yes_current": 0.21
+      "current_price": 0.81,
+      "price_yes_current": 0.19
     },
     {
       "market_id": "682705",
@@ -594,8 +594,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.785,
-      "price_yes_current": 0.215
+      "current_price": 0.775,
+      "price_yes_current": 0.225
     },
     {
       "market_id": "1439530",
@@ -648,8 +648,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.7050000000000001,
-      "price_yes_current": 0.295
+      "current_price": 0.7150000000000001,
+      "price_yes_current": 0.285
     },
     {
       "market_id": "677366",
@@ -666,8 +666,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.25,
-      "price_yes_current": 0.75
+      "current_price": 0.255,
+      "price_yes_current": 0.745
     },
     {
       "market_id": "1707841",
@@ -720,8 +720,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.74,
-      "price_yes_current": 0.26
+      "current_price": 0.665,
+      "price_yes_current": 0.335
     },
     {
       "market_id": "1487673",
@@ -774,8 +774,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.69,
-      "price_yes_current": 0.31
+      "current_price": 0.665,
+      "price_yes_current": 0.335
     },
     {
       "market_id": "678746",
@@ -810,8 +810,26 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.32499999999999996,
-      "price_yes_current": 0.675
+      "current_price": 0.31499999999999995,
+      "price_yes_current": 0.685
+    },
+    {
+      "market_id": "1117222",
+      "question": "Miguel D\u00edaz-Canel out as leader of Cuba by December 31?",
+      "token_id": "72095897215599895681149701722606364539867186803340437295210002622844727571825",
+      "bet_side": "NO",
+      "entry_date": "2026-05-19 02:27",
+      "entry_price": 0.41500000000000004,
+      "size_usd": 25,
+      "shares": 59.93975903614457,
+      "cluster": "latam",
+      "expected_close": "2026-12-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
     }
   ],
   "closed_trades": [
@@ -1321,8 +1339,8 @@
     }
   ],
   "created_at": "2026-02-08T22:16:55.328996",
-  "last_updated": "2026-05-18T19:25:36.460428",
-  "total_trades": 45,
+  "last_updated": "2026-05-19T02:27:46.104011",
+  "total_trades": 46,
   "wins": 7,
   "losses": 21,
   "total_pnl": -242.16276014290287
