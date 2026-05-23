@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 1123.7776088213272,
+  "bankroll_current": 1131.7965178402364,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -1548,8 +1548,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.762,
-      "price_yes_current": 0.238
+      "current_price": 0.7605,
+      "price_yes_current": 0.2395
     },
     {
       "market_id": "1117230",
@@ -2358,8 +2358,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.968,
-      "price_yes_current": 0.032
+      "current_price": 0.969,
+      "price_yes_current": 0.031
     },
     {
       "market_id": "1439532",
@@ -2412,8 +2412,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.17500000000000004,
-      "price_yes_current": 0.825
+      "current_price": 0.19499999999999995,
+      "price_yes_current": 0.805
     },
     {
       "market_id": "1418679",
@@ -2826,8 +2826,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.88,
-      "price_yes_current": 0.12
+      "current_price": 0.875,
+      "price_yes_current": 0.125
     },
     {
       "market_id": "1568565",
@@ -3974,12 +3974,12 @@
       "shares": 8.504273504273504,
       "cluster": "other",
       "expected_close": "2026-05-23",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.56,
-      "price_yes_current": 0.44
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-05-23 13:02",
+      "pnl": 3.5042735042735043,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1835807",
@@ -3992,12 +3992,12 @@
       "shares": 7.834645669291338,
       "cluster": "other",
       "expected_close": "2026-05-23",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9675,
-      "price_yes_current": 0.0325
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-05-23 13:02",
+      "pnl": -5.0,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "1835809",
@@ -4010,12 +4010,12 @@
       "shares": 7.896825396825396,
       "cluster": "other",
       "expected_close": "2026-05-23",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.62,
-      "price_yes_current": 0.38
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-05-23 13:02",
+      "pnl": 2.8968253968253963,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1835811",
@@ -4028,12 +4028,12 @@
       "shares": 7.653846153846153,
       "cluster": "other",
       "expected_close": "2026-05-23",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.985,
-      "price_yes_current": 0.015
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-05-23 13:02",
+      "pnl": 2.6538461538461533,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1835808",
@@ -4046,12 +4046,12 @@
       "shares": 8.963963963963964,
       "cluster": "other",
       "expected_close": "2026-05-23",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.995,
-      "price_yes_current": 0.005
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-05-23 13:02",
+      "pnl": 3.9639639639639643,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1692994",
@@ -4302,8 +4302,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.86,
-      "price_yes_current": 0.14
+      "current_price": 0.855,
+      "price_yes_current": 0.145
     },
     {
       "market_id": "1455627",
@@ -5256,8 +5256,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.95,
-      "price_yes_current": 0.05
+      "current_price": 0.9535,
+      "price_yes_current": 0.0465
     },
     {
       "market_id": "1959800",
@@ -5292,8 +5292,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.665,
-      "price_yes_current": 0.335
+      "current_price": 0.675,
+      "price_yes_current": 0.325
     },
     {
       "market_id": "957019",
@@ -5310,8 +5310,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.795,
-      "price_yes_current": 0.205
+      "current_price": 0.81,
+      "price_yes_current": 0.19
     },
     {
       "market_id": "1992560",
@@ -6318,8 +6318,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.19499999999999995,
-      "price_yes_current": 0.805
+      "current_price": 0.21999999999999997,
+      "price_yes_current": 0.78
     },
     {
       "market_id": "2039534",
@@ -6336,8 +6336,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.8,
-      "price_yes_current": 0.2
+      "current_price": 0.79,
+      "price_yes_current": 0.21
     },
     {
       "market_id": "2039535",
@@ -6354,8 +6354,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.5,
-      "price_yes_current": 0.5
+      "current_price": 0.56,
+      "price_yes_current": 0.44
     },
     {
       "market_id": "2039537",
@@ -6408,8 +6408,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.795,
-      "price_yes_current": 0.205
+      "current_price": 0.81,
+      "price_yes_current": 0.19
     },
     {
       "market_id": "2037917",
@@ -6444,8 +6444,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.235,
-      "price_yes_current": 0.765
+      "current_price": 0.22999999999999998,
+      "price_yes_current": 0.77
     },
     {
       "market_id": "2039536",
@@ -6534,8 +6534,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.81,
-      "price_yes_current": 0.19
+      "current_price": 0.864,
+      "price_yes_current": 0.136
     },
     {
       "market_id": "2053919",
@@ -6552,8 +6552,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9275,
-      "price_yes_current": 0.0725
+      "current_price": 0.9415,
+      "price_yes_current": 0.0585
     },
     {
       "market_id": "2053635",
@@ -6570,8 +6570,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.8049999999999999,
-      "price_yes_current": 0.195
+      "current_price": 0.81,
+      "price_yes_current": 0.19
     },
     {
       "market_id": "1973434",
@@ -6606,8 +6606,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.945,
-      "price_yes_current": 0.055
+      "current_price": 0.94,
+      "price_yes_current": 0.06
     },
     {
       "market_id": "2047653",
@@ -6624,8 +6624,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9845,
-      "price_yes_current": 0.0155
+      "current_price": 0.9885,
+      "price_yes_current": 0.0115
     },
     {
       "market_id": "2039533",
@@ -6642,8 +6642,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.845,
-      "price_yes_current": 0.155
+      "current_price": 0.8049999999999999,
+      "price_yes_current": 0.195
     },
     {
       "market_id": "2039532",
@@ -6660,8 +6660,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9575,
-      "price_yes_current": 0.0425
+      "current_price": 0.9475,
+      "price_yes_current": 0.0525
     },
     {
       "market_id": "2039648",
@@ -6678,8 +6678,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.7455,
-      "price_yes_current": 0.2545
+      "current_price": 0.7475,
+      "price_yes_current": 0.2525
     },
     {
       "market_id": "2035734",
@@ -6714,8 +6714,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.977,
-      "price_yes_current": 0.023
+      "current_price": 0.9795,
+      "price_yes_current": 0.0205
     },
     {
       "market_id": "1986890",
@@ -6750,8 +6750,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9565,
-      "price_yes_current": 0.0435
+      "current_price": 0.9555,
+      "price_yes_current": 0.0445
     },
     {
       "market_id": "994858",
@@ -6768,8 +6768,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9275,
-      "price_yes_current": 0.0725
+      "current_price": 0.5589999999999999,
+      "price_yes_current": 0.441
     },
     {
       "market_id": "1194305",
@@ -6822,8 +6822,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.971,
-      "price_yes_current": 0.029
+      "current_price": 0.9685,
+      "price_yes_current": 0.0315
     },
     {
       "market_id": "2107957",
@@ -6894,8 +6894,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9535,
-      "price_yes_current": 0.0465
+      "current_price": 0.9525,
+      "price_yes_current": 0.0475
     },
     {
       "market_id": "2159882",
@@ -6930,8 +6930,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.895,
-      "price_yes_current": 0.105
+      "current_price": 0.885,
+      "price_yes_current": 0.115
     },
     {
       "market_id": "2166651",
@@ -6948,8 +6948,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.515,
-      "price_yes_current": 0.485
+      "current_price": 0.5449999999999999,
+      "price_yes_current": 0.455
     },
     {
       "market_id": "2169751",
@@ -6966,8 +6966,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9935,
-      "price_yes_current": 0.0065
+      "current_price": 0.992,
+      "price_yes_current": 0.008
     },
     {
       "market_id": "2232280",
@@ -7020,8 +7020,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.44499999999999995,
-      "price_yes_current": 0.555
+      "current_price": 0.395,
+      "price_yes_current": 0.605
     }
   ],
   "closed_trades": [
@@ -12604,12 +12604,102 @@
       "pnl": 3.9639639639639643,
       "current_price": 1.0,
       "price_yes_current": 0.0
+    },
+    {
+      "market_id": "1835787",
+      "question": "Will \"UN-APEX\" by TK from Ling Tosite Sigure (Solo Leveling Season 2 -Arise from the Shadow-) win Best Anime Ending Sequ",
+      "token_id": "39403498552119818574801009671633881664428554277057635798667094515573630608633",
+      "bet_side": "NO",
+      "entry_date": "2026-04-05 06:57",
+      "entry_price": 0.585,
+      "size_usd": 5.0,
+      "shares": 8.504273504273504,
+      "cluster": "other",
+      "expected_close": "2026-05-23",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-05-23 13:02",
+      "pnl": 3.5042735042735043,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
+    },
+    {
+      "market_id": "1835807",
+      "question": "Will Aoi Yuki as Maomao (The Apothecary Diaries Season 2) win Best Anime Voice Artist Performance (Japanese) at the 2026",
+      "token_id": "15595918662106131874997423848611856953544666825333980163279328785472823208555",
+      "bet_side": "NO",
+      "entry_date": "2026-04-05 06:57",
+      "entry_price": 0.635,
+      "size_usd": 5.0,
+      "shares": 7.834645669291338,
+      "cluster": "other",
+      "expected_close": "2026-05-23",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-05-23 13:02",
+      "pnl": -5.0,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1835809",
+      "question": "Will Daiki Yamashita as Izuku Midoriya (My Hero Academia FINAL SEASON) win Best Anime Voice Artist Performance (Japanese",
+      "token_id": "80100373283130581236015775083450922828220428150056212345843871716236519928308",
+      "bet_side": "NO",
+      "entry_date": "2026-04-05 06:57",
+      "entry_price": 0.63,
+      "size_usd": 5.0,
+      "shares": 7.896825396825396,
+      "cluster": "other",
+      "expected_close": "2026-05-23",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-05-23 13:02",
+      "pnl": 2.8968253968253963,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
+    },
+    {
+      "market_id": "1835811",
+      "question": "Will Mayumi Tanaka as Monkey D. Luffy (ONE PIECE) win Best Anime Voice Artist Performance (Japanese) at the 2026 Crunchy",
+      "token_id": "77485283291235560096520921781108921866854575859201810039572236167560228695257",
+      "bet_side": "NO",
+      "entry_date": "2026-04-05 06:57",
+      "entry_price": 0.65,
+      "size_usd": 5.0,
+      "shares": 7.653846153846153,
+      "cluster": "other",
+      "expected_close": "2026-05-23",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-05-23 13:02",
+      "pnl": 2.6538461538461533,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
+    },
+    {
+      "market_id": "1835808",
+      "question": "Will Chiaki Kobayashi as Yoshiki Tsujinaka (The Summer Hikaru Died) win Best Anime Voice Artist Performance (Japanese) a",
+      "token_id": "100871758377063547943333955746716283219403884893610971040376102528167983269140",
+      "bet_side": "NO",
+      "entry_date": "2026-04-05 06:57",
+      "entry_price": 0.5549999999999999,
+      "size_usd": 5.0,
+      "shares": 8.963963963963964,
+      "cluster": "other",
+      "expected_close": "2026-05-23",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-05-23 13:02",
+      "pnl": 3.9639639639639643,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329149",
-  "last_updated": "2026-05-23T08:06:40.402161",
+  "last_updated": "2026-05-23T13:02:02.364006",
   "total_trades": 390,
-  "wins": 178,
-  "losses": 132,
-  "total_pnl": 123.77760882132735
+  "wins": 182,
+  "losses": 133,
+  "total_pnl": 131.79651784023636
 }

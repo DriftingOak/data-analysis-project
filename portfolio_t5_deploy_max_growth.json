@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 811.4461937643346,
+  "bankroll_current": 899.329750019252,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -702,8 +702,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.968,
-      "price_yes_current": 0.032
+      "current_price": 0.969,
+      "price_yes_current": 0.031
     },
     {
       "market_id": "1437281",
@@ -1332,8 +1332,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.845,
-      "price_yes_current": 0.155
+      "current_price": 0.8049999999999999,
+      "price_yes_current": 0.195
     },
     {
       "market_id": "2039536",
@@ -1368,8 +1368,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.971,
-      "price_yes_current": 0.029
+      "current_price": 0.9685,
+      "price_yes_current": 0.0315
     },
     {
       "market_id": "2039535",
@@ -1386,8 +1386,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.5,
-      "price_yes_current": 0.5
+      "current_price": 0.56,
+      "price_yes_current": 0.44
     },
     {
       "market_id": "1835811",
@@ -1400,12 +1400,12 @@
       "shares": 106.98924731182797,
       "cluster": "other",
       "expected_close": "2026-05-23",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.985,
-      "price_yes_current": 0.015
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-05-23 13:02",
+      "pnl": 56.98924731182797,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "2037917",
@@ -1440,8 +1440,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.235,
-      "price_yes_current": 0.765
+      "current_price": 0.22999999999999998,
+      "price_yes_current": 0.77
     },
     {
       "market_id": "1835809",
@@ -1454,12 +1454,12 @@
       "shares": 80.89430894308943,
       "cluster": "other",
       "expected_close": "2026-05-23",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.62,
-      "price_yes_current": 0.38
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-05-23 13:02",
+      "pnl": 30.894308943089428,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "2039645",
@@ -1476,8 +1476,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.81,
-      "price_yes_current": 0.19
+      "current_price": 0.864,
+      "price_yes_current": 0.136
     },
     {
       "market_id": "2053635",
@@ -1494,8 +1494,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.8049999999999999,
-      "price_yes_current": 0.195
+      "current_price": 0.81,
+      "price_yes_current": 0.19
     },
     {
       "market_id": "540816",
@@ -1514,6 +1514,42 @@
       "pnl": -50,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "994858",
+      "question": "Sudan civil war ceasefire by June 30, 2026?",
+      "token_id": "2433662050647517706323359615496513605357547934153481879606183024436021971628",
+      "bet_side": "NO",
+      "entry_date": "2026-05-23 13:02",
+      "entry_price": 0.5589999999999999,
+      "size_usd": 50,
+      "shares": 88.99821109123435,
+      "cluster": "africa",
+      "expected_close": "2026-06-30",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "540843",
+      "question": "Will China invades Taiwan before GTA VI?",
+      "token_id": "17516427576383382756368467656206258206490015951115433065318503962238754362428",
+      "bet_side": "NO",
+      "entry_date": "2026-05-23 13:02",
+      "entry_price": 0.495,
+      "size_usd": 50,
+      "shares": 100.5050505050505,
+      "cluster": "china",
+      "expected_close": "2026-07-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
     }
   ],
   "closed_trades": [
@@ -2776,12 +2812,48 @@
       "pnl": -50,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1835811",
+      "question": "Will Mayumi Tanaka as Monkey D. Luffy (ONE PIECE) win Best Anime Voice Artist Performance (Japanese) at the 2026 Crunchy",
+      "token_id": "77485283291235560096520921781108921866854575859201810039572236167560228695257",
+      "bet_side": "NO",
+      "entry_date": "2026-05-01 08:03",
+      "entry_price": 0.46499999999999997,
+      "size_usd": 50,
+      "shares": 106.98924731182797,
+      "cluster": "other",
+      "expected_close": "2026-05-23",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-05-23 13:02",
+      "pnl": 56.98924731182797,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
+    },
+    {
+      "market_id": "1835809",
+      "question": "Will Daiki Yamashita as Izuku Midoriya (My Hero Academia FINAL SEASON) win Best Anime Voice Artist Performance (Japanese",
+      "token_id": "80100373283130581236015775083450922828220428150056212345843871716236519928308",
+      "bet_side": "NO",
+      "entry_date": "2026-05-04 08:19",
+      "entry_price": 0.615,
+      "size_usd": 50,
+      "shares": 80.89430894308943,
+      "cluster": "other",
+      "expected_close": "2026-05-23",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-05-23 13:02",
+      "pnl": 30.894308943089428,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329192",
-  "last_updated": "2026-05-23T08:06:40.487089",
-  "total_trades": 84,
-  "wins": 36,
+  "last_updated": "2026-05-23T13:02:02.449672",
+  "total_trades": 86,
+  "wins": 38,
   "losses": 34,
-  "total_pnl": -188.55380623566543
+  "total_pnl": -100.67024998074804
 }

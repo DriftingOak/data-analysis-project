@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 727.2436288233733,
+  "bankroll_current": 758.1425052278678,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -18,8 +18,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.815,
-      "price_yes_current": 0.185
+      "current_price": 0.785,
+      "price_yes_current": 0.215
     },
     {
       "market_id": "1117207",
@@ -72,8 +72,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.35,
-      "price_yes_current": 0.65
+      "current_price": 0.355,
+      "price_yes_current": 0.645
     },
     {
       "market_id": "1301486",
@@ -126,8 +126,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.405,
-      "price_yes_current": 0.595
+      "current_price": 0.395,
+      "price_yes_current": 0.605
     },
     {
       "market_id": "1221318",
@@ -162,8 +162,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.64,
-      "price_yes_current": 0.36
+      "current_price": 0.625,
+      "price_yes_current": 0.375
     },
     {
       "market_id": "1277913",
@@ -360,8 +360,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.6950000000000001,
-      "price_yes_current": 0.305
+      "current_price": 0.7150000000000001,
+      "price_yes_current": 0.285
     },
     {
       "market_id": "958427",
@@ -450,8 +450,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.615,
-      "price_yes_current": 0.385
+      "current_price": 0.605,
+      "price_yes_current": 0.395
     },
     {
       "market_id": "567687",
@@ -504,8 +504,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.635,
-      "price_yes_current": 0.365
+      "current_price": 0.645,
+      "price_yes_current": 0.355
     },
     {
       "market_id": "1106634",
@@ -522,8 +522,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.755,
-      "price_yes_current": 0.245
+      "current_price": 0.775,
+      "price_yes_current": 0.225
     },
     {
       "market_id": "825457",
@@ -540,8 +540,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.968,
-      "price_yes_current": 0.032
+      "current_price": 0.969,
+      "price_yes_current": 0.031
     },
     {
       "market_id": "569366",
@@ -558,8 +558,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.44499999999999995,
-      "price_yes_current": 0.555
+      "current_price": 0.395,
+      "price_yes_current": 0.605
     },
     {
       "market_id": "1333270",
@@ -648,8 +648,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9275,
-      "price_yes_current": 0.0725
+      "current_price": 0.5589999999999999,
+      "price_yes_current": 0.441
     },
     {
       "market_id": "1198592",
@@ -738,8 +738,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.17500000000000004,
-      "price_yes_current": 0.825
+      "current_price": 0.19499999999999995,
+      "price_yes_current": 0.805
     },
     {
       "market_id": "1117230",
@@ -792,8 +792,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.905,
-      "price_yes_current": 0.095
+      "current_price": 0.895,
+      "price_yes_current": 0.105
     },
     {
       "market_id": "1397281",
@@ -1044,8 +1044,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.5,
-      "price_yes_current": 0.5
+      "current_price": 0.505,
+      "price_yes_current": 0.495
     },
     {
       "market_id": "569373",
@@ -1062,8 +1062,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9125,
-      "price_yes_current": 0.0875
+      "current_price": 0.9355,
+      "price_yes_current": 0.0645
     },
     {
       "market_id": "2037919",
@@ -1080,8 +1080,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.235,
-      "price_yes_current": 0.765
+      "current_price": 0.22999999999999998,
+      "price_yes_current": 0.77
     },
     {
       "market_id": "1835811",
@@ -1094,12 +1094,12 @@
       "shares": 55.89887640449439,
       "cluster": "other",
       "expected_close": "2026-05-23",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.985,
-      "price_yes_current": 0.015
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-05-23 13:02",
+      "pnl": 30.898876404494388,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "2169833",
@@ -1116,8 +1116,44 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.895,
-      "price_yes_current": 0.105
+      "current_price": 0.885,
+      "price_yes_current": 0.115
+    },
+    {
+      "market_id": "567688",
+      "question": "Netanyahu out by end of 2026?",
+      "token_id": "66255671088804707681511323064315150986307471908131081808279119719218775249892",
+      "bet_side": "NO",
+      "entry_date": "2026-05-23 13:02",
+      "entry_price": 0.565,
+      "size_usd": 25,
+      "shares": 44.02654867256638,
+      "cluster": "mideast",
+      "expected_close": "2026-12-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "678748",
+      "question": "Will Israel strike 5 countries in 2026?",
+      "token_id": "20455173427364356838408585209910046941012545528098916344397103955053233725093",
+      "bet_side": "NO",
+      "entry_date": "2026-05-23 13:02",
+      "entry_price": 0.591,
+      "size_usd": 25,
+      "shares": 42.08967851099831,
+      "cluster": "mideast",
+      "expected_close": "2026-12-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
     }
   ],
   "closed_trades": [
@@ -1768,12 +1804,30 @@
       "pnl": -25,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1835811",
+      "question": "Will Mayumi Tanaka as Monkey D. Luffy (ONE PIECE) win Best Anime Voice Artist Performance (Japanese) at the 2026 Crunchy",
+      "token_id": "77485283291235560096520921781108921866854575859201810039572236167560228695257",
+      "bet_side": "NO",
+      "entry_date": "2026-05-04 08:19",
+      "entry_price": 0.44499999999999995,
+      "size_usd": 25,
+      "shares": 55.89887640449439,
+      "cluster": "other",
+      "expected_close": "2026-05-23",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-05-23 13:02",
+      "pnl": 30.898876404494388,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.328980",
-  "last_updated": "2026-05-23T08:06:40.232472",
-  "total_trades": 62,
-  "wins": 12,
+  "last_updated": "2026-05-23T13:02:02.191834",
+  "total_trades": 64,
+  "wins": 13,
   "losses": 24,
-  "total_pnl": -272.75637117662666
+  "total_pnl": -241.85749477213227
 }

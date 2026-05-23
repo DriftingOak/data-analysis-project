@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 500,
-  "bankroll_current": 402.0646518712608,
+  "bankroll_current": 463.8624046802496,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -414,8 +414,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.971,
-      "price_yes_current": 0.029
+      "current_price": 0.9685,
+      "price_yes_current": 0.0315
     },
     {
       "market_id": "1455627",
@@ -450,8 +450,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.235,
-      "price_yes_current": 0.765
+      "current_price": 0.22999999999999998,
+      "price_yes_current": 0.77
     },
     {
       "market_id": "2053635",
@@ -468,8 +468,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.8049999999999999,
-      "price_yes_current": 0.195
+      "current_price": 0.81,
+      "price_yes_current": 0.19
     },
     {
       "market_id": "1835811",
@@ -482,12 +482,12 @@
       "shares": 111.79775280898878,
       "cluster": "other",
       "expected_close": "2026-05-23",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.985,
-      "price_yes_current": 0.015
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-05-23 13:02",
+      "pnl": 61.797752808988776,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "569368",
@@ -504,8 +504,44 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.635,
-      "price_yes_current": 0.365
+      "current_price": 0.645,
+      "price_yes_current": 0.355
+    },
+    {
+      "market_id": "1911805",
+      "question": "Will Trump attend NATO Summit?",
+      "token_id": "87965406190444435272170809622140945691391816988039603983609241847568810131207",
+      "bet_side": "NO",
+      "entry_date": "2026-05-23 13:02",
+      "entry_price": 0.21999999999999997,
+      "size_usd": 50,
+      "shares": 226.13636363636365,
+      "cluster": "europe",
+      "expected_close": "2026-07-08",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "994858",
+      "question": "Sudan civil war ceasefire by June 30, 2026?",
+      "token_id": "2433662050647517706323359615496513605357547934153481879606183024436021971628",
+      "bet_side": "NO",
+      "entry_date": "2026-05-23 13:02",
+      "entry_price": 0.5589999999999999,
+      "size_usd": 50,
+      "shares": 88.99821109123435,
+      "cluster": "africa",
+      "expected_close": "2026-06-30",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
     }
   ],
   "closed_trades": [
@@ -886,12 +922,30 @@
       "pnl": -50,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1835811",
+      "question": "Will Mayumi Tanaka as Monkey D. Luffy (ONE PIECE) win Best Anime Voice Artist Performance (Japanese) at the 2026 Crunchy",
+      "token_id": "77485283291235560096520921781108921866854575859201810039572236167560228695257",
+      "bet_side": "NO",
+      "entry_date": "2026-05-04 08:19",
+      "entry_price": 0.44499999999999995,
+      "size_usd": 50,
+      "shares": 111.79775280898878,
+      "cluster": "other",
+      "expected_close": "2026-05-23",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-05-23 13:02",
+      "pnl": 61.797752808988776,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329114",
-  "last_updated": "2026-05-23T08:06:40.375309",
-  "total_trades": 28,
-  "wins": 8,
+  "last_updated": "2026-05-23T13:02:02.335411",
+  "total_trades": 30,
+  "wins": 9,
   "losses": 13,
-  "total_pnl": -97.93534812873915
+  "total_pnl": -36.137595319750375
 }
