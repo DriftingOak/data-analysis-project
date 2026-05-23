@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 500,
-  "bankroll_current": 473.81124834370905,
+  "bankroll_current": 423.81124834370905,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -342,8 +342,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.865,
-      "price_yes_current": 0.135
+      "current_price": 0.86,
+      "price_yes_current": 0.14
     },
     {
       "market_id": "1403723",
@@ -504,8 +504,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.7665,
-      "price_yes_current": 0.2335
+      "current_price": 0.77,
+      "price_yes_current": 0.23
     },
     {
       "market_id": "1559953",
@@ -770,12 +770,12 @@
       "shares": 127.56410256410255,
       "cluster": "other",
       "expected_close": "2026-05-31",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.0020000000000000018,
-      "price_yes_current": 0.998
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-05-23 02:06",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "2037919",
@@ -792,8 +792,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.20999999999999996,
-      "price_yes_current": 0.79
+      "current_price": 0.235,
+      "price_yes_current": 0.765
     },
     {
       "market_id": "1931455",
@@ -828,8 +828,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9390000000000001,
-      "price_yes_current": 0.061
+      "current_price": 0.949,
+      "price_yes_current": 0.051
     },
     {
       "market_id": "2053635",
@@ -846,8 +846,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.745,
-      "price_yes_current": 0.255
+      "current_price": 0.79,
+      "price_yes_current": 0.21
     },
     {
       "market_id": "1455627",
@@ -882,8 +882,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.625,
-      "price_yes_current": 0.375
+      "current_price": 0.635,
+      "price_yes_current": 0.365
     }
   ],
   "closed_trades": [
@@ -1624,12 +1624,30 @@
       "pnl": -50,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "2097480",
+      "question": "Major US official out by May 31?",
+      "token_id": "778850816671884507713450391193890060449214772894382113937294625756084213356",
+      "bet_side": "NO",
+      "entry_date": "2026-05-01 08:03",
+      "entry_price": 0.39,
+      "size_usd": 50,
+      "shares": 127.56410256410255,
+      "cluster": "other",
+      "expected_close": "2026-05-31",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-05-23 02:06",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329124",
-  "last_updated": "2026-05-22T19:23:49.472589",
+  "last_updated": "2026-05-23T02:06:40.226221",
   "total_trades": 49,
   "wins": 18,
-  "losses": 23,
-  "total_pnl": -26.188751656290933
+  "losses": 24,
+  "total_pnl": -76.18875165629093
 }
