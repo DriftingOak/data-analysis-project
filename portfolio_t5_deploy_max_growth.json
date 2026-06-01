@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 849.329750019252,
+  "bankroll_current": 930.2508026508309,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -36,8 +36,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.845,
-      "price_yes_current": 0.155
+      "current_price": 0.835,
+      "price_yes_current": 0.165
     },
     {
       "market_id": "1277912",
@@ -702,8 +702,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9845,
-      "price_yes_current": 0.0155
+      "current_price": 0.989,
+      "price_yes_current": 0.011
     },
     {
       "market_id": "1437281",
@@ -1332,8 +1332,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.992,
-      "price_yes_current": 0.008
+      "current_price": 0.958,
+      "price_yes_current": 0.042
     },
     {
       "market_id": "2039536",
@@ -1350,8 +1350,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.015000000000000013,
-      "price_yes_current": 0.985
+      "current_price": 0.015499999999999958,
+      "price_yes_current": 0.9845
     },
     {
       "market_id": "2109772",
@@ -1422,8 +1422,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9935,
-      "price_yes_current": 0.0065
+      "current_price": 0.995,
+      "price_yes_current": 0.005
     },
     {
       "market_id": "2037919",
@@ -1440,8 +1440,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9955,
-      "price_yes_current": 0.0045
+      "current_price": 0.9915,
+      "price_yes_current": 0.0085
     },
     {
       "market_id": "1835809",
@@ -1476,8 +1476,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.976,
-      "price_yes_current": 0.024
+      "current_price": 0.9865,
+      "price_yes_current": 0.0135
     },
     {
       "market_id": "2053635",
@@ -1530,8 +1530,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9015,
-      "price_yes_current": 0.0985
+      "current_price": 0.9255,
+      "price_yes_current": 0.0745
     },
     {
       "market_id": "540843",
@@ -1566,8 +1566,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.755,
-      "price_yes_current": 0.245
+      "current_price": 0.765,
+      "price_yes_current": 0.235
     },
     {
       "market_id": "1919425",
@@ -1580,12 +1580,12 @@
       "shares": 130.92105263157896,
       "cluster": "mideast",
       "expected_close": "2026-05-31",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9995,
-      "price_yes_current": 0.0005
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-06-01 17:18",
+      "pnl": 80.92105263157896,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "closed_trades": [
@@ -2902,12 +2902,30 @@
       "pnl": -50,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1919425",
+      "question": "US x Iran permanent peace deal by May 31, 2026?",
+      "token_id": "42918220085288219341491829385501246298233444593663440094436147850542032590016",
+      "bet_side": "NO",
+      "entry_date": "2026-05-24 02:15",
+      "entry_price": 0.38,
+      "size_usd": 50,
+      "shares": 130.92105263157896,
+      "cluster": "mideast",
+      "expected_close": "2026-05-31",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-06-01 17:18",
+      "pnl": 80.92105263157896,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329192",
-  "last_updated": "2026-06-01T11:10:17.698666",
+  "last_updated": "2026-06-01T17:18:15.289116",
   "total_trades": 88,
-  "wins": 38,
+  "wins": 39,
   "losses": 35,
-  "total_pnl": -150.67024998074805
+  "total_pnl": -69.7491973491691
 }
