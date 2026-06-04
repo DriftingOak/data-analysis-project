@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 500,
-  "bankroll_current": 465.84323069827207,
+  "bankroll_current": 516.3482812033226,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -504,8 +504,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.7915,
-      "price_yes_current": 0.2085
+      "current_price": 0.7905,
+      "price_yes_current": 0.2095
     },
     {
       "market_id": "1559953",
@@ -788,12 +788,12 @@
       "shares": 100.5050505050505,
       "cluster": "latam",
       "expected_close": "2026-05-31",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9945,
-      "price_yes_current": 0.0055
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-06-04 09:43",
+      "pnl": 50.505050505050505,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1931455",
@@ -882,8 +882,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.815,
-      "price_yes_current": 0.185
+      "current_price": 0.825,
+      "price_yes_current": 0.175
     },
     {
       "market_id": "1911805",
@@ -900,8 +900,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.06999999999999995,
-      "price_yes_current": 0.93
+      "current_price": 0.12,
+      "price_yes_current": 0.88
     },
     {
       "market_id": "994858",
@@ -918,8 +918,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.8634999999999999,
-      "price_yes_current": 0.1365
+      "current_price": 0.8975,
+      "price_yes_current": 0.1025
     },
     {
       "market_id": "540843",
@@ -1750,12 +1750,30 @@
       "pnl": 35.042735042735046,
       "current_price": 1.0,
       "price_yes_current": 0.0
+    },
+    {
+      "market_id": "2037919",
+      "question": "Will Abelardo de la Espriella place 2nd in the 1st round of the 2026 Colombian presidential election?",
+      "token_id": "102079623168623471273840290882862058479284336255106205460876708374644120043097",
+      "bet_side": "NO",
+      "entry_date": "2026-05-01 08:03",
+      "entry_price": 0.495,
+      "size_usd": 50,
+      "shares": 100.5050505050505,
+      "cluster": "latam",
+      "expected_close": "2026-05-31",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-06-04 09:43",
+      "pnl": 50.505050505050505,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329124",
-  "last_updated": "2026-06-04T02:45:32.021733",
+  "last_updated": "2026-06-04T09:43:52.881638",
   "total_trades": 52,
-  "wins": 20,
+  "wins": 21,
   "losses": 25,
-  "total_pnl": -34.15676930172792
+  "total_pnl": 16.348281203322585
 }

@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 965.2935376935659,
+  "bankroll_current": 1048.8879283775088,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -1296,8 +1296,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.06499999999999995,
-      "price_yes_current": 0.935
+      "current_price": 0.51,
+      "price_yes_current": 0.49
     },
     {
       "market_id": "2024097",
@@ -1332,8 +1332,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9795,
-      "price_yes_current": 0.0205
+      "current_price": 0.979,
+      "price_yes_current": 0.021
     },
     {
       "market_id": "2039536",
@@ -1350,8 +1350,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.02849999999999997,
-      "price_yes_current": 0.9715
+      "current_price": 0.05249999999999999,
+      "price_yes_current": 0.9475
     },
     {
       "market_id": "2109772",
@@ -1386,8 +1386,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.986,
-      "price_yes_current": 0.014
+      "current_price": 0.9895,
+      "price_yes_current": 0.0105
     },
     {
       "market_id": "1835811",
@@ -1418,12 +1418,12 @@
       "shares": 74.25373134328359,
       "cluster": "latam",
       "expected_close": "2026-05-31",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9965,
-      "price_yes_current": 0.0035
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-06-04 09:43",
+      "pnl": 24.25373134328359,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "2037919",
@@ -1436,12 +1436,12 @@
       "shares": 109.34065934065936,
       "cluster": "latam",
       "expected_close": "2026-05-31",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9945,
-      "price_yes_current": 0.0055
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-06-04 09:43",
+      "pnl": 59.34065934065936,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1835809",
@@ -1530,8 +1530,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.8634999999999999,
-      "price_yes_current": 0.1365
+      "current_price": 0.8975,
+      "price_yes_current": 0.1025
     },
     {
       "market_id": "540843",
@@ -1566,8 +1566,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.745,
-      "price_yes_current": 0.255
+      "current_price": 0.755,
+      "price_yes_current": 0.245
     },
     {
       "market_id": "1919425",
@@ -2938,12 +2938,48 @@
       "pnl": 35.042735042735046,
       "current_price": 1.0,
       "price_yes_current": 0.0
+    },
+    {
+      "market_id": "2037917",
+      "question": "Will Paloma Valencia place 2nd in the 1st round of the 2026 Colombian presidential election?",
+      "token_id": "40612471379175543257454686269876903661266624554019736329691040922411085126433",
+      "bet_side": "NO",
+      "entry_date": "2026-05-01 08:03",
+      "entry_price": 0.6699999999999999,
+      "size_usd": 50,
+      "shares": 74.25373134328359,
+      "cluster": "latam",
+      "expected_close": "2026-05-31",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-06-04 09:43",
+      "pnl": 24.25373134328359,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
+    },
+    {
+      "market_id": "2037919",
+      "question": "Will Abelardo de la Espriella place 2nd in the 1st round of the 2026 Colombian presidential election?",
+      "token_id": "102079623168623471273840290882862058479284336255106205460876708374644120043097",
+      "bet_side": "NO",
+      "entry_date": "2026-05-03 01:57",
+      "entry_price": 0.45499999999999996,
+      "size_usd": 50,
+      "shares": 109.34065934065936,
+      "cluster": "latam",
+      "expected_close": "2026-05-31",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-06-04 09:43",
+      "pnl": 59.34065934065936,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329192",
-  "last_updated": "2026-06-04T02:45:32.135340",
+  "last_updated": "2026-06-04T09:43:53.007830",
   "total_trades": 88,
-  "wins": 40,
+  "wins": 42,
   "losses": 35,
-  "total_pnl": -34.70646230643405
+  "total_pnl": 48.8879283775089
 }
