@@ -522,8 +522,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.07099999999999995,
-      "price_yes_current": 0.929
+      "current_price": 0.2025,
+      "price_yes_current": 0.7975
     },
     {
       "market_id": "994858",
@@ -540,8 +540,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.879,
-      "price_yes_current": 0.121
+      "current_price": 0.8795,
+      "price_yes_current": 0.1205
     },
     {
       "market_id": "540843",
@@ -1015,7 +1015,7 @@
     }
   ],
   "created_at": "2026-02-08T22:16:55.329114",
-  "last_updated": "2026-06-07T13:22:27.078429",
+  "last_updated": "2026-06-07T19:07:15.268545",
   "total_trades": 31,
   "wins": 11,
   "losses": 14,
