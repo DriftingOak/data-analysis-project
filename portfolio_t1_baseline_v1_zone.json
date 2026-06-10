@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 860.2755781249704,
+  "bankroll_current": 875.722732596515,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -18,8 +18,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.8049999999999999,
-      "price_yes_current": 0.195
+      "current_price": 0.81,
+      "price_yes_current": 0.19
     },
     {
       "market_id": "1117207",
@@ -72,8 +72,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.48,
-      "price_yes_current": 0.52
+      "current_price": 0.44499999999999995,
+      "price_yes_current": 0.555
     },
     {
       "market_id": "1301486",
@@ -162,8 +162,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.665,
-      "price_yes_current": 0.335
+      "current_price": 0.655,
+      "price_yes_current": 0.345
     },
     {
       "market_id": "1277913",
@@ -234,8 +234,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.745,
-      "price_yes_current": 0.255
+      "current_price": 0.755,
+      "price_yes_current": 0.245
     },
     {
       "market_id": "1277912",
@@ -536,12 +536,12 @@
       "shares": 40.447154471544714,
       "cluster": "other",
       "expected_close": "2026-06-02",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9995,
-      "price_yes_current": 0.0005
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-06-10 20:12",
+      "pnl": 15.447154471544714,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "569366",
@@ -594,8 +594,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.935,
-      "price_yes_current": 0.065
+      "current_price": 0.9299999999999999,
+      "price_yes_current": 0.07
     },
     {
       "market_id": "665224",
@@ -648,8 +648,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9395,
-      "price_yes_current": 0.0605
+      "current_price": 0.8734999999999999,
+      "price_yes_current": 0.1265
     },
     {
       "market_id": "1198592",
@@ -792,8 +792,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9655,
-      "price_yes_current": 0.0345
+      "current_price": 0.9645,
+      "price_yes_current": 0.0355
     },
     {
       "market_id": "1397281",
@@ -1044,8 +1044,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.585,
-      "price_yes_current": 0.415
+      "current_price": 0.5900000000000001,
+      "price_yes_current": 0.41
     },
     {
       "market_id": "569373",
@@ -1152,8 +1152,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.593,
-      "price_yes_current": 0.407
+      "current_price": 0.637,
+      "price_yes_current": 0.363
     },
     {
       "market_id": "1397260",
@@ -1170,8 +1170,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.739,
-      "price_yes_current": 0.261
+      "current_price": 0.7475,
+      "price_yes_current": 0.2525
     },
     {
       "market_id": "678777",
@@ -1206,8 +1206,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.61,
-      "price_yes_current": 0.39
+      "current_price": 0.605,
+      "price_yes_current": 0.395
     },
     {
       "market_id": "677356",
@@ -1262,6 +1262,42 @@
       "pnl": null,
       "current_price": 0.72,
       "price_yes_current": 0.28
+    },
+    {
+      "market_id": "1397291",
+      "question": "Will Russia capture all of Lyman by December 31, 2026?",
+      "token_id": "98177024324666504815034070208522481241428920177308252095749890439817469551944",
+      "bet_side": "NO",
+      "entry_date": "2026-06-10 20:12",
+      "entry_price": 0.765,
+      "size_usd": 25,
+      "shares": 32.51633986928105,
+      "cluster": "ukraine",
+      "expected_close": "2026-12-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
+    },
+    {
+      "market_id": "1272721",
+      "question": "US grants license for new nuclear reactor in 2026?",
+      "token_id": "67998278660129672852538774459383085042667707670653830519656550808883766593424",
+      "bet_side": "NO",
+      "entry_date": "2026-06-10 20:12",
+      "entry_price": 0.78,
+      "size_usd": 25,
+      "shares": 31.89102564102564,
+      "cluster": "other",
+      "expected_close": "2026-12-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
     }
   ],
   "closed_trades": [
@@ -1984,12 +2020,30 @@
       "pnl": 36.419753086419746,
       "current_price": 1.0,
       "price_yes_current": 0.0
+    },
+    {
+      "market_id": "825457",
+      "question": "Will Chad Bianco advance from the 2026 California Governor primary election?",
+      "token_id": "32233912889011459115794527747270625282524231363363751212593112607140967588398",
+      "bet_side": "NO",
+      "entry_date": "2026-02-08 22:16",
+      "entry_price": 0.615,
+      "size_usd": 25,
+      "shares": 40.447154471544714,
+      "cluster": "other",
+      "expected_close": "2026-06-02",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-06-10 20:12",
+      "pnl": 15.447154471544714,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.328980",
-  "last_updated": "2026-06-10T14:53:52.639493",
-  "total_trades": 70,
-  "wins": 16,
+  "last_updated": "2026-06-10T20:12:45.253812",
+  "total_trades": 72,
+  "wins": 17,
   "losses": 24,
-  "total_pnl": -139.72442187502963
+  "total_pnl": -124.27726740348493
 }
