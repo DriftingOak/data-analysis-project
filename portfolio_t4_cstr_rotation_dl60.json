@@ -504,8 +504,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.706,
-      "price_yes_current": 0.294
+      "current_price": 0.7685,
+      "price_yes_current": 0.2315
     },
     {
       "market_id": "1559953",
@@ -882,8 +882,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.865,
-      "price_yes_current": 0.135
+      "current_price": 0.875,
+      "price_yes_current": 0.125
     },
     {
       "market_id": "1911805",
@@ -900,8 +900,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.11050000000000004,
-      "price_yes_current": 0.8895
+      "current_price": 0.10599999999999998,
+      "price_yes_current": 0.894
     },
     {
       "market_id": "994858",
@@ -918,8 +918,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.8825000000000001,
-      "price_yes_current": 0.1175
+      "current_price": 0.8925,
+      "price_yes_current": 0.1075
     },
     {
       "market_id": "540843",
@@ -954,8 +954,26 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.755,
-      "price_yes_current": 0.245
+      "current_price": 0.81,
+      "price_yes_current": 0.19
+    },
+    {
+      "market_id": "957019",
+      "question": "US-Iran nuclear deal by June 30?",
+      "token_id": "10690391194840875541563517589463912963575786539307433160985752952931887140267",
+      "bet_side": "NO",
+      "entry_date": "2026-06-11 20:10",
+      "entry_price": 0.5700000000000001,
+      "size_usd": 50,
+      "shares": 87.28070175438596,
+      "cluster": "mideast",
+      "expected_close": "2026-06-30",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
     }
   ],
   "closed_trades": [
@@ -1789,8 +1807,8 @@
     }
   ],
   "created_at": "2026-02-08T22:16:55.329124",
-  "last_updated": "2026-06-11T15:35:54.857522",
-  "total_trades": 53,
+  "last_updated": "2026-06-11T20:10:54.469601",
+  "total_trades": 54,
   "wins": 21,
   "losses": 25,
   "total_pnl": 16.348281203322585
