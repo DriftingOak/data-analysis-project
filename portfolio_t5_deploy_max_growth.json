@@ -1332,8 +1332,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9885,
-      "price_yes_current": 0.0115
+      "current_price": 0.9965,
+      "price_yes_current": 0.0035
     },
     {
       "market_id": "2039536",
@@ -1350,8 +1350,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.02300000000000002,
-      "price_yes_current": 0.977
+      "current_price": 0.014000000000000012,
+      "price_yes_current": 0.986
     },
     {
       "market_id": "2109772",
@@ -1386,8 +1386,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.99,
-      "price_yes_current": 0.01
+      "current_price": 0.9905,
+      "price_yes_current": 0.0095
     },
     {
       "market_id": "1835811",
@@ -1530,8 +1530,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.8260000000000001,
-      "price_yes_current": 0.174
+      "current_price": 0.9255,
+      "price_yes_current": 0.0745
     },
     {
       "market_id": "540843",
@@ -1566,8 +1566,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.585,
-      "price_yes_current": 0.415
+      "current_price": 0.505,
+      "price_yes_current": 0.495
     },
     {
       "market_id": "1919425",
@@ -1586,6 +1586,24 @@
       "pnl": 80.92105263157896,
       "current_price": 1.0,
       "price_yes_current": 0.0
+    },
+    {
+      "market_id": "957019",
+      "question": "US-Iran nuclear deal by June 30?",
+      "token_id": "10690391194840875541563517589463912963575786539307433160985752952931887140267",
+      "bet_side": "NO",
+      "entry_date": "2026-06-13 13:26",
+      "entry_price": 0.475,
+      "size_usd": 50,
+      "shares": 104.73684210526316,
+      "cluster": "mideast",
+      "expected_close": "2026-06-30",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
     }
   ],
   "closed_trades": [
@@ -2995,8 +3013,8 @@
     }
   ],
   "created_at": "2026-02-08T22:16:55.329192",
-  "last_updated": "2026-06-13T08:47:31.235564",
-  "total_trades": 88,
+  "last_updated": "2026-06-13T13:26:44.175186",
+  "total_trades": 89,
   "wins": 43,
   "losses": 35,
   "total_pnl": 77.85618234576286
