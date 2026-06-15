@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 500,
-  "bankroll_current": 516.3482812033226,
+  "bankroll_current": 466.3482812033226,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -342,8 +342,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.81,
-      "price_yes_current": 0.19
+      "current_price": 0.855,
+      "price_yes_current": 0.145
     },
     {
       "market_id": "1403723",
@@ -504,8 +504,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.6655,
-      "price_yes_current": 0.3345
+      "current_price": 0.6715,
+      "price_yes_current": 0.3285
     },
     {
       "market_id": "1559953",
@@ -882,8 +882,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.875,
-      "price_yes_current": 0.125
+      "current_price": 0.895,
+      "price_yes_current": 0.105
     },
     {
       "market_id": "1911805",
@@ -900,8 +900,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.14549999999999996,
-      "price_yes_current": 0.8545
+      "current_price": 0.2885,
+      "price_yes_current": 0.7115
     },
     {
       "market_id": "994858",
@@ -918,8 +918,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9325,
-      "price_yes_current": 0.0675
+      "current_price": 0.945,
+      "price_yes_current": 0.055
     },
     {
       "market_id": "540843",
@@ -954,8 +954,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.91,
-      "price_yes_current": 0.09
+      "current_price": 0.935,
+      "price_yes_current": 0.065
     },
     {
       "market_id": "957019",
@@ -968,12 +968,12 @@
       "shares": 87.28070175438596,
       "cluster": "mideast",
       "expected_close": "2026-06-30",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.15500000000000003,
-      "price_yes_current": 0.845
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-06-15 11:46",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     }
   ],
   "closed_trades": [
@@ -1804,12 +1804,30 @@
       "pnl": 50.505050505050505,
       "current_price": 1.0,
       "price_yes_current": 0.0
+    },
+    {
+      "market_id": "957019",
+      "question": "US-Iran nuclear deal by June 30?",
+      "token_id": "10690391194840875541563517589463912963575786539307433160985752952931887140267",
+      "bet_side": "NO",
+      "entry_date": "2026-06-11 20:10",
+      "entry_price": 0.5700000000000001,
+      "size_usd": 50,
+      "shares": 87.28070175438596,
+      "cluster": "mideast",
+      "expected_close": "2026-06-30",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-06-15 11:46",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329124",
-  "last_updated": "2026-06-15T02:47:23.607005",
+  "last_updated": "2026-06-15T11:46:38.293671",
   "total_trades": 54,
   "wins": 21,
-  "losses": 25,
-  "total_pnl": 16.348281203322585
+  "losses": 26,
+  "total_pnl": -33.651718796677415
 }
