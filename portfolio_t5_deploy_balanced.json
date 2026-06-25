@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 1219.081620889474,
+  "bankroll_current": 1194.081620889474,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -1548,8 +1548,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.791,
-      "price_yes_current": 0.209
+      "current_price": 0.7935,
+      "price_yes_current": 0.2065
     },
     {
       "market_id": "1117230",
@@ -3708,8 +3708,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9595,
-      "price_yes_current": 0.0405
+      "current_price": 0.9605,
+      "price_yes_current": 0.0395
     },
     {
       "market_id": "1706303",
@@ -4284,8 +4284,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.988,
-      "price_yes_current": 0.012
+      "current_price": 0.9865,
+      "price_yes_current": 0.0135
     },
     {
       "market_id": "1692999",
@@ -4338,8 +4338,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.995,
-      "price_yes_current": 0.005
+      "current_price": 0.9945,
+      "price_yes_current": 0.0055
     },
     {
       "market_id": "1706299",
@@ -6264,8 +6264,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.0665,
-      "price_yes_current": 0.9335
+      "current_price": 0.05900000000000005,
+      "price_yes_current": 0.941
     },
     {
       "market_id": "2037917",
@@ -6300,8 +6300,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9685,
-      "price_yes_current": 0.0315
+      "current_price": 0.9985,
+      "price_yes_current": 0.0015
     },
     {
       "market_id": "2039534",
@@ -6318,8 +6318,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9695,
-      "price_yes_current": 0.0305
+      "current_price": 0.968,
+      "price_yes_current": 0.032
     },
     {
       "market_id": "2037919",
@@ -6390,8 +6390,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.965,
-      "price_yes_current": 0.035
+      "current_price": 0.9965,
+      "price_yes_current": 0.0035
     },
     {
       "market_id": "2039536",
@@ -6642,8 +6642,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.998,
-      "price_yes_current": 0.002
+      "current_price": 0.9995,
+      "price_yes_current": 0.0005
     },
     {
       "market_id": "1973506",
@@ -6678,8 +6678,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9855,
-      "price_yes_current": 0.0145
+      "current_price": 0.984,
+      "price_yes_current": 0.016
     },
     {
       "market_id": "2035734",
@@ -6714,8 +6714,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.988,
-      "price_yes_current": 0.012
+      "current_price": 0.9855,
+      "price_yes_current": 0.0145
     },
     {
       "market_id": "994858",
@@ -6786,8 +6786,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.954,
-      "price_yes_current": 0.046
+      "current_price": 0.955,
+      "price_yes_current": 0.045
     },
     {
       "market_id": "540816",
@@ -6840,8 +6840,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.997,
-      "price_yes_current": 0.003
+      "current_price": 0.9865,
+      "price_yes_current": 0.0135
     },
     {
       "market_id": "2159882",
@@ -6894,8 +6894,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9535,
-      "price_yes_current": 0.0465
+      "current_price": 0.955,
+      "price_yes_current": 0.045
     },
     {
       "market_id": "2169751",
@@ -6962,12 +6962,12 @@
       "shares": 50.25252525252525,
       "cluster": "latam",
       "expected_close": "2026-06-21",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.0004999999999999449,
-      "price_yes_current": 0.9995
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-06-25 02:27",
+      "pnl": -25.0,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "1919425",
@@ -13000,12 +13000,30 @@
       "pnl": -25.0,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "569366",
+      "question": "Will Abelardo de la Espriella  win the 2026 Colombian presidential election?",
+      "token_id": "93119283163420984666329627600000273753909488383271496422725436610044958733622",
+      "bet_side": "NO",
+      "entry_date": "2026-05-21 14:42",
+      "entry_price": 0.495,
+      "size_usd": 25.0,
+      "shares": 50.25252525252525,
+      "cluster": "latam",
+      "expected_close": "2026-06-21",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-06-25 02:27",
+      "pnl": -25.0,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329170",
-  "last_updated": "2026-06-24T19:26:59.516797",
+  "last_updated": "2026-06-25T02:27:37.456376",
   "total_trades": 389,
   "wins": 198,
-  "losses": 135,
-  "total_pnl": 219.08162088947404
+  "losses": 136,
+  "total_pnl": 194.08162088947404
 }

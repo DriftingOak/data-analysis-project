@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 500,
-  "bankroll_current": 499.41019022803516,
+  "bankroll_current": 533.0236356061864,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -500,12 +500,12 @@
       "shares": 83.61344537815127,
       "cluster": "latam",
       "expected_close": "2026-06-21",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9995,
-      "price_yes_current": 0.0005
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-06-25 02:27",
+      "pnl": 33.61344537815127,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1911805",
@@ -522,8 +522,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.0665,
-      "price_yes_current": 0.9335
+      "current_price": 0.05900000000000005,
+      "price_yes_current": 0.941
     },
     {
       "market_id": "994858",
@@ -576,8 +576,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9595,
-      "price_yes_current": 0.0405
+      "current_price": 0.9605,
+      "price_yes_current": 0.0395
     },
     {
       "market_id": "1397260",
@@ -594,8 +594,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.791,
-      "price_yes_current": 0.209
+      "current_price": 0.7935,
+      "price_yes_current": 0.2065
     }
   ],
   "closed_trades": [
@@ -1048,12 +1048,30 @@
       "pnl": 50.505050505050505,
       "current_price": 1.0,
       "price_yes_current": 0.0
+    },
+    {
+      "market_id": "569368",
+      "question": "Will Ivan Cepeda Castro win the 2026 Colombian presidential election?",
+      "token_id": "45225184915026490412090111842887484470550126139644389135401954155408710524398",
+      "bet_side": "NO",
+      "entry_date": "2026-05-04 08:19",
+      "entry_price": 0.595,
+      "size_usd": 50,
+      "shares": 83.61344537815127,
+      "cluster": "latam",
+      "expected_close": "2026-06-21",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-06-25 02:27",
+      "pnl": 33.61344537815127,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329114",
-  "last_updated": "2026-06-24T19:26:59.439968",
+  "last_updated": "2026-06-25T02:27:37.383090",
   "total_trades": 33,
-  "wins": 11,
+  "wins": 12,
   "losses": 14,
-  "total_pnl": -0.5898097719648234
+  "total_pnl": 33.023635606186446
 }

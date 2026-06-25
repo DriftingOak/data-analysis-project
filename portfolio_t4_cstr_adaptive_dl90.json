@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 1178.1720219388778,
+  "bankroll_current": 1188.428526287342,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -1278,8 +1278,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.791,
-      "price_yes_current": 0.209
+      "current_price": 0.7935,
+      "price_yes_current": 0.2065
     },
     {
       "market_id": "1397313",
@@ -2876,12 +2876,12 @@
       "shares": 41.806722689075634,
       "cluster": "latam",
       "expected_close": "2026-06-21",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9995,
-      "price_yes_current": 0.0005
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-06-25 02:27",
+      "pnl": 16.806722689075634,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "569373",
@@ -2894,12 +2894,12 @@
       "shares": 43.44978165938865,
       "cluster": "latam",
       "expected_close": "2026-06-21",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9995,
-      "price_yes_current": 0.0005
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-06-25 02:27",
+      "pnl": 18.44978165938865,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1692480",
@@ -3546,8 +3546,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9595,
-      "price_yes_current": 0.0405
+      "current_price": 0.9605,
+      "price_yes_current": 0.0395
     },
     {
       "market_id": "1706221",
@@ -4050,8 +4050,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.988,
-      "price_yes_current": 0.012
+      "current_price": 0.9865,
+      "price_yes_current": 0.0135
     },
     {
       "market_id": "1708133",
@@ -4068,8 +4068,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.995,
-      "price_yes_current": 0.005
+      "current_price": 0.9945,
+      "price_yes_current": 0.0055
     },
     {
       "market_id": "1835809",
@@ -4212,8 +4212,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.0665,
-      "price_yes_current": 0.9335
+      "current_price": 0.05900000000000005,
+      "price_yes_current": 0.941
     },
     {
       "market_id": "1909342",
@@ -6102,8 +6102,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9695,
-      "price_yes_current": 0.0305
+      "current_price": 0.968,
+      "price_yes_current": 0.032
     },
     {
       "market_id": "2039535",
@@ -6120,8 +6120,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9685,
-      "price_yes_current": 0.0315
+      "current_price": 0.9985,
+      "price_yes_current": 0.0015
     },
     {
       "market_id": "2037917",
@@ -6318,8 +6318,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9855,
-      "price_yes_current": 0.0145
+      "current_price": 0.984,
+      "price_yes_current": 0.016
     },
     {
       "market_id": "2039537",
@@ -6336,8 +6336,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.965,
-      "price_yes_current": 0.035
+      "current_price": 0.9965,
+      "price_yes_current": 0.0035
     },
     {
       "market_id": "2053790",
@@ -6372,8 +6372,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.998,
-      "price_yes_current": 0.002
+      "current_price": 0.9995,
+      "price_yes_current": 0.0005
     },
     {
       "market_id": "2039645",
@@ -6462,8 +6462,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.988,
-      "price_yes_current": 0.012
+      "current_price": 0.9855,
+      "price_yes_current": 0.0145
     },
     {
       "market_id": "1973506",
@@ -6674,12 +6674,12 @@
       "shares": 42.52136752136752,
       "cluster": "latam",
       "expected_close": "2026-06-21",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.0004999999999999449,
-      "price_yes_current": 0.9995
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-06-25 02:27",
+      "pnl": -25.0,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "2169751",
@@ -12550,12 +12550,66 @@
       "pnl": -25.0,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "569368",
+      "question": "Will Ivan Cepeda Castro win the 2026 Colombian presidential election?",
+      "token_id": "45225184915026490412090111842887484470550126139644389135401954155408710524398",
+      "bet_side": "NO",
+      "entry_date": "2026-03-23 18:44",
+      "entry_price": 0.595,
+      "size_usd": 25.0,
+      "shares": 41.806722689075634,
+      "cluster": "latam",
+      "expected_close": "2026-06-21",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-06-25 02:27",
+      "pnl": 16.806722689075634,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
+    },
+    {
+      "market_id": "569373",
+      "question": "Will Paloma Valencia win the 2026 Colombian presidential election?",
+      "token_id": "85033408490054356469224638555921276992969532989623124901223739012644529258496",
+      "bet_side": "NO",
+      "entry_date": "2026-03-23 18:44",
+      "entry_price": 0.5725,
+      "size_usd": 25.0,
+      "shares": 43.44978165938865,
+      "cluster": "latam",
+      "expected_close": "2026-06-21",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-06-25 02:27",
+      "pnl": 18.44978165938865,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
+    },
+    {
+      "market_id": "569366",
+      "question": "Will Abelardo de la Espriella  win the 2026 Colombian presidential election?",
+      "token_id": "93119283163420984666329627600000273753909488383271496422725436610044958733622",
+      "bet_side": "NO",
+      "entry_date": "2026-05-10 02:01",
+      "entry_price": 0.585,
+      "size_usd": 25.0,
+      "shares": 42.52136752136752,
+      "cluster": "latam",
+      "expected_close": "2026-06-21",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-06-25 02:27",
+      "pnl": -25.0,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329138",
-  "last_updated": "2026-06-24T19:26:59.445875",
+  "last_updated": "2026-06-25T02:27:37.389004",
   "total_trades": 376,
-  "wins": 181,
-  "losses": 140,
-  "total_pnl": 178.1720219388778
+  "wins": 183,
+  "losses": 141,
+  "total_pnl": 188.4285262873421
 }
