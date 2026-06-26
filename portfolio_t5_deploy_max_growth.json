@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 977.8561823457628,
+  "bankroll_current": 1004.9931146319949,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -1328,12 +1328,12 @@
       "shares": 71.58273381294963,
       "cluster": "latam",
       "expected_close": "2026-05-31",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9995,
-      "price_yes_current": 0.0005
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-06-26 08:50",
+      "pnl": 21.582733812949627,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "2039536",
@@ -1346,12 +1346,12 @@
       "shares": 71.07142857142857,
       "cluster": "latam",
       "expected_close": "2026-05-31",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.0004999999999999449,
-      "price_yes_current": 0.9995
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-06-26 08:50",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "2109772",
@@ -1382,12 +1382,12 @@
       "shares": 75.95419847328245,
       "cluster": "latam",
       "expected_close": "2026-05-31",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9995,
-      "price_yes_current": 0.0005
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-06-26 08:50",
+      "pnl": 25.954198473282446,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1835811",
@@ -1472,12 +1472,12 @@
       "shares": 79.6,
       "cluster": "latam",
       "expected_close": "2026-05-31",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9995,
-      "price_yes_current": 0.0005
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-06-26 08:50",
+      "pnl": 29.599999999999994,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "2053635",
@@ -1530,8 +1530,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9845,
-      "price_yes_current": 0.0155
+      "current_price": 0.982,
+      "price_yes_current": 0.018
     },
     {
       "market_id": "540843",
@@ -3046,12 +3046,84 @@
       "pnl": -50,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "2039533",
+      "question": "Will voter turnout be 48-51% in the first round of the 2026 Colombian presidential election?",
+      "token_id": "102560387857978748384548978283322193589527827015543147702753449953711286634445",
+      "bet_side": "NO",
+      "entry_date": "2026-05-01 08:03",
+      "entry_price": 0.6950000000000001,
+      "size_usd": 50,
+      "shares": 71.58273381294963,
+      "cluster": "latam",
+      "expected_close": "2026-05-31",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-06-26 08:50",
+      "pnl": 21.582733812949627,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
+    },
+    {
+      "market_id": "2039536",
+      "question": "Will voter turnout be 57-60% in the first round of the 2026 Colombian presidential election?",
+      "token_id": "34846859660880390881524864090570701673049667537334430803889441358354504758899",
+      "bet_side": "NO",
+      "entry_date": "2026-05-01 08:03",
+      "entry_price": 0.7,
+      "size_usd": 50,
+      "shares": 71.07142857142857,
+      "cluster": "latam",
+      "expected_close": "2026-05-31",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-06-26 08:50",
+      "pnl": -50,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
+    },
+    {
+      "market_id": "2039535",
+      "question": "Will voter turnout be 54-57% in the first round of the 2026 Colombian presidential election?",
+      "token_id": "90961231938093514912200270669629884315791398955267344410680946648388713758644",
+      "bet_side": "NO",
+      "entry_date": "2026-05-01 08:03",
+      "entry_price": 0.655,
+      "size_usd": 50,
+      "shares": 75.95419847328245,
+      "cluster": "latam",
+      "expected_close": "2026-05-31",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-06-26 08:50",
+      "pnl": 25.954198473282446,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
+    },
+    {
+      "market_id": "2039645",
+      "question": "Will Iv\u00e1n Cepeda Castro win the first round of the 2026 Colombian presidential election by 15-20%?",
+      "token_id": "35117004784723359702596341511805129239404387694487961224760968358036166299534",
+      "bet_side": "NO",
+      "entry_date": "2026-05-04 08:19",
+      "entry_price": 0.625,
+      "size_usd": 50,
+      "shares": 79.6,
+      "cluster": "latam",
+      "expected_close": "2026-05-31",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-06-26 08:50",
+      "pnl": 29.599999999999994,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329192",
-  "last_updated": "2026-06-26T02:29:40.854760",
+  "last_updated": "2026-06-26T08:50:49.330255",
   "total_trades": 89,
-  "wins": 43,
-  "losses": 37,
-  "total_pnl": -22.14381765423714
+  "wins": 46,
+  "losses": 38,
+  "total_pnl": 4.993114631994928
 }
