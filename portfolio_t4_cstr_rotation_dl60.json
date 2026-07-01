@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 500,
-  "bankroll_current": 604.4679393229808,
+  "bankroll_current": 640.9896784534155,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -950,12 +950,12 @@
       "shares": 86.5217391304348,
       "cluster": "mideast",
       "expected_close": "2026-06-30",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9995,
-      "price_yes_current": 0.0005
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-07-01 19:30",
+      "pnl": 36.521739130434796,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "957019",
@@ -1858,12 +1858,30 @@
       "pnl": 103.0769230769231,
       "current_price": 1.0,
       "price_yes_current": 0.0
+    },
+    {
+      "market_id": "1121887",
+      "question": "Israel strike on Yemen by June 30, 2026?",
+      "token_id": "49232347074200257286333705540570950896584522176544392767367009767750446431044",
+      "bet_side": "NO",
+      "entry_date": "2026-06-08 10:18",
+      "entry_price": 0.575,
+      "size_usd": 50,
+      "shares": 86.5217391304348,
+      "cluster": "mideast",
+      "expected_close": "2026-06-30",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-07-01 19:30",
+      "pnl": 36.521739130434796,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329124",
-  "last_updated": "2026-07-01T14:08:59.086140",
+  "last_updated": "2026-07-01T19:30:56.748562",
   "total_trades": 54,
-  "wins": 23,
+  "wins": 24,
   "losses": 26,
-  "total_pnl": 104.46793932298073
+  "total_pnl": 140.98967845341554
 }
