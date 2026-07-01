@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 500,
-  "bankroll_current": 748.3943214019621,
+  "bankroll_current": 829.5037640810979,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -396,8 +396,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.835,
-      "price_yes_current": 0.165
+      "current_price": 0.83,
+      "price_yes_current": 0.17
     },
     {
       "market_id": "1336154",
@@ -1868,12 +1868,12 @@
       "shares": 97.54901960784314,
       "cluster": "ukraine",
       "expected_close": "2026-03-31",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9985,
-      "price_yes_current": 0.0015
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-07-01 09:29",
+      "pnl": 72.54901960784314,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1418679",
@@ -5594,12 +5594,12 @@
       "shares": 7.370370370370369,
       "cluster": "ukraine",
       "expected_close": "2026-06-30",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.992,
-      "price_yes_current": 0.008
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-07-01 09:29",
+      "pnl": 2.3703703703703694,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "2039644",
@@ -5684,12 +5684,12 @@
       "shares": 7.537878787878788,
       "cluster": "ukraine",
       "expected_close": "2026-06-30",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.987,
-      "price_yes_current": 0.013
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-07-01 09:29",
+      "pnl": 2.537878787878788,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1323366",
@@ -5724,8 +5724,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.014499999999999957,
-      "price_yes_current": 0.9855
+      "current_price": 0.011499999999999955,
+      "price_yes_current": 0.9885
     },
     {
       "market_id": "2169751",
@@ -5756,12 +5756,12 @@
       "shares": 8.652173913043478,
       "cluster": "ukraine",
       "expected_close": "2026-06-30",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.982,
-      "price_yes_current": 0.018
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-07-01 09:29",
+      "pnl": 3.6521739130434785,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "2234511",
@@ -11146,12 +11146,84 @@
       "pnl": 2.2101449275362315,
       "current_price": 1.0,
       "price_yes_current": 0.0
+    },
+    {
+      "market_id": "1397260",
+      "question": "Will Russia capture Kostyantynivka by June 30?",
+      "token_id": "43321630833125241017427912676100747595457556487829359498141771278458547970943",
+      "bet_side": "NO",
+      "entry_date": "2026-03-06 06:37",
+      "entry_price": 0.255,
+      "size_usd": 25.0,
+      "shares": 97.54901960784314,
+      "cluster": "ukraine",
+      "expected_close": "2026-03-31",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-07-01 09:29",
+      "pnl": 72.54901960784314,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
+    },
+    {
+      "market_id": "2107957",
+      "question": "Will Russia capture Sofiivka by June 30?",
+      "token_id": "65092268981801262790137381799022573764575969403755141605672570681092767433646",
+      "bet_side": "NO",
+      "entry_date": "2026-05-01 12:58",
+      "entry_price": 0.675,
+      "size_usd": 5.0,
+      "shares": 7.370370370370369,
+      "cluster": "ukraine",
+      "expected_close": "2026-06-30",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-07-01 09:29",
+      "pnl": 2.3703703703703694,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
+    },
+    {
+      "market_id": "2166651",
+      "question": "Will Russia capture all of Rodynske again by June 30?",
+      "token_id": "111226232583945828406215157938697048521441263275156210979787465976309894285279",
+      "bet_side": "NO",
+      "entry_date": "2026-05-08 13:10",
+      "entry_price": 0.6599999999999999,
+      "size_usd": 5.0,
+      "shares": 7.537878787878788,
+      "cluster": "ukraine",
+      "expected_close": "2026-06-30",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-07-01 09:29",
+      "pnl": 2.537878787878788,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
+    },
+    {
+      "market_id": "2232280",
+      "question": "Will Russia capture all of Huliaipole by June 30?",
+      "token_id": "108068592128428709275051439608908260804635152998548465905381992501325520257212",
+      "bet_side": "NO",
+      "entry_date": "2026-05-13 19:42",
+      "entry_price": 0.575,
+      "size_usd": 5.0,
+      "shares": 8.652173913043478,
+      "cluster": "ukraine",
+      "expected_close": "2026-06-30",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-07-01 09:29",
+      "pnl": 3.6521739130434785,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329182",
-  "last_updated": "2026-07-01T02:36:01.958940",
+  "last_updated": "2026-07-01T09:29:35.967988",
   "total_trades": 322,
-  "wins": 184,
+  "wins": 188,
   "losses": 113,
-  "total_pnl": 248.3943214019621
+  "total_pnl": 329.5037640810979
 }

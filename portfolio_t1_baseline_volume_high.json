@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 787.984030995021,
+  "bankroll_current": 812.734030995021,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -36,8 +36,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.865,
-      "price_yes_current": 0.135
+      "current_price": 0.86,
+      "price_yes_current": 0.14
     },
     {
       "market_id": "540816",
@@ -288,8 +288,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9995,
-      "price_yes_current": 0.0005
+      "current_price": 0.9975,
+      "price_yes_current": 0.0025
     },
     {
       "market_id": "661699",
@@ -504,8 +504,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.5900000000000001,
-      "price_yes_current": 0.41
+      "current_price": 0.585,
+      "price_yes_current": 0.415
     },
     {
       "market_id": "1471457",
@@ -536,12 +536,12 @@
       "shares": 49.75,
       "cluster": "latam",
       "expected_close": "2026-06-30",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.997,
-      "price_yes_current": 0.003
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-07-01 09:29",
+      "pnl": 24.75,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "682705",
@@ -648,8 +648,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.855,
-      "price_yes_current": 0.145
+      "current_price": 0.865,
+      "price_yes_current": 0.135
     },
     {
       "market_id": "677366",
@@ -666,8 +666,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.16000000000000003,
-      "price_yes_current": 0.84
+      "current_price": 0.16500000000000004,
+      "price_yes_current": 0.835
     },
     {
       "market_id": "1707841",
@@ -900,8 +900,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.525,
-      "price_yes_current": 0.475
+      "current_price": 0.5349999999999999,
+      "price_yes_current": 0.465
     },
     {
       "market_id": "678747",
@@ -918,8 +918,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.47150000000000003,
-      "price_yes_current": 0.5285
+      "current_price": 0.472,
+      "price_yes_current": 0.528
     }
   ],
   "closed_trades": [
@@ -1570,12 +1570,30 @@
       "pnl": -25,
       "current_price": 0.0,
       "price_yes_current": 1.0
+    },
+    {
+      "market_id": "1106634",
+      "question": "Miguel D\u00edaz-Canel out as leader of Cuba by June 30?",
+      "token_id": "58505293773838465935116525784998147381307821161678906360166240694093964623719",
+      "bet_side": "NO",
+      "entry_date": "2026-03-10 01:10",
+      "entry_price": 0.5,
+      "size_usd": 25,
+      "shares": 49.75,
+      "cluster": "latam",
+      "expected_close": "2026-06-30",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-07-01 09:29",
+      "pnl": 24.75,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.328996",
-  "last_updated": "2026-07-01T02:36:01.733228",
+  "last_updated": "2026-07-01T09:29:35.706874",
   "total_trades": 51,
-  "wins": 10,
+  "wins": 11,
   "losses": 26,
-  "total_pnl": -212.01596900497898
+  "total_pnl": -187.26596900497898
 }
