@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 770.5444223279798,
+  "bankroll_current": 782.9504373655737,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -104,12 +104,12 @@
       "shares": 37.40601503759398,
       "cluster": "ukraine",
       "expected_close": "2026-06-30",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9895,
-      "price_yes_current": 0.0105
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-07-02 02:15",
+      "pnl": 12.406015037593981,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "665224",
@@ -144,8 +144,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.92,
-      "price_yes_current": 0.08
+      "current_price": 0.91,
+      "price_yes_current": 0.09
     },
     {
       "market_id": "1301487",
@@ -360,8 +360,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.815,
-      "price_yes_current": 0.185
+      "current_price": 0.825,
+      "price_yes_current": 0.175
     },
     {
       "market_id": "1107582",
@@ -378,8 +378,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.585,
-      "price_yes_current": 0.415
+      "current_price": 0.615,
+      "price_yes_current": 0.385
     },
     {
       "market_id": "677393",
@@ -414,8 +414,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.7975,
-      "price_yes_current": 0.2025
+      "current_price": 0.8015,
+      "price_yes_current": 0.1985
     },
     {
       "market_id": "567689",
@@ -468,8 +468,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.993,
-      "price_yes_current": 0.007
+      "current_price": 0.9935,
+      "price_yes_current": 0.0065
     },
     {
       "market_id": "956449",
@@ -540,8 +540,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.84,
-      "price_yes_current": 0.16
+      "current_price": 0.855,
+      "price_yes_current": 0.145
     },
     {
       "market_id": "1336080",
@@ -720,8 +720,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.605,
-      "price_yes_current": 0.395
+      "current_price": 0.61,
+      "price_yes_current": 0.39
     },
     {
       "market_id": "1385754",
@@ -900,8 +900,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.7295,
-      "price_yes_current": 0.2705
+      "current_price": 0.73,
+      "price_yes_current": 0.27
     },
     {
       "market_id": "678777",
@@ -918,8 +918,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.643,
-      "price_yes_current": 0.357
+      "current_price": 0.6425000000000001,
+      "price_yes_current": 0.3575
     },
     {
       "market_id": "561234",
@@ -936,8 +936,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.8455,
-      "price_yes_current": 0.1545
+      "current_price": 0.8415,
+      "price_yes_current": 0.1585
     },
     {
       "market_id": "560317",
@@ -1008,8 +1008,26 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.87,
-      "price_yes_current": 0.13
+      "current_price": 0.875,
+      "price_yes_current": 0.125
+    },
+    {
+      "market_id": "665738",
+      "question": "Ahmed al-Sharaa out as leader of Syria by December 31, 2026?",
+      "token_id": "46732744935746325796186386668595078574021317414578491797326912350003873298749",
+      "bet_side": "NO",
+      "entry_date": "2026-07-02 02:15",
+      "entry_price": 0.885,
+      "size_usd": 25,
+      "shares": 28.10734463276836,
+      "cluster": "mideast",
+      "expected_close": "2026-12-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
     }
   ],
   "closed_trades": [
@@ -1534,12 +1552,30 @@
       "pnl": 10.535714285714285,
       "current_price": 1.0,
       "price_yes_current": 0.0
+    },
+    {
+      "market_id": "1323366",
+      "question": "Ukraine officially agrees to a US backed ceasefire framework by June 30?",
+      "token_id": "37251786892594326537435119887561603611665137452042941584472086350746589330816",
+      "bet_side": "NO",
+      "entry_date": "2026-02-08 22:16",
+      "entry_price": 0.665,
+      "size_usd": 25,
+      "shares": 37.40601503759398,
+      "cluster": "ukraine",
+      "expected_close": "2026-06-30",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-07-02 02:15",
+      "pnl": 12.406015037593981,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329012",
-  "last_updated": "2026-07-01T19:30:56.598095",
-  "total_trades": 56,
-  "wins": 14,
+  "last_updated": "2026-07-02T02:15:14.343801",
+  "total_trades": 57,
+  "wins": 15,
   "losses": 15,
-  "total_pnl": -229.45557767202024
+  "total_pnl": -217.04956263442625
 }
