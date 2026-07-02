@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 1344.0701413246634,
+  "bankroll_current": 1362.7104922018564,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -36,8 +36,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.855,
-      "price_yes_current": 0.145
+      "current_price": 0.84,
+      "price_yes_current": 0.16
     },
     {
       "market_id": "1277912",
@@ -500,12 +500,12 @@
       "shares": 43.64035087719298,
       "cluster": "mideast",
       "expected_close": "2026-03-31",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.993,
-      "price_yes_current": 0.007
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-07-02 19:10",
+      "pnl": 18.64035087719298,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "1273938",
@@ -6246,8 +6246,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.050000000000000044,
-      "price_yes_current": 0.95
+      "current_price": 0.04500000000000004,
+      "price_yes_current": 0.955
     },
     {
       "market_id": "2024097",
@@ -6318,8 +6318,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.007000000000000006,
-      "price_yes_current": 0.993
+      "current_price": 0.00649999999999995,
+      "price_yes_current": 0.9935
     },
     {
       "market_id": "2039534",
@@ -13432,12 +13432,30 @@
       "pnl": 85.55555555555557,
       "current_price": 1.0,
       "price_yes_current": 0.0
+    },
+    {
+      "market_id": "957646",
+      "question": "Israel x Hamas Ceasefire Phase II by June 30?",
+      "token_id": "108199626497821046618572524993737909727470476156115808563328756112796709819504",
+      "bet_side": "NO",
+      "entry_date": "2026-02-08 22:16",
+      "entry_price": 0.5700000000000001,
+      "size_usd": 25.0,
+      "shares": 43.64035087719298,
+      "cluster": "mideast",
+      "expected_close": "2026-03-31",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-07-02 19:10",
+      "pnl": 18.64035087719298,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329149",
-  "last_updated": "2026-07-02T13:30:52.979592",
+  "last_updated": "2026-07-02T19:10:03.487636",
   "total_trades": 391,
-  "wins": 217,
+  "wins": 218,
   "losses": 138,
-  "total_pnl": 344.0701413246634
+  "total_pnl": 362.71049220185637
 }
