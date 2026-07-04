@@ -126,8 +126,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.785,
-      "price_yes_current": 0.215
+      "current_price": 0.8,
+      "price_yes_current": 0.2
     },
     {
       "market_id": "1114327",
@@ -180,8 +180,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.875,
-      "price_yes_current": 0.125
+      "current_price": 0.865,
+      "price_yes_current": 0.135
     },
     {
       "market_id": "994858",
@@ -414,8 +414,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.7965,
-      "price_yes_current": 0.2035
+      "current_price": 0.7975,
+      "price_yes_current": 0.2025
     },
     {
       "market_id": "567689",
@@ -432,8 +432,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.915,
-      "price_yes_current": 0.085
+      "current_price": 0.905,
+      "price_yes_current": 0.095
     },
     {
       "market_id": "1171663",
@@ -594,8 +594,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9,
-      "price_yes_current": 0.1
+      "current_price": 0.895,
+      "price_yes_current": 0.105
     },
     {
       "market_id": "1123479",
@@ -684,8 +684,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.40149999999999997,
-      "price_yes_current": 0.5985
+      "current_price": 0.4225,
+      "price_yes_current": 0.5775
     },
     {
       "market_id": "1437331",
@@ -846,8 +846,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.565,
-      "price_yes_current": 0.435
+      "current_price": 0.5700000000000001,
+      "price_yes_current": 0.43
     },
     {
       "market_id": "1535973",
@@ -882,8 +882,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.6665,
-      "price_yes_current": 0.3335
+      "current_price": 0.6890000000000001,
+      "price_yes_current": 0.311
     },
     {
       "market_id": "678748",
@@ -900,8 +900,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.7090000000000001,
-      "price_yes_current": 0.291
+      "current_price": 0.6985,
+      "price_yes_current": 0.3015
     },
     {
       "market_id": "678777",
@@ -918,8 +918,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.655,
-      "price_yes_current": 0.345
+      "current_price": 0.6555,
+      "price_yes_current": 0.3445
     },
     {
       "market_id": "561234",
@@ -1026,8 +1026,26 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.875,
-      "price_yes_current": 0.125
+      "current_price": 0.89,
+      "price_yes_current": 0.11
+    },
+    {
+      "market_id": "678780",
+      "question": "Will the US strike 11 countries in 2026?",
+      "token_id": "79407015664270524218671161191032455433472245341040696019700588451849041730781",
+      "bet_side": "NO",
+      "entry_date": "2026-07-04 08:24",
+      "entry_price": 0.8645,
+      "size_usd": 25,
+      "shares": 28.77385772122614,
+      "cluster": "other",
+      "expected_close": "2026-12-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
     }
   ],
   "closed_trades": [
@@ -1609,8 +1627,8 @@
     }
   ],
   "created_at": "2026-02-08T22:16:55.329012",
-  "last_updated": "2026-07-04T01:58:19.884692",
-  "total_trades": 57,
+  "last_updated": "2026-07-04T08:24:22.838400",
+  "total_trades": 58,
   "wins": 17,
   "losses": 15,
   "total_pnl": -198.81885482361417
