@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 500,
-  "bankroll_current": 640.9896784534155,
+  "bankroll_current": 679.9878895446499,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -914,12 +914,12 @@
       "shares": 88.99821109123435,
       "cluster": "africa",
       "expected_close": "2026-06-30",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.9985,
-      "price_yes_current": 0.0015
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-07-07 02:07",
+      "pnl": 38.99821109123435,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "540843",
@@ -1876,12 +1876,30 @@
       "pnl": 36.521739130434796,
       "current_price": 1.0,
       "price_yes_current": 0.0
+    },
+    {
+      "market_id": "994858",
+      "question": "Sudan civil war ceasefire by June 30, 2026?",
+      "token_id": "2433662050647517706323359615496513605357547934153481879606183024436021971628",
+      "bet_side": "NO",
+      "entry_date": "2026-05-23 13:02",
+      "entry_price": 0.5589999999999999,
+      "size_usd": 50,
+      "shares": 88.99821109123435,
+      "cluster": "africa",
+      "expected_close": "2026-06-30",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-07-07 02:07",
+      "pnl": 38.99821109123435,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329124",
-  "last_updated": "2026-07-06T19:43:38.448334",
+  "last_updated": "2026-07-07T02:07:08.175594",
   "total_trades": 54,
-  "wins": 24,
+  "wins": 25,
   "losses": 26,
-  "total_pnl": 140.98967845341554
+  "total_pnl": 179.98788954464987
 }
