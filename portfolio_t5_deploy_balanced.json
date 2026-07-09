@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 1409.888552108106,
+  "bankroll_current": 1404.888552108106,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -6260,12 +6260,12 @@
       "shares": 10.698924731182796,
       "cluster": "europe",
       "expected_close": "2026-07-08",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.0004999999999999449,
-      "price_yes_current": 0.9995
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-07-09 09:21",
+      "pnl": -5.0,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "2037917",
@@ -13414,12 +13414,30 @@
       "pnl": 4.8952095808383245,
       "current_price": 1.0,
       "price_yes_current": 0.0
+    },
+    {
+      "market_id": "1911805",
+      "question": "Will Trump attend NATO Summit?",
+      "token_id": "87965406190444435272170809622140945691391816988039603983609241847568810131207",
+      "bet_side": "NO",
+      "entry_date": "2026-04-23 01:49",
+      "entry_price": 0.46499999999999997,
+      "size_usd": 5.0,
+      "shares": 10.698924731182796,
+      "cluster": "europe",
+      "expected_close": "2026-07-08",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-07-09 09:21",
+      "pnl": -5.0,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329170",
-  "last_updated": "2026-07-09T02:00:14.135276",
+  "last_updated": "2026-07-09T09:21:51.745927",
   "total_trades": 389,
   "wins": 219,
-  "losses": 137,
-  "total_pnl": 409.888552108106
+  "losses": 138,
+  "total_pnl": 404.888552108106
 }

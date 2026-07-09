@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 1341.148763368855,
+  "bankroll_current": 1336.148763368855,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -486,8 +486,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.6599999999999999,
-      "price_yes_current": 0.34
+      "current_price": 0.665,
+      "price_yes_current": 0.335
     },
     {
       "market_id": "1333270",
@@ -1206,8 +1206,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.84,
-      "price_yes_current": 0.16
+      "current_price": 0.825,
+      "price_yes_current": 0.175
     },
     {
       "market_id": "1294921",
@@ -2592,8 +2592,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.92,
-      "price_yes_current": 0.08
+      "current_price": 0.925,
+      "price_yes_current": 0.075
     },
     {
       "market_id": "1116062",
@@ -2610,8 +2610,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.935,
-      "price_yes_current": 0.065
+      "current_price": 0.905,
+      "price_yes_current": 0.095
     },
     {
       "market_id": "1487673",
@@ -4406,12 +4406,12 @@
       "shares": 14.632352941176471,
       "cluster": "europe",
       "expected_close": "2026-07-08",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.0004999999999999449,
-      "price_yes_current": 0.9995
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-07-09 09:21",
+      "pnl": -5.0,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "1909342",
@@ -6390,8 +6390,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.785,
-      "price_yes_current": 0.215
+      "current_price": 0.795,
+      "price_yes_current": 0.205
     },
     {
       "market_id": "2037917",
@@ -6768,8 +6768,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.945,
-      "price_yes_current": 0.055
+      "current_price": 0.94,
+      "price_yes_current": 0.06
     },
     {
       "market_id": "1124834",
@@ -6786,8 +6786,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9425,
-      "price_yes_current": 0.0575
+      "current_price": 0.943,
+      "price_yes_current": 0.057
     },
     {
       "market_id": "1389013",
@@ -6804,8 +6804,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.825,
-      "price_yes_current": 0.175
+      "current_price": 0.83,
+      "price_yes_current": 0.17
     },
     {
       "market_id": "1993750",
@@ -6840,8 +6840,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9625,
-      "price_yes_current": 0.0375
+      "current_price": 0.963,
+      "price_yes_current": 0.037
     },
     {
       "market_id": "1194305",
@@ -7002,8 +7002,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.18000000000000005,
-      "price_yes_current": 0.82
+      "current_price": 0.16000000000000003,
+      "price_yes_current": 0.84
     },
     {
       "market_id": "2159866",
@@ -13342,12 +13342,30 @@
       "pnl": 7.79964221824687,
       "current_price": 1.0,
       "price_yes_current": 0.0
+    },
+    {
+      "market_id": "1911805",
+      "question": "Will Trump attend NATO Summit?",
+      "token_id": "87965406190444435272170809622140945691391816988039603983609241847568810131207",
+      "bet_side": "NO",
+      "entry_date": "2026-04-10 01:29",
+      "entry_price": 0.33999999999999997,
+      "size_usd": 5.0,
+      "shares": 14.632352941176471,
+      "cluster": "europe",
+      "expected_close": "2026-07-08",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-07-09 09:21",
+      "pnl": -5.0,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329025",
-  "last_updated": "2026-07-09T02:00:13.917955",
+  "last_updated": "2026-07-09T09:21:51.521206",
   "total_trades": 396,
   "wins": 201,
-  "losses": 144,
-  "total_pnl": 341.148763368855
+  "losses": 145,
+  "total_pnl": 336.148763368855
 }
