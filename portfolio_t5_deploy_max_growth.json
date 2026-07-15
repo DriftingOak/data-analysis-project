@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 1043.9913257232292,
+  "bankroll_current": 1096.568645310858,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -1310,12 +1310,12 @@
       "shares": 102.57731958762886,
       "cluster": "other",
       "expected_close": "2026-05-03",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.505,
-      "price_yes_current": 0.495
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-07-15 01:25",
+      "pnl": 52.577319587628864,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     },
     {
       "market_id": "2039533",
@@ -3136,12 +3136,30 @@
       "pnl": 38.99821109123435,
       "current_price": 1.0,
       "price_yes_current": 0.0
+    },
+    {
+      "market_id": "2024097",
+      "question": "Pakistan Super League: Rawalpindi Pindiz vs Peshawar Zalmi - Most Sixes Rawalpindi Pindiz Winner",
+      "token_id": "109887116583716289999909109328108547341549004545088199249314204904929854796738",
+      "bet_side": "NO",
+      "entry_date": "2026-04-26 01:51",
+      "entry_price": 0.485,
+      "size_usd": 50,
+      "shares": 102.57731958762886,
+      "cluster": "other",
+      "expected_close": "2026-05-03",
+      "status": "closed",
+      "resolution": "win",
+      "close_date": "2026-07-15 01:25",
+      "pnl": 52.577319587628864,
+      "current_price": 1.0,
+      "price_yes_current": 0.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.329192",
-  "last_updated": "2026-07-14T19:03:19.468203",
+  "last_updated": "2026-07-15T01:25:12.411697",
   "total_trades": 89,
-  "wins": 47,
+  "wins": 48,
   "losses": 38,
-  "total_pnl": 43.99132572322928
+  "total_pnl": 96.56864531085814
 }
