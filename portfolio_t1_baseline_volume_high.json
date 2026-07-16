@@ -504,8 +504,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.685,
-      "price_yes_current": 0.315
+      "current_price": 0.69,
+      "price_yes_current": 0.31
     },
     {
       "market_id": "1471457",
@@ -558,8 +558,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.605,
-      "price_yes_current": 0.395
+      "current_price": 0.645,
+      "price_yes_current": 0.355
     },
     {
       "market_id": "1535973",
@@ -594,8 +594,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.865,
-      "price_yes_current": 0.135
+      "current_price": 0.845,
+      "price_yes_current": 0.155
     },
     {
       "market_id": "1439530",
@@ -648,8 +648,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.765,
-      "price_yes_current": 0.235
+      "current_price": 0.775,
+      "price_yes_current": 0.225
     },
     {
       "market_id": "677366",
@@ -666,8 +666,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.07399999999999995,
-      "price_yes_current": 0.926
+      "current_price": 0.07299999999999995,
+      "price_yes_current": 0.927
     },
     {
       "market_id": "1707841",
@@ -828,8 +828,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.6699999999999999,
-      "price_yes_current": 0.33
+      "current_price": 0.655,
+      "price_yes_current": 0.345
     },
     {
       "market_id": "569366",
@@ -900,8 +900,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.635,
-      "price_yes_current": 0.365
+      "current_price": 0.645,
+      "price_yes_current": 0.355
     },
     {
       "market_id": "678747",
@@ -918,8 +918,26 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.5405,
-      "price_yes_current": 0.4595
+      "current_price": 0.5469999999999999,
+      "price_yes_current": 0.453
+    },
+    {
+      "market_id": "682708",
+      "question": "Will Gadi Eizenkot be the next Prime Minister of Israel?",
+      "token_id": "1507744758511144558263623459899956467548763419522526462308518027912401299177",
+      "bet_side": "NO",
+      "entry_date": "2026-07-16 18:56",
+      "entry_price": 0.49,
+      "size_usd": 25,
+      "shares": 50.76530612244898,
+      "cluster": "mideast",
+      "expected_close": "2026-12-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
     }
   ],
   "closed_trades": [
@@ -1609,8 +1627,8 @@
     }
   ],
   "created_at": "2026-02-08T22:16:55.328996",
-  "last_updated": "2026-07-16T13:21:09.149155",
-  "total_trades": 51,
+  "last_updated": "2026-07-16T18:56:29.921560",
+  "total_trades": 52,
   "wins": 12,
   "losses": 26,
   "total_pnl": -147.65557939458938
