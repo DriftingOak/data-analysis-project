@@ -6048,8 +6048,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.49550000000000005,
-      "price_yes_current": 0.5045
+      "current_price": 0.495,
+      "price_yes_current": 0.505
     },
     {
       "market_id": "2024097",
@@ -13003,7 +13003,7 @@
     }
   ],
   "created_at": "2026-02-08T22:16:55.329138",
-  "last_updated": "2026-07-29T13:46:09.100320",
+  "last_updated": "2026-07-29T18:58:12.979640",
   "total_trades": 376,
   "wins": 203,
   "losses": 143,
