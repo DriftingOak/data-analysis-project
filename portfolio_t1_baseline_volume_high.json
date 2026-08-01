@@ -558,8 +558,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.655,
-      "price_yes_current": 0.345
+      "current_price": 0.63,
+      "price_yes_current": 0.37
     },
     {
       "market_id": "1535973",
@@ -576,8 +576,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.775,
-      "price_yes_current": 0.225
+      "current_price": 0.765,
+      "price_yes_current": 0.235
     },
     {
       "market_id": "1107878",
@@ -648,8 +648,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.755,
-      "price_yes_current": 0.245
+      "current_price": 0.735,
+      "price_yes_current": 0.265
     },
     {
       "market_id": "677366",
@@ -666,8 +666,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.07550000000000001,
-      "price_yes_current": 0.9245
+      "current_price": 0.06399999999999995,
+      "price_yes_current": 0.936
     },
     {
       "market_id": "1707841",
@@ -756,8 +756,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.18100000000000005,
-      "price_yes_current": 0.819
+      "current_price": 0.18300000000000005,
+      "price_yes_current": 0.817
     },
     {
       "market_id": "1962237",
@@ -900,8 +900,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.6,
-      "price_yes_current": 0.4
+      "current_price": 0.595,
+      "price_yes_current": 0.405
     },
     {
       "market_id": "678747",
@@ -936,8 +936,26 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.48950000000000005,
-      "price_yes_current": 0.5105
+      "current_price": 0.5075000000000001,
+      "price_yes_current": 0.4925
+    },
+    {
+      "market_id": "678777",
+      "question": "Will the US strike 8 countries in 2026?",
+      "token_id": "48104476277248651078025403001110186156043502055626284334477243629003399032624",
+      "bet_side": "NO",
+      "entry_date": "2026-08-01 18:54",
+      "entry_price": 0.491,
+      "size_usd": 25,
+      "shares": 50.66191446028513,
+      "cluster": "other",
+      "expected_close": "2026-12-31",
+      "status": "open",
+      "resolution": null,
+      "close_date": null,
+      "pnl": null,
+      "current_price": null,
+      "price_yes_current": null
     }
   ],
   "closed_trades": [
@@ -1627,8 +1645,8 @@
     }
   ],
   "created_at": "2026-02-08T22:16:55.328996",
-  "last_updated": "2026-08-01T12:57:27.854439",
-  "total_trades": 52,
+  "last_updated": "2026-08-01T18:54:53.799785",
+  "total_trades": 53,
   "wins": 12,
   "losses": 26,
   "total_pnl": -147.65557939458938
