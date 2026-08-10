@@ -306,8 +306,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.795,
-      "price_yes_current": 0.205
+      "current_price": 0.63,
+      "price_yes_current": 0.37
     },
     {
       "market_id": "898685",
@@ -360,8 +360,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.4605,
-      "price_yes_current": 0.5395
+      "current_price": 0.4645,
+      "price_yes_current": 0.5355
     },
     {
       "market_id": "569366",
@@ -1008,8 +1008,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.7150000000000001,
-      "price_yes_current": 0.285
+      "current_price": 0.72,
+      "price_yes_current": 0.28
     },
     {
       "market_id": "569255",
@@ -1458,8 +1458,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.795,
-      "price_yes_current": 0.205
+      "current_price": 0.8049999999999999,
+      "price_yes_current": 0.195
     },
     {
       "market_id": "1232093",
@@ -2196,8 +2196,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.87,
-      "price_yes_current": 0.13
+      "current_price": 0.865,
+      "price_yes_current": 0.135
     },
     {
       "market_id": "1106634",
@@ -2664,8 +2664,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.61,
-      "price_yes_current": 0.39
+      "current_price": 0.615,
+      "price_yes_current": 0.385
     },
     {
       "market_id": "565065",
@@ -3276,8 +3276,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.9555,
-      "price_yes_current": 0.0445
+      "current_price": 0.956,
+      "price_yes_current": 0.044
     },
     {
       "market_id": "1123479",
@@ -4068,8 +4068,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.835,
-      "price_yes_current": 0.165
+      "current_price": 0.825,
+      "price_yes_current": 0.175
     },
     {
       "market_id": "1692995",
@@ -4248,8 +4248,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.18000000000000005,
-      "price_yes_current": 0.82
+      "current_price": 0.1805,
+      "price_yes_current": 0.8195
     },
     {
       "market_id": "1919425",
@@ -4644,8 +4644,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.488,
-      "price_yes_current": 0.512
+      "current_price": 0.48750000000000004,
+      "price_yes_current": 0.5125
     },
     {
       "market_id": "678778",
@@ -4662,8 +4662,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.7464999999999999,
-      "price_yes_current": 0.2535
+      "current_price": 0.7475,
+      "price_yes_current": 0.2525
     },
     {
       "market_id": "677408",
@@ -8467,7 +8467,7 @@
     }
   ],
   "created_at": "2026-01-19T04:52:40.034094",
-  "last_updated": "2026-08-10T01:00:05.919925",
+  "last_updated": "2026-08-10T07:11:01.995659",
   "total_trades": 262,
   "wins": 122,
   "losses": 88,
