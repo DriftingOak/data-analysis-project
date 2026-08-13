@@ -36,8 +36,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.87,
-      "price_yes_current": 0.13
+      "current_price": 0.875,
+      "price_yes_current": 0.125
     },
     {
       "market_id": "1277912",
@@ -13543,7 +13543,7 @@
     }
   ],
   "created_at": "2026-02-08T22:16:55.329149",
-  "last_updated": "2026-08-13T01:07:39.136657",
+  "last_updated": "2026-08-13T07:13:19.475641",
   "total_trades": 391,
   "wins": 222,
   "losses": 139,
