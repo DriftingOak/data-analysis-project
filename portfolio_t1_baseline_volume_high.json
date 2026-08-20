@@ -1,6 +1,6 @@
 {
   "bankroll_initial": 1000,
-  "bankroll_current": 852.3444206054106,
+  "bankroll_current": 827.3444206054106,
   "entry_cost_rate": 0.005,
   "positions": [
     {
@@ -558,8 +558,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.7150000000000001,
-      "price_yes_current": 0.285
+      "current_price": 0.725,
+      "price_yes_current": 0.275
     },
     {
       "market_id": "1535973",
@@ -662,12 +662,12 @@
       "shares": 124.37500000000003,
       "cluster": "ukraine",
       "expected_close": "2026-12-31",
-      "status": "open",
-      "resolution": null,
-      "close_date": null,
-      "pnl": null,
-      "current_price": 0.0044999999999999485,
-      "price_yes_current": 0.9955
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-08-20 00:39",
+      "pnl": -25,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     },
     {
       "market_id": "1707841",
@@ -936,8 +936,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.4265,
-      "price_yes_current": 0.5735
+      "current_price": 0.4395,
+      "price_yes_current": 0.5605
     },
     {
       "market_id": "678777",
@@ -954,8 +954,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.37050000000000005,
-      "price_yes_current": 0.6295
+      "current_price": 0.40800000000000003,
+      "price_yes_current": 0.592
     }
   ],
   "closed_trades": [
@@ -1642,12 +1642,30 @@
       "pnl": 39.6103896103896,
       "current_price": 1.0,
       "price_yes_current": 0.0
+    },
+    {
+      "market_id": "677366",
+      "question": "Will Russia capture Kostyantynivka by December 31, 2026?",
+      "token_id": "47029152085101973226255505664149277121974669906212969183902148537312535402801",
+      "bet_side": "NO",
+      "entry_date": "2026-04-08 01:27",
+      "entry_price": 0.19999999999999996,
+      "size_usd": 25,
+      "shares": 124.37500000000003,
+      "cluster": "ukraine",
+      "expected_close": "2026-12-31",
+      "status": "closed",
+      "resolution": "lose",
+      "close_date": "2026-08-20 00:39",
+      "pnl": -25,
+      "current_price": 0.0,
+      "price_yes_current": 1.0
     }
   ],
   "created_at": "2026-02-08T22:16:55.328996",
-  "last_updated": "2026-08-19T18:20:15.749142",
+  "last_updated": "2026-08-20T00:39:58.809816",
   "total_trades": 53,
   "wins": 12,
-  "losses": 26,
-  "total_pnl": -147.65557939458938
+  "losses": 27,
+  "total_pnl": -172.65557939458938
 }
