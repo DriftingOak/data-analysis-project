@@ -504,8 +504,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.885,
-      "price_yes_current": 0.115
+      "current_price": 0.875,
+      "price_yes_current": 0.125
     },
     {
       "market_id": "1471457",
@@ -558,8 +558,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.645,
-      "price_yes_current": 0.355
+      "current_price": 0.655,
+      "price_yes_current": 0.345
     },
     {
       "market_id": "1535973",
@@ -648,8 +648,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.845,
-      "price_yes_current": 0.155
+      "current_price": 0.835,
+      "price_yes_current": 0.165
     },
     {
       "market_id": "677366",
@@ -756,8 +756,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.2845,
-      "price_yes_current": 0.7155
+      "current_price": 0.2855,
+      "price_yes_current": 0.7145
     },
     {
       "market_id": "1962237",
@@ -900,8 +900,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.625,
-      "price_yes_current": 0.375
+      "current_price": 0.635,
+      "price_yes_current": 0.365
     },
     {
       "market_id": "678747",
@@ -936,8 +936,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.5835,
-      "price_yes_current": 0.4165
+      "current_price": 0.5855,
+      "price_yes_current": 0.4145
     },
     {
       "market_id": "678777",
@@ -954,8 +954,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.4195,
-      "price_yes_current": 0.5805
+      "current_price": 0.42000000000000004,
+      "price_yes_current": 0.58
     }
   ],
   "closed_trades": [
@@ -1663,7 +1663,7 @@
     }
   ],
   "created_at": "2026-02-08T22:16:55.328996",
-  "last_updated": "2026-10-10T11:36:03.512376",
+  "last_updated": "2026-10-10T16:36:46.226062",
   "total_trades": 53,
   "wins": 12,
   "losses": 27,
