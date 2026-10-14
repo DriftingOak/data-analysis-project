@@ -612,8 +612,8 @@
       "resolution": null,
       "close_date": null,
       "pnl": null,
-      "current_price": 0.522,
-      "price_yes_current": 0.478
+      "current_price": 0.5145,
+      "price_yes_current": 0.4855
     }
   ],
   "closed_trades": [
@@ -1159,7 +1159,7 @@
     }
   ],
   "created_at": "2026-02-08T22:16:55.329114",
-  "last_updated": "2026-10-14T10:52:11.345426",
+  "last_updated": "2026-10-14T16:11:15.855128",
   "total_trades": 34,
   "wins": 15,
   "losses": 15,
